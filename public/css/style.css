@@ -1,0 +1,79 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.nav_cat:hover {
+    border-bottom: 2px solid black !important;
+}
+
+.nav_main:hover {
+    color: red !important;
+}
+
+.socialMedias {
+    font-size: 24px;
+}
+
+#arrowScroll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+    transition: visibility 0.5s;
+
+    width: 1.5em;
+    height: 1.5em;
+
+    border: 3px solid #4c5760;
+    border-radius: 50%;
+
+    background-color: #FFFFFF;
+
+    color: #4c5760;
+    font-size: 2.5em;
+
+    cursor: pointer;
+}
+
+#arrowScroll:hover {
+    background-color: #4c5760;
+    color: #ffffff;
+    transition: 0.4s
+}
+
+/* Panier */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Donner son avis avec étoiles */
+.star {
+    font-size: 1.5rem;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.star.active {
+    color: gold;
+}
+
+/* -------------------------------
+/* Notes sur les avis déja publiés */
+.starr {
+    font-size: 1.5rem;
+    color: gray;
+}
+
+.starr.active {
+    color: gold;
+}
