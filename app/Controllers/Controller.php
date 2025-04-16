@@ -7,14 +7,14 @@ namespace App\Controllers;
 use App\Models\MessageModel;
 
 
-/////////////////////////////////
-// CLASSE CONTROLEUR PRINCIPAL //
-/////////////////////////////////
+// ---------------------------
+// CLASSE CONTROLEUR PRINCIPAL
+// ---------------------------
 abstract class Controller
 {
-    //////////////////////////////////////
-    // METHODE POUR LE RENDU DANS VIEWS //
-    //////////////////////////////////////
+    // -----------------------------------
+    // METHODE POUR LE RENDU VERS LES VUES
+    // -----------------------------------
     public function render($view, $data = [])
     {
         extract($data); // Les clés du tableau deviennent des noms de variables.
@@ -25,38 +25,10 @@ abstract class Controller
         //exit();
     }
 
-    /////////////////////////////////////
-    // METHODE POUR RECHARGER UNE PAGE //
-    /////////////////////////////////////
-    public function myHeader($controller, $action, $messageKey, $data = [])
-    {
-        // CONSTUCTION DE L'URL
-        $location = "index.php?controller=" . $controller . "&action=" . $action;
 
-        // AJOUT D'UN PARAMETRE
-        if (isset($data)) {
-            $location .= "&" . key($data) . "=" . current($data);
-        }
-
-        // AJOUT D'UN MESSAGE
-        if (isset($messageKey)) {   
-            $messageModel = new MessageModel();
-            $message = $messageModel->getMessage($messageKey);
-
-            // if (str_starts_with($messageKey, "success_")) {
-            //     $location .= "&msgOK=" . $message;
-            // } else {
-            //     $location .= "&msgKO=" . $message;
-            // }
-        }
-        
-        header("location: " . $location);
-        //exit();  
-    }
-
-    ////////////////////////////////////////
-    // METHODE POUR GENERER UN TOKEN CSRF //
-    ////////////////////////////////////////
+    // ----------------------------------
+    // METHODE POUR GENERER UN TOKEN CSRF
+    // ----------------------------------
     public function generateToken()
     {
         $token_expiration = time() + 900; // 15 minutes (900 secondes)

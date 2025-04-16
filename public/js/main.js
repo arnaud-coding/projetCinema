@@ -1,6 +1,6 @@
-///////////////////// 
-// MODE DARK/LIGHT //
-/////////////////////
+// ----------------------
+// MODE DARK - LIGHT MODE
+// ----------------------
 
 // SELECTION DES ELEMENTS DU DOM
 const btnModeDark = document.querySelector("#btnModeDark");
@@ -14,10 +14,10 @@ let darkMode = JSON.parse(localStorage.getItem("darkMode"));
 // INITIALISATION DU MODE
 if (darkMode) {
     fctDarkMode();
-} 
+}
 
 // CHANGEMENT DE MODE AU CLICK
-btnModeDark.addEventListener("click", () => {   
+btnModeDark.addEventListener("click", () => {
     fctDarkMode();
     localStorage.setItem("darkMode", JSON.stringify(!darkMode));
 });
@@ -33,9 +33,9 @@ function fctDarkMode() {
 }
 
 
-//////////////////
-// POPUP COOKIE //
-//////////////////
+// ------------
+// POPUP COOKIE
+// ------------
 
 // SELECTION DES ELEMENTS DU DOM
 const modalCookie = new bootstrap.Modal(document.querySelector("#modalCookie"));
@@ -44,7 +44,7 @@ const btnCookieAccept = document.querySelector("#btnCookieAccept");
 
 
 // CONTROLE DE L'EXISTENCE D'UN COOKIE D'ACCEPTATION
-fetch("index.php?controller=Utilisateur&action=ctrlCookie")
+fetch("index.php?controller=User&action=ctrlCookie")
     .then((response) => response.json()) // On récupère la réponse et on la transforme en objet JSON
     .then((data) => // On récupère les données
     {
@@ -56,41 +56,41 @@ fetch("index.php?controller=Utilisateur&action=ctrlCookie")
 
 // ACCEPTATION DES COOKIES
 btnCookieAccept.addEventListener("click", () => {
-    fetch("index.php?controller=Utilisateur&action=validCookie&cookie=accept")
-    .then((response) => response.json()) // On récupère la réponse et on la transforme en objet JSON
-    .then((data) => // On récupère les données
-    {
-        if (data) modalCookie.hide();
-    })
-    .catch(error => {
-        console.error("Erreur:", error);
-    });
+    fetch("index.php?controller=User&action=validCookie&cookie=accept")
+        .then((response) => response.json()) // On récupère la réponse et on la transforme en objet JSON
+        .then((data) => // On récupère les données
+        {
+            if (data) modalCookie.hide();
+        })
+        .catch(error => {
+            console.error("Erreur:", error);
+        });
 });
 
 // REFUS DES COOKIES
 btnCookieRefuse.addEventListener("click", () => {
     fetch("index.php?controller=Utilisateur&action=validCookie")
-    .then((response) => response.json()) // On récupère la réponse et on la transforme en objet JSON
-    .then((data) => // On récupère les données
-    {
-        if (data) modalCookie.hide();
-    })
-    .catch(error => {
-        console.error("Erreur:", error);
-    });
+        .then((response) => response.json()) // On récupère la réponse et on la transforme en objet JSON
+        .then((data) => // On récupère les données
+        {
+            if (data) modalCookie.hide();
+        })
+        .catch(error => {
+            console.error("Erreur:", error);
+        });
 });
 
 
-//////////////////////////////
-// FLECHE SCROLL HAUT PAGE  //
-//////////////////////////////
+// -----------------------
+// FLECHE SCROLL HAUT PAGE
+// -----------------------
 
 // SELECTION DE LA FLECHE
 const arrowScroll = document.querySelector("#arrowScroll");
 
 
 // AFFICHAGE DE LA FLECHE AU SCROLL
-window.addEventListener("scroll", () => {   
+window.addEventListener("scroll", () => {
     if (window.scrollY > 100) {
         arrowScroll.style.visibility = "visible";
     } else {
@@ -99,17 +99,9 @@ window.addEventListener("scroll", () => {
 })
 
 // RETOUR HAUT DE PAGE AU CLICK
-arrowScroll.addEventListener('click', ()=> {
+arrowScroll.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
         behavior: 'smooth' // Pour un défilement doux
     });
 });
-
-
-////////////////////////////////////////
-// AFFICHAGE DES CALENDRIERS AU CLICK //
-////////////////////////////////////////
-// jour.addEventListener("focus", () => {
-//    jour.showPicker();
-// });

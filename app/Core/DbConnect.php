@@ -25,7 +25,7 @@ abstract class DbConnect
     const SERVER = "localhost";
     const USER = "root";
     const PASSWORD = "";
-    const BASE = "ecommerce";
+    const BASE = "projet_cinema";
 
     ////////////////////////////////////////////////
     // CONSTRUCTEUR POUR INITIALISER LA CONNEXION //
@@ -45,8 +45,7 @@ abstract class DbConnect
             // ENCODAGE DES CARACTERES SPECIAUX EN UTF8
             $this->connection->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8");
         } catch (PDOException $e) {
-            //echo $e->getMessage();
-            //die;
+            die('Erreur : ' . $e->getMessage());
         }
     }
 }
