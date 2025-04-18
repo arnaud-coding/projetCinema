@@ -54,7 +54,7 @@ class UserController extends Controller
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
         $this->render("user/formLogin");
     }
-
+    /*
     // -------------------------
     //  SE CONNECTER
     // -------------------------
@@ -72,10 +72,10 @@ class UserController extends Controller
 
                 // VERIFICATION DES CHAMPS
                 $email = $_POST["email"] ?? null;
-                $mdp = $_POST["mdp"] ?? null;
+                $password = $_POST["password"] ?? null;
                 // var_dump($_POST);
                 // die;
-                if ($email && $mdp) {
+                if ($email && $password) {
 
                     // LECTURE DE L'EMAIL CLIENT
                     $readUser = new User();
@@ -86,7 +86,7 @@ class UserController extends Controller
                     // die;
 
                     // VERIFICATION DE L'EXISTENCE DE L'EMAIL CLIENT ET DU MDP
-                    if ($user && (password_verify($mdp, $user->mdp))) {
+                    if ($user && (password_verify($password, $user->password))) {
 
                         // CREATION D'UNE NOUVELLE SESSION
                         session_regenerate_id();
@@ -146,23 +146,23 @@ class UserController extends Controller
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
         $this->myHeader("Home", "home", "success_logout");
     }
-
+*/
     // -------------------------------------------------------
     //  AFFICHER UN FORMULAIRE DE REINISIALISATION
     // -------------------------------------------------------
-    public function formForgetMdp()
+    public function formForgetPassword()
     {
         // CREATION D'UN TOKEN CSRF
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("user/formForgetMdp");
+        $this->render("user/formForgetPassword");
     }
     /*
     // ------------------------------------
     //  REINITIALISATION UN MDP
     // ------------------------------------
-    public function forgetMdp()
+    public function forgetPassword()
     {
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -195,19 +195,19 @@ class UserController extends Controller
                         $success1 = $majUserModel->updateToken($majUser);
 
                         // ENVOI D'UN MAIL DE REINITIALISATION
-                        $majMdpMail = new Mail();
-                        $majMdpMail->setFirstname($user->firstname);
-                        $majMdpMail->setLastname($user->lastname);
-                        $majMdpMail->setEmail($user->email);
-                        $majMdpMail->setToken($token);
-                        $majMdpMailModel = new MailModel();
-                        $success2 = $majMdpMailModel->mdpForget($majMdpMail);
+                        $majPasswordMail = new Mail();
+                        $majPasswordMail->setFirstname($user->firstname);
+                        $majPasswordMail->setLastname($user->lastname);
+                        $majPasswordMail->setEmail($user->email);
+                        $majPasswordMail->setToken($token);
+                        $majPasswordMailModel = new MailModel();
+                        $success2 = $majPasswordMailModel->mdpForget($majPasswordMail);
 
                         // VERIFICATION DES ACCUSES DE TRAITEMENT
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                         $success1 && $success2
                             ? $this->myHeader("Home", "home", "success_email")
-                            : $this->myHeader("User", "formForgetMdp", "error_email");
+                            : $this->myHeader("User", "formForgetPassword", "error_email");
                     } else {
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
@@ -216,12 +216,12 @@ class UserController extends Controller
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("User", "formForgetMdp", "error_inputEmail");
+                    $this->myHeader("User", "formForgetPassword", "error_inputEmail");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("User", "formForgetMdp", "error_token");
+                $this->myHeader("User", "formForgetPassword", "error_token");
             }
         }
     }
@@ -229,7 +229,7 @@ class UserController extends Controller
     // -------------------------------------------------------
     //  AFFICHER UN FORMULAIRE DE REINITIALISATION
     // -------------------------------------------------------
-    public function formUpdateMdp()
+    public function formUpdatePassword()
     {
         // VERIFICATION DU GET
         if ($_GET["token"] ?? null) {
@@ -247,12 +247,12 @@ class UserController extends Controller
                 // VERIFICATION DE LA DATE D'EXPIRATION
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE OU LE RECHARGEMENT
                 strtotime($user->token_expire) > time()
-                    ? $this->render("user/formUpdateMdp")
-                    : $this->myHeader("User", "formForgetMdp", "error_expire");
+                    ? $this->render("user/formUpdatePassword")
+                    : $this->myHeader("User", "formForgetPassword", "error_expire");
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("User", "formForgetMdp", "error_link");
+                $this->myHeader("User", "formForgetPassword", "error_link");
             }
         } else {
 
@@ -264,7 +264,7 @@ class UserController extends Controller
     // ----------------------------
     //  MODIFIER LE MDP
     // ----------------------------
-    public function updateMdp()
+    public function updatePassword()
     {
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -278,8 +278,8 @@ class UserController extends Controller
 
                 // VERIFICATION DES CHAMPS
                 $token = $_POST["token"] ?? null;
-                $mdp = $_POST["mdp"] ?? null;
-                if ($token && $mdp) {
+                $password = $_POST["password"] ?? null;
+                if ($token && $password) {
 
                     // LECTURE DE L'CLIENT AVEC LE TOKEN
                     $majUser = new User();
@@ -289,25 +289,25 @@ class UserController extends Controller
 
                     // MISE A JOUR DU MDP
                     $majUser->setEmail($user->email);
-                    $majUser->setMdp($mdp);
+                    $majUser->setPassword($password);
                     $majUser->setToken(null); // Réinitialisation du token
                     $majUser->setToken_expire(null); // Réinitialisation de la date d'expiration
-                    $success = $majUserModel->updateMdp($majUser);
+                    $success = $majUserModel->updatePassword($majUser);
 
                     // VERIFICATION DE L'ACCUSE DE TRAITEMENT
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                     $success
-                        ? $this->myHeader("User", "formLogin", "success_updateMdp")
-                        : $this->myHeader("User", "formUpdateMdp", "error_request");
+                        ? $this->myHeader("User", "formLogin", "success_updatePassword")
+                        : $this->myHeader("User", "formUpdatePassword", "error_request");
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("User", "formUpdateMdp", "error_input");
+                    $this->myHeader("User", "formUpdatePassword", "error_input");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("User", "formUpdateMdp", "error_token");
+                $this->myHeader("User", "formUpdatePassword", "error_token");
             }
         }
     }
@@ -315,13 +315,13 @@ class UserController extends Controller
     // -----------------------------------------------
     //  AFFICHER UN FORMULAIRE DE CREATION
     // -----------------------------------------------
-    public function formCreate()
+    public function formSignUp()
     {
         // CREATION D'UN TOKEN CSRF
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("user/formCreate");
+        $this->render("user/formSignup");
     }
 
     // ----------------------------
@@ -333,218 +333,57 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // VERIFICATION DU TOKEN
-            $token = $_POST["token"] ?? "";
-            if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
+            // $token = $_POST["token"] ?? "";
+            // if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
 
-                // SUPPRESSION DU TOKEN
-                unset($_SESSION["token"]);
+            //     // SUPPRESSION DU TOKEN
+            //     unset($_SESSION["token"]);
+            if (true) {
 
                 // VERIFICATION DES CHAMPS
-                $firstname = $_POST["firstname"] ?? null;
-                $lastname = $_POST["lastname"] ?? null;
+                $pseudo = $_POST["pseudo"] ?? null;
                 $email = $_POST["email"] ?? null;
-                $mdp = $_POST["password"] ?? null;
-                $adresse = $_POST["adresse"] ?? null;
-                $cp = $_POST["cp"] ?? null;
-                $ville = $_POST["ville"] ?? null;
+                $password = $_POST["password"] ?? null;
+                $type = $_POST["type"] ?? null;
 
-                if ($firstname && $lastname && $email && $mdp && $adresse && $cp && $ville) {
+                if ($pseudo && $email && $password && $type) {
 
                     // CREATION D'UN CLIENT
-                    $addUser = new User();
-                    $addUser->setFirstname($firstname);
-                    $addUser->setLastname($lastname);
-                    $addUser->setEmail($email);
-                    $addUser->setMdp($mdp);
-                    $addUser->setAdresse($adresse);
-                    $addUser->setCp($cp);
-                    $addUser->setVille($ville);
-                    $addUserModel = new UserModel();
-                    $success = $addUserModel->create($addUser);
+                    $user = new User();
+                    $user->setPseudo($pseudo);
+                    $user->setEmail($email);
+                    $user->setPassword($password);
+                    $user->setType($type);
 
-                    if ($success === true) { // VERIFICATION DE L'ACCUSE DE TRAITEMENT
 
-                        // REDIRECTION VERS LA PAGE LOGIN
-                        $this->myHeader("User", "formLogin", "success_createUserByUser");
-                    } elseif ($success === "emailExistant") { // VERIFICATION DE L'EXISTENCE DE L'EMAIL
+                    $userModel = new UserModel();
+                    $success = $userModel->create($user);
 
-                        // EMAIL DEJA EXISTANT DANS LA BDD : RENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("User", "formLogin", "error_userFound");
+                    if ($success === true) {
+                        // SUCCES : REDIRECTION VERS LA PAGE LOGIN
+                        $message = "Félicitations, vous êtes des notres ! Connectez vous maintenant...";
+                        header("Location: index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message));
                     } else {
-
-                        // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("User", "formCreate", "error_request");
+                        if ($success === "not_unique") {
+                            $message = "Le pseudo ou l'adresse mail existe déja.";
+                        } else {
+                            $message = "Unexpected error occured. Please try later.";
+                        }
+                        header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                     }
                 } else {
-
-                    // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("User", "formCreate", "error_input");
+                    $message = "Tous les champs du formulaire doivent être remplis";
+                    header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                 }
             } else {
-
-                // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("User", "formCreate", "error_token");
+                $message = "Token error.";
+                header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
             }
         }
     }
 
-    // --------------------------------
-    //   AFFICHER LE PANIER
-    // --------------------------------
-    public function displayCart()
-    {
-        $this->render('user/panier');
-    }
 
-    // -----------------------------------------
-    //  AJOUTER UN PRODUIT AU PANIER
-    // -----------------------------------------
-    public function addToCart()
-    {
-        $id_produit = intval($_GET['id_produit']) ?? null;
-        $prix = floatval($_GET['prix']) ?? null;
-        $panier = isset($_SESSION['panier']) ? $_SESSION['panier'] : [];
-        $produit = [
-            'id_produit' => $id_produit,
-            'quantite' => 1,
-            'prix' => $prix
-        ];
-
-        if ($produit) {
-            $panier[] = $produit; // Même effet que : array_push($panier, $produit)
-            $_SESSION['panier'] = $panier; // mise à jour de la session panier
-        }
-        header('Location: index.php?controller=User&action=displayCart');
-    }
-
-    // -------------------------------------------------------------
-    //  MODIFIER LA QUANTITE D'UN PRODUIT DANS LE PANIER
-    // -------------------------------------------------------------
-    public function setQuantity()
-    {
-        $index = $_POST['indexPanier'] ?? null;
-        $id_produit = intval($_POST['id_produit']) ?? null;
-        $quantite = intval($_POST['quantite']) ?? null;
-        $prix = floatval($_POST['prix']) ?? null;
-        $_SESSION['panier'][$index] = [
-            'id_produit' => $id_produit,
-            'quantite' => $quantite,
-            'prix' => $prix * $quantite
-        ];
-
-        header('Location: index.php?controller=User&action=displayCart');
-    }
-
-    // ----------------------------
-    //  VIDER LE PANIER
-    // ----------------------------
-    public function clearCart()
-    {
-        unset($_SESSION['panier']);
-        unset($_SESSION['montant_commande']);
-        header('Location: index.php?controller=User&action=displayCart');
-    }
-
-    // ----------------------------
-    //  RETIRER UN ARTICLE DU PANIER
-    // ----------------------------
-    public function removeFromCart()
-    {
-        $panier = isset($_SESSION['panier']) ? $_SESSION['panier'] : [];
-        $produit = intval($_GET['produit']) ?? null;
-
-        array_splice($panier, $produit, 1);
-        $_SESSION['panier'] = $panier; // mise à jour de la session panier
-
-        header('Location: index.php?controller=User&action=displayCart');
-    }
-
-    // ---------------------------------
-    //  VALIDER LA COMMANDE
-    // ---------------------------------
-    public function validateOrder()
-    {
-
-        try {
-            // Envoi la requete de création de la commande
-
-            // =================================================================================
-            $url = 'https://www.cefii-developpements.fr/olivier1422/cefii_market/market_api/public/index.php?controller=Commande&action=add';
-
-            // Données
-            $num_commande = (new DateTime())->getTimestamp();
-            $date_commande = (new DateTime())->format('Y-m-d');
-            $data = [
-                'id_user' => $_SESSION['user']['id_user'],
-                'firstname' => $_SESSION['user']['firstname'],
-                'lastname' => $_SESSION['user']['lastname'],
-                'num_commande' => $num_commande,
-                'date_commande' => $date_commande,
-                'email' => $_SESSION['user']['email'],
-                'adresse' => $_SESSION['user']['adresse'],
-                'cp' => $_SESSION['user']['cp'],
-                'ville' => $_SESSION['user']['ville'],
-                'produits' => $_SESSION['panier']
-            ];
-
-
-            // Conversion des données en JSON
-            $jsonData = json_encode($data);
-
-            // Créer le contexte de flux
-            $opts = [
-                'http' =>
-                [
-                    'method' => 'POST',
-                    'header' => 'Content-type: application/json',
-                    'content' => $jsonData
-                ]
-            ];
-
-            $context = stream_context_create($opts);
-
-            // Envoyer la requête POST
-            file_get_contents($url, false, $context);
-
-
-            // Obtient le statut de la reponse
-            $http_response_code = intval(explode(" ", $http_response_header[0])[1]);
-
-            // vérifie la réponse à la requete
-            if ($http_response_code !== 201) {
-                // La requete HTTP a échouée: retourne à la page d'acceuil avec un message d'erreur'
-                throw new Exception("Error sending command data to the API. Error code=" . $http_response_code);
-            } else {
-
-                // Succès de la requête HTTP : Envoi du mail de confirmation au user
-                $mail = new Mail();
-                $mail->setFirstname($_SESSION['user']['firstname']);
-                $mail->setLastname($_SESSION['user']['lastname']);
-                $mail->setEmail($_SESSION['user']['email']);
-                $mail->setNum_commande($num_commande);
-                $mail->setDate_commande($date_commande);
-                $mail->setMontant_commande($_SESSION['montant_commande']);
-                $mail->setAdresse($_SESSION['user']['adresse']);
-                $mail->setCode_postal($_SESSION['user']['cp']);
-                $mail->setVille($_SESSION['user']['ville']);
-                $mailModel = new MailModel();
-                $mailModel->validatedOrder($mail);
-
-                // Commande réussie et mail de confirmation envoyé : on vide le panier
-                unset($_SESSION['panier']);
-                unset($_SESSION['montant_commande']);
-
-
-                // La requete HTTP à réussie: redirection vers la page d'acceuil avec un message de succès
-                $this->myHeader("Home", "home", "success_validateOrder");
-            }
-        } catch (Exception $e) {
-            echo "validateOrder: Caught exception: " . $e->getMessage();
-            $this->myHeader("Home", "home", "error_validateOrder");
-        }
-    }
     /*
-
     // --------------------------------------------------
     //  AFFICHER UN FORMULAIRE DE MISE A JOUR
     // --------------------------------------------------
@@ -614,7 +453,7 @@ class UserController extends Controller
                     $firstname = $_POST["firstname"] ?? null;
                     $lastname = $_POST["lastname"] ?? null;
                     $email = $_POST["email"] ?? null;
-                    $mdp = $_POST["mdp"] ?? ""; // Le mot de passe peut être nul.
+                    $password = $_POST["password"] ?? ""; // Le mot de passe peut être nul.
                     $statut = $_POST["statut"] ?? "user"; // Statut user minimum
                     if ($id_user && $firstname && $lastname && $email) {
 
@@ -624,7 +463,7 @@ class UserController extends Controller
                         $majUser->setFirstname($firstname);
                         $majUser->setLastname($lastname);
                         $majUser->setEmail($email);
-                        $majUser->setMdp($mdp);
+                        $majUser->setPassword($password);
                         $majUser->setStatut($statut);
 
                         $majUserModel = new UserModel();

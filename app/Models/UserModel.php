@@ -123,12 +123,15 @@ class UserModel extends DbConnect
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
             return $this->request->execute();
         } catch (PDOException $e) {
-            if ($e->errorInfo[1] == 1062) {
-                return "emailExistant";
+            $errCode = $e->errorInfo[1];
+            if ($errCode == 1062) {
+                return "not_unique";
+            } else {
+                return "unknown_error" . $errCode;
             }
-            // die($e->getMessage());
         }
     }
+    /*
     // ------------------------------------
     //  MODIFIER UN UTILISATEUR
     // ------------------------------------
@@ -174,7 +177,7 @@ class UserModel extends DbConnect
             die;
         }
     }
-
+*/
     // ----------------------------
     //  MODIFIER UN MDP
     // ----------------------------

@@ -12,13 +12,28 @@
         <i class="bi bi-x-lg"></i>
     </a>
 </div>
-
+<?php
+$message = isset($_GET['message']) ? $_GET['message'] : '';
+$success = isset($_GET['success']) ? $_GET['success'] : null;
+// Afficher uniquement quand success est passé (true or false)
+if ($success !== null) {
+    if ($success === '1') {
+?>
+        <p class="text-center text-success"><?php echo $message ?></p>
+    <?php
+    } else {
+    ?>
+        <p class="text-center text-danger"><?php echo $message ?></p>
+<?php
+    }
+}
+?>
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="card w-50 mx-auto my-3">
     <div class="card-body">
-        <form method="post" action="index.php?controller=Client&action=login">
+        <form method="post" action="index.php?controller=User&action=login" novalidate>
 
             <!-- TOKEN CSRF -->
             <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">
@@ -37,7 +52,7 @@
 
             <!-- LIEN VERS MDP OUBLIE -->
             <div class="mb-3 text-end">
-                <a class="text-decoration-none" href="index.php?controller=Client&action=formForgetMdp">Mot de passe oublié ?</a>
+                <a class="text-decoration-none" href="index.php?controller=User&action=formForgetMdp">Mot de passe oublié ?</a>
             </div>
 
             <!-- BOUTON D'ENVOI -->
@@ -48,8 +63,8 @@
 
         <!-- LIEN VERS LA CREATION DE COMPTE -->
         <div class="text-center mt-4">
-            <p class="fw-bold">Vous n'avez pas de compte ?</p>
-            <a class="btn btn-outline-secondary" href="index.php?controller=Client&action=formCreate">Créer un compte</a>
+            <p class="fw-bold">Vous n'avez pas enore de compte ?</p>
+            <a class="btn btn-outline-secondary" href="index.php?controller=User&action=formSignup">Créer un compte</a>
         </div>
     </div>
 </div>
