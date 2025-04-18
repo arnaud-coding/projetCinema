@@ -1,5 +1,5 @@
 // ----------------------
-// MODE DARK - LIGHT MODE
+// DARK MODE - LIGHT MODE
 // ----------------------
 
 // SELECTION DES ELEMENTS DU DOM

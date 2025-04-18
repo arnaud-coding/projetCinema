@@ -16,19 +16,13 @@
             <a href="#"><i class="bi bi-facebook text-dark px-2"></i></a>
             <a href="#"><i class="bi bi-instagram text-dark"></i></a>
         </div>
-        <p>&copy; 2025 CEFiiMarket - Production interne - &reg; Tous droits réservés.</p>
+        <p>&copy; 2025 MovieLovers - Production interne - &reg; Tous droits réservés.</p>
     </div>
 </footer>
 
 <!-- SCRIPTS -->
 <script src="../public/js/main.js"></script>
-<script src="../public/js/panier.js"></script>
 <script src="../public/js/avis.js"></script>
-<script src="../public/js/utilisateur/testMDP.js"></script>
-<!-- <script src="../public/js/utilisateur/testEmail.js"></script> -->
-<script type="module" src="../public/js/livre/testFormLivre.js"></script>
-<script type="module" src="../public/js/livre/modules/addLivre.js"></script>
-<script type="module" src="../public/js/livre/createToken.js"></script>
 </body>
 
 </html>

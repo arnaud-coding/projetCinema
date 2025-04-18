@@ -14,7 +14,8 @@
             <!-- MODAL BODY -->
             <div class="modal-body">
                 <p>
-                    Nous utilisons des cookies pour améliorer votre expérience sur notre site.<br>En cliquant sur "Accepter", vous consentez à l'utilisation de tous les cookies. En cliquant sur "Refuser", vous consentez à l'utilisation des cookies essentiels.
+                    Nous utilisons des cookies pour améliorer votre expérience sur notre site.<br>
+                    En cliquant sur "Accepter", vous consentez à l'utilisation de tous les cookies. En cliquant sur "Refuser", vous consentez à l'utilisation des cookies essentiels.
                 </p>
             </div>
 

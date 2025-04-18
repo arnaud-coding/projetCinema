@@ -8,8 +8,28 @@ main {
     flex: 1;
 }
 
-.nav_cat:hover {
-    border-bottom: 2px solid black !important;
+.nav_cat {
+    position: relative;
+    display: inline-block;
+    /* Important pour que la largeur colle au texte */
+    text-decoration: none;
+}
+
+.nav_cat::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease;
+}
+
+.nav_cat:hover::after {
+    transform: scaleX(1);
 }
 
 .nav_main:hover {

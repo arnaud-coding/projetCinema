@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <title>CEFiiMarket</title>
+    <link rel="icon" type="img/png" href="img/logo.png">
+    <title>MovieLovers</title>
 
     <!-- CSS Bootstrap -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
@@ -18,10 +18,7 @@
 
     <!-- JS Bootstrap -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script> -->
-    <script src="../public/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Font Awesome -->
-    <!-- <script src="https://kit.fontawesome.com/c245ee9b98.js" crossorigin="anonymous"></script> -->
+    <script src="../public/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
 <body>
@@ -32,12 +29,12 @@
 
                 <!-- LOGO -->
                 <a class="navbar-brand fs-2 fw-bold text-dark" href="index.php">
-                    <img src="images/logo.png" alt="Logo" width="100" height="100">
-                    CEFiiMarket
+                    <img src="img/nopicture.jpg" alt="Logo" width="100" height="100">
+                    MovieLovers
                 </a>
 
                 <!-- MODE CLAIR/OMBRE -->
-                <!-- <i id="btnModeDark" class="bi bi-lightbulb-fill text-warning ps-4" style="cursor: pointer;"></i> -->
+                <i id="btnModeDark" class="bi bi-lightbulb-fill text-warning ps-4" style="cursor: pointer;"></i>
 
                 <!-- MENU -->
                 <!-- <div id="navbarNav" class="collapse navbar-collapse justify-content-center">
@@ -81,7 +78,7 @@
         </nav>
 
         <!-- NAV : CATEGORIES DE PRODUITS -->
-        <nav class="navbar navbar-expand-md bg-white py-3 border-top">
+        <nav class="navbar navbar-expand-md bg-white py-4 border-top">
             <div class="container">
                 <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                     <ul class="navbar-nav fs-5 fw-medium">
@@ -94,7 +91,7 @@
                 </div>
 
                 <!-- BOUTON RESPONSIVE -->
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler my-3 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
@@ -118,13 +115,3 @@
                     <p class="mb-0"><?php echo htmlspecialchars($_GET["msgKO"], ENT_QUOTES, "UTF-8"); ?></p>
                 </div>
             <?php endif; ?>
-
-            <!-- <script>
-                // Cacher le message après 5 secondes
-                setTimeout(() => {
-                    const message = document.getElementById("message");
-                    if (message) {
-                        message.style.display = "none";
-                    }
-                }, 5000);
-            </script> -->

@@ -8,28 +8,22 @@ use PDO;
 use PDOException;
 
 
-//////////////////////////////////////////////
-// CLASSE DE CONNEXION A LA BASE DE DONNEES //
-//////////////////////////////////////////////
+// ----------------------------------------
+// CLASSE DE CONNEXION A LA BASE DE DONNEES
+// ----------------------------------------
 abstract class DbConnect
 {
-    ///////////////
-    // ATTRIBUTS //
-    ///////////////
+    // ATTRIBUTS
     protected $connection;
     protected $request;
 
-    //////////////////////////////////////////////////
-    // CONSTANTES DE CONNEXION A LA BASE DE DONNEES //
-    //////////////////////////////////////////////////
+    // CONSTANTES DE CONNEXION A LA BASE DE DONNEES
     const SERVER = "localhost";
     const USER = "root";
     const PASSWORD = "";
     const BASE = "projet_cinema";
 
-    ////////////////////////////////////////////////
-    // CONSTRUCTEUR POUR INITIALISER LA CONNEXION //
-    ////////////////////////////////////////////////
+    // CONSTRUCTEUR POUR INITIALISER LA CONNEXION
     public function __construct()
     {
         try {
