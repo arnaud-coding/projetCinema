@@ -12,8 +12,8 @@ class Mail
     // ---------------------------------
     // ATTRIBUTS //
     // ---------------------------------
-    private $nom;
-    private $prenom;
+    private $lastname;
+    private $firstname;
     private $email;
     private $token;
     private $num_commande;
@@ -27,26 +27,26 @@ class Mail
     // METHODES GETTER ET SETTER //
     // ---------------------------------
 
-    public function getNom()
+    public function getLastname()
     {
-        return $this->nom;
+        return $this->lastname;
     }
 
-    public function setNom($nom)
+    public function setLastname($lastname)
     {
-        $this->nom = $nom;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
-    public function getPrenom()
+    public function getFirstname()
     {
-        return $this->prenom;
+        return $this->firstname;
     }
 
-    public function setPrenom($prenom)
+    public function setFirstname($firstname)
     {
-        $this->prenom = $prenom;
+        $this->firstname = $firstname;
 
         return $this;
     }

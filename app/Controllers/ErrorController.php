@@ -13,7 +13,7 @@ use App\Controllers\Controller as Controller;
 class ErrorController extends Controller
 {
     // -----------------------
-    // METHODE POUR AFFICHER L'ERREUR 404
+    //  AFFICHER L'ERREUR 404
     // -----------------------
     public function error404()
     {

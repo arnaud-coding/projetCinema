@@ -16,7 +16,7 @@ use PDOException;
 class AvisModel extends DbConnect
 {
   // ---------------------------------------
-  // METHODE POUR LIRE LES AVIS D'UN PRODUIT
+  //  LIRE LES AVIS D'UN PRODUIT
   // ---------------------------------------
   public function readByProduit($id_produit)
   {
@@ -24,7 +24,7 @@ class AvisModel extends DbConnect
       // PREPARATION DE LA REQUETE SQL
       $this->request = $this->connection->prepare("SELECT
                                                       eco_avis.*,
-                                                      eco_client.prenom AS prenom
+                                                      eco_client.firstname AS firstname
                                                    FROM eco_avis
                                                    INNER JOIN eco_client ON
                                                       eco_client.id_client = eco_avis.id_client
@@ -47,7 +47,7 @@ class AvisModel extends DbConnect
   }
 
   // ----------------------------
-  // METHODE POUR AJOUTER UN AVIS
+  //  AJOUTER UN AVIS
   // ----------------------------
   public function add(Avis $avis)
   {

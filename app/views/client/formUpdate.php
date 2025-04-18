@@ -29,26 +29,26 @@
 
             <!-- TOKEN CSRF -->
             <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">
-             
+
             <!-- CHAMP ID UTILISATEUR -->
             <input type="hidden" name="id_utilisateur" value="<?php echo htmlspecialchars($utilisateur->id_utilisateur, ENT_QUOTES, "UTF-8"); ?>">
 
             <!-- CHAMP PRENOM -->
             <div class="mb-3">
-                <label for="prenom" class="form-label">Prénom</label>
-                <input id="prenom" class="form-control form-control-sm" type="text" name="prenom" value="<?php echo htmlspecialchars($utilisateur->prenom, ENT_QUOTES, "UTF-8"); ?>">
+                <label for="firstname" class="form-label">Prénom</label>
+                <input id="firstname" class="form-control form-control-sm" type="text" name="firstname" value="<?php echo htmlspecialchars($utilisateur->firstname, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <!-- CHAMP NOM -->
             <div class="mb-3">
-                <label for="nom" class="form-label">Nom</label>
-                <input id="nom" class="form-control form-control-sm" type="text" name="nom" value="<?php echo htmlspecialchars($utilisateur->nom, ENT_QUOTES, "UTF-8"); ?>">
+                <label for="lastname" class="form-label">Nom</label>
+                <input id="lastname" class="form-control form-control-sm" type="text" name="lastname" value="<?php echo htmlspecialchars($utilisateur->lastname, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <!-- CHAMP EMAIL -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input id="email" class="form-control form-control-sm" type="email" name="email" value="<?php echo htmlspecialchars($utilisateur->email, ENT_QUOTES,"UTF-8"); ?>">
+                <input id="email" class="form-control form-control-sm" type="email" name="email" value="<?php echo htmlspecialchars($utilisateur->email, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <!-- CHAMP MDP -->

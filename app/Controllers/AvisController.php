@@ -16,7 +16,7 @@ use DateTime;
 class AvisController extends Controller
 {
   // ----------------------------
-  // METHODE POUR AJOUTER UN AVIS
+  //  AJOUTER UN AVIS
   // ----------------------------
   public function add()
   {

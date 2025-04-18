@@ -26,14 +26,14 @@
 
             <!-- CHAMP PRENOM -->
             <div class="mb-3">
-                <label for="prenom" class="form-label">Prénom</label>
-                <input id="prenom" class="form-control form-control-sm" type="text" name="prenom" placeholder="Entrez votre prénom">
+                <label for="firstname" class="form-label">Prénom</label>
+                <input id="firstname" class="form-control form-control-sm" type="text" name="firstname" placeholder="Entrez votre prénom">
             </div>
 
             <!-- CHAMP NOM -->
             <div class="mb-3">
-                <label for="nom" class="form-label">Nom</label>
-                <input id="nom" class="form-control form-control-sm" type="text" name="nom" placeholder="Entrez votre nom">
+                <label for="lastname" class="form-label">Nom</label>
+                <input id="lastname" class="form-control form-control-sm" type="text" name="lastname" placeholder="Entrez votre lastname">
             </div>
 
             <!-- CHAMP EMAIL -->

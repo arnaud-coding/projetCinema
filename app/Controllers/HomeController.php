@@ -13,9 +13,12 @@ use App\Controllers\Controller as Controller;
 class HomeController extends Controller
 {
 
-    // ---------------------------------
-    // METHODE POUR AFFICHER LA PAGE HOME //
-    // ---------------------------------
+    // ----------------------
+    //  AFFICHER LA PAGE HOME
+    // ----------------------
+    /**
+     * affiche la page home
+     */
     public function home()
     {
         $this->render("home/home");

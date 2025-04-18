@@ -5,9 +5,9 @@ namespace App\Controllers;
 
 // IMPORT DE CLASSES
 use App\Controllers\Controller as Controller;
-use App\Entities\Client as Client;
+use App\Entities\User as User;
 use App\Entities\Mail as Mail;
-use App\Models\ClientModel as ClientModel;
+use App\Models\UserModel as UserModel;
 use App\Models\MailModel as MailModel;
 use Exception;
 use DateTime;
@@ -15,10 +15,10 @@ use DateTime;
 // ------------------------------------
 // CLASSE CONTROLEUR DE L'ENTITE CLIENT
 // ------------------------------------
-class ClientController extends Controller
+class UserController extends Controller
 {
     // -----------------------------------------------------
-    // METHODE POUR CONTROLER L'EXISTENCE D'UN COOKIE "RGPD"
+    //  CONTROLER L'EXISTENCE D'UN COOKIE "RGPD"
     // -----------------------------------------------------
     public function ctrlCookie()
     {
@@ -27,7 +27,7 @@ class ClientController extends Controller
     }
 
     // --------------------------------------------
-    // METHODE POUR DEFINIR l'ETAT DU COOKIE "RGPD"
+    //  DEFINIR l'ETAT DU COOKIE "RGPD"
     // --------------------------------------------
     public function validCookie()
     {
@@ -44,7 +44,7 @@ class ClientController extends Controller
     }
 
     // ------------------------------------------------
-    // METHODE POUR AFFICHER UN FORMULAIRE DE CONNEXION
+    //  AFFICHER UN FORMULAIRE DE CONNEXION
     // ------------------------------------------------
     public function formLogin()
     {
@@ -52,11 +52,11 @@ class ClientController extends Controller
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("client/formLogin");
+        $this->render("user/formLogin");
     }
 
     // -------------------------
-    // METHODE POUR SE CONNECTER
+    //  SE CONNECTER
     // -------------------------
     public function login()
     {
@@ -78,28 +78,28 @@ class ClientController extends Controller
                 if ($email && $mdp) {
 
                     // LECTURE DE L'EMAIL CLIENT
-                    $readClient = new Client();
-                    $readClient->setEmail($email);
-                    $readClientModel = new ClientModel();
-                    $client = $readClientModel->readByEmail($readClient);
-                    // var_dump($client);
+                    $readUser = new User();
+                    $readUser->setEmail($email);
+                    $readUserModel = new UserModel();
+                    $user = $readUserModel->readByEmail($readUser);
+                    // var_dump($user);
                     // die;
 
                     // VERIFICATION DE L'EXISTENCE DE L'EMAIL CLIENT ET DU MDP
-                    if ($client && (password_verify($mdp, $client->mdp))) {
+                    if ($user && (password_verify($mdp, $user->mdp))) {
 
                         // CREATION D'UNE NOUVELLE SESSION
                         session_regenerate_id();
 
                         // DEFINITION DE LA SESSION CLIENT
                         $_SESSION["user"] = [
-                            "id_client" => $client->id_client,
-                            "prenom" => $client->prenom,
-                            "nom" => $client->nom,
-                            "email" => $client->email,
-                            "adresse" => $client->adresse,
-                            "cp" => $client->cp,
-                            "ville" => $client->ville
+                            "id_user" => $user->id_user,
+                            "firstname" => $user->firstname,
+                            "lastname" => $user->lastname,
+                            "email" => $user->email,
+                            "adresse" => $user->adresse,
+                            "cp" => $user->cp,
+                            "ville" => $user->ville
                         ];
 
                         // DEFINITION DES COOKIES CLIENT
@@ -114,23 +114,23 @@ class ClientController extends Controller
                     } else {
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Client", "formLogin", "error_login");
+                        $this->myHeader("User", "formLogin", "error_login");
                     }
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("Client", "formLogin", "error_input");
+                    $this->myHeader("User", "formLogin", "error_input");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("Client", "formLogin", "error_token");
+                $this->myHeader("User", "formLogin", "error_token");
             }
         }
     }
 
     // ---------------------------
-    // METHODE POUR SE DECONNECTER
+    //  SE DECONNECTER
     // ---------------------------
     public function logout()
     {
@@ -148,7 +148,7 @@ class ClientController extends Controller
     }
 
     // -------------------------------------------------------
-    // METHODE POUR AFFICHER UN FORMULAIRE DE REINISIALISATION
+    //  AFFICHER UN FORMULAIRE DE REINISIALISATION
     // -------------------------------------------------------
     public function formForgetMdp()
     {
@@ -156,11 +156,11 @@ class ClientController extends Controller
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("client/formForgetMdp");
+        $this->render("user/formForgetMdp");
     }
     /*
     // ------------------------------------
-    // METHODE POUR REINITIALISATION UN MDP
+    //  REINITIALISATION UN MDP
     // ------------------------------------
     public function forgetMdp()
     {
@@ -178,27 +178,27 @@ class ClientController extends Controller
                 if ($_POST["email"] ?? null) {
 
                     // LECTURE DE L'CLIENT
-                    $majClient = new Client();
-                    $majClient->setEmail($_POST["email"]);
-                    $majClientModel = new ClientModel();
-                    $client = $majClientModel->readByEmail($majClient);
+                    $majUser = new User();
+                    $majUser->setEmail($_POST["email"]);
+                    $majUserModel = new UserModel();
+                    $user = $majUserModel->readByEmail($majUser);
 
-                    if ($client) {
+                    if ($user) {
 
                         // GENERATION D'UN TOKEN ET D'UNE DATE D'EXPIRATION
                         $token = bin2hex(random_bytes(32)); // 64 caractères
                         $date = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
                         // MISE A JOUR DE L'CLIENT AVEC LE TOKEN ET LA DATE D'EXPIRATION
-                        $majClient->setToken($token);
-                        $majClient->setToken_expiration($date);
-                        $success1 = $majClientModel->updateToken($majClient);
+                        $majUser->setToken($token);
+                        $majUser->setToken_expiration($date);
+                        $success1 = $majUserModel->updateToken($majUser);
 
                         // ENVOI D'UN MAIL DE REINITIALISATION
                         $majMdpMail = new Mail();
-                        $majMdpMail->setPrenom($client->prenom);
-                        $majMdpMail->setNom($client->nom);
-                        $majMdpMail->setEmail($client->email);
+                        $majMdpMail->setFirstname($user->firstname);
+                        $majMdpMail->setLastname($user->lastname);
+                        $majMdpMail->setEmail($user->email);
                         $majMdpMail->setToken($token);
                         $majMdpMailModel = new MailModel();
                         $success2 = $majMdpMailModel->mdpForget($majMdpMail);
@@ -207,27 +207,27 @@ class ClientController extends Controller
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                         $success1 && $success2
                             ? $this->myHeader("Home", "home", "success_email")
-                            : $this->myHeader("Client", "formForgetMdp", "error_email");
+                            : $this->myHeader("User", "formForgetMdp", "error_email");
                     } else {
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Client", "formCreate", "error_noEmail");
+                        $this->myHeader("User", "formCreate", "error_noEmail");
                     }
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("Client", "formForgetMdp", "error_inputEmail");
+                    $this->myHeader("User", "formForgetMdp", "error_inputEmail");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("Client", "formForgetMdp", "error_token");
+                $this->myHeader("User", "formForgetMdp", "error_token");
             }
         }
     }
 
     // -------------------------------------------------------
-    // METHODE POUR AFFICHER UN FORMULAIRE DE REINITIALISATION
+    //  AFFICHER UN FORMULAIRE DE REINITIALISATION
     // -------------------------------------------------------
     public function formUpdateMdp()
     {
@@ -238,21 +238,21 @@ class ClientController extends Controller
             $this->generateToken();
 
             // LECTURE DE L'CLIENT AVEC LE TOKEN
-            $readClient = new Client();
-            $readClient->setToken($_GET["token"]);
-            $readClientModel = new ClientModel();
-            $client = $readClientModel->readByToken($readClient);
-            if ($client && ($_GET["token"] === $client->token)) {
+            $readUser = new User();
+            $readUser->setToken($_GET["token"]);
+            $readUserModel = new UserModel();
+            $user = $readUserModel->readByToken($readUser);
+            if ($user && ($_GET["token"] === $user->token)) {
 
                 // VERIFICATION DE LA DATE D'EXPIRATION
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE OU LE RECHARGEMENT
-                strtotime($client->token_expire) > time()
-                    ? $this->render("client/formUpdateMdp")
-                    : $this->myHeader("Client", "formForgetMdp", "error_expire");
+                strtotime($user->token_expire) > time()
+                    ? $this->render("user/formUpdateMdp")
+                    : $this->myHeader("User", "formForgetMdp", "error_expire");
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("Client", "formForgetMdp", "error_link");
+                $this->myHeader("User", "formForgetMdp", "error_link");
             }
         } else {
 
@@ -262,7 +262,7 @@ class ClientController extends Controller
     }
 
     // ----------------------------
-    // METHODE POUR MODIFIER LE MDP
+    //  MODIFIER LE MDP
     // ----------------------------
     public function updateMdp()
     {
@@ -282,38 +282,38 @@ class ClientController extends Controller
                 if ($token && $mdp) {
 
                     // LECTURE DE L'CLIENT AVEC LE TOKEN
-                    $majClient = new Client();
-                    $majClient->setToken($token);
-                    $majClientModel = new ClientModel();
-                    $client = $majClientModel->readByToken($majClient);
+                    $majUser = new User();
+                    $majUser->setToken($token);
+                    $majUserModel = new UserModel();
+                    $user = $majUserModel->readByToken($majUser);
 
                     // MISE A JOUR DU MDP
-                    $majClient->setEmail($client->email);
-                    $majClient->setMdp($mdp);
-                    $majClient->setToken(null); // Réinitialisation du token
-                    $majClient->setToken_expire(null); // Réinitialisation de la date d'expiration
-                    $success = $majClientModel->updateMdp($majClient);
+                    $majUser->setEmail($user->email);
+                    $majUser->setMdp($mdp);
+                    $majUser->setToken(null); // Réinitialisation du token
+                    $majUser->setToken_expire(null); // Réinitialisation de la date d'expiration
+                    $success = $majUserModel->updateMdp($majUser);
 
                     // VERIFICATION DE L'ACCUSE DE TRAITEMENT
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                     $success
-                        ? $this->myHeader("Client", "formLogin", "success_updateMdp")
-                        : $this->myHeader("Client", "formUpdateMdp", "error_request");
+                        ? $this->myHeader("User", "formLogin", "success_updateMdp")
+                        : $this->myHeader("User", "formUpdateMdp", "error_request");
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("Client", "formUpdateMdp", "error_input");
+                    $this->myHeader("User", "formUpdateMdp", "error_input");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("Client", "formUpdateMdp", "error_token");
+                $this->myHeader("User", "formUpdateMdp", "error_token");
             }
         }
     }
 */
     // -----------------------------------------------
-    // METHODE POUR AFFICHER UN FORMULAIRE DE CREATION
+    //  AFFICHER UN FORMULAIRE DE CREATION
     // -----------------------------------------------
     public function formCreate()
     {
@@ -321,11 +321,11 @@ class ClientController extends Controller
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("client/formCreate");
+        $this->render("user/formCreate");
     }
 
     // ----------------------------
-    // METHODE POUR CREER UN CLIENT
+    //  CREER UN CLIENT
     // ----------------------------
     public function create()
     {
@@ -340,64 +340,64 @@ class ClientController extends Controller
                 unset($_SESSION["token"]);
 
                 // VERIFICATION DES CHAMPS
-                $prenom = $_POST["prenom"] ?? null;
-                $nom = $_POST["nom"] ?? null;
+                $firstname = $_POST["firstname"] ?? null;
+                $lastname = $_POST["lastname"] ?? null;
                 $email = $_POST["email"] ?? null;
                 $mdp = $_POST["password"] ?? null;
                 $adresse = $_POST["adresse"] ?? null;
                 $cp = $_POST["cp"] ?? null;
                 $ville = $_POST["ville"] ?? null;
 
-                if ($prenom && $nom && $email && $mdp && $adresse && $cp && $ville) {
+                if ($firstname && $lastname && $email && $mdp && $adresse && $cp && $ville) {
 
                     // CREATION D'UN CLIENT
-                    $addClient = new Client();
-                    $addClient->setPrenom($prenom);
-                    $addClient->setNom($nom);
-                    $addClient->setEmail($email);
-                    $addClient->setMdp($mdp);
-                    $addClient->setAdresse($adresse);
-                    $addClient->setCp($cp);
-                    $addClient->setVille($ville);
-                    $addClientModel = new ClientModel();
-                    $success = $addClientModel->create($addClient);
+                    $addUser = new User();
+                    $addUser->setFirstname($firstname);
+                    $addUser->setLastname($lastname);
+                    $addUser->setEmail($email);
+                    $addUser->setMdp($mdp);
+                    $addUser->setAdresse($adresse);
+                    $addUser->setCp($cp);
+                    $addUser->setVille($ville);
+                    $addUserModel = new UserModel();
+                    $success = $addUserModel->create($addUser);
 
                     if ($success === true) { // VERIFICATION DE L'ACCUSE DE TRAITEMENT
 
                         // REDIRECTION VERS LA PAGE LOGIN
-                        $this->myHeader("Client", "formLogin", "success_createUserByUser");
+                        $this->myHeader("User", "formLogin", "success_createUserByUser");
                     } elseif ($success === "emailExistant") { // VERIFICATION DE L'EXISTENCE DE L'EMAIL
 
                         // EMAIL DEJA EXISTANT DANS LA BDD : RENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Client", "formLogin", "error_userFound");
+                        $this->myHeader("User", "formLogin", "error_userFound");
                     } else {
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Client", "formCreate", "error_request");
+                        $this->myHeader("User", "formCreate", "error_request");
                     }
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("Client", "formCreate", "error_input");
+                    $this->myHeader("User", "formCreate", "error_input");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("Client", "formCreate", "error_token");
+                $this->myHeader("User", "formCreate", "error_token");
             }
         }
     }
 
     // --------------------------------
-    //  METHODE POUR AFFICHER LE PANIER
+    //   AFFICHER LE PANIER
     // --------------------------------
     public function displayCart()
     {
-        $this->render('client/panier');
+        $this->render('user/panier');
     }
 
     // -----------------------------------------
-    // METHODE POUR AJOUTER UN PRODUIT AU PANIER
+    //  AJOUTER UN PRODUIT AU PANIER
     // -----------------------------------------
     public function addToCart()
     {
@@ -414,11 +414,11 @@ class ClientController extends Controller
             $panier[] = $produit; // Même effet que : array_push($panier, $produit)
             $_SESSION['panier'] = $panier; // mise à jour de la session panier
         }
-        header('Location: index.php?controller=Client&action=displayCart');
+        header('Location: index.php?controller=User&action=displayCart');
     }
 
     // -------------------------------------------------------------
-    // METHODE POUR MODIFIER LA QUANTITE D'UN PRODUIT DANS LE PANIER
+    //  MODIFIER LA QUANTITE D'UN PRODUIT DANS LE PANIER
     // -------------------------------------------------------------
     public function setQuantity()
     {
@@ -432,21 +432,21 @@ class ClientController extends Controller
             'prix' => $prix * $quantite
         ];
 
-        header('Location: index.php?controller=Client&action=displayCart');
+        header('Location: index.php?controller=User&action=displayCart');
     }
 
     // ----------------------------
-    // METHODE POUR VIDER LE PANIER
+    //  VIDER LE PANIER
     // ----------------------------
     public function clearCart()
     {
         unset($_SESSION['panier']);
         unset($_SESSION['montant_commande']);
-        header('Location: index.php?controller=Client&action=displayCart');
+        header('Location: index.php?controller=User&action=displayCart');
     }
 
     // ----------------------------
-    // METHODE POUR RETIRER UN ARTICLE DU PANIER
+    //  RETIRER UN ARTICLE DU PANIER
     // ----------------------------
     public function removeFromCart()
     {
@@ -456,11 +456,11 @@ class ClientController extends Controller
         array_splice($panier, $produit, 1);
         $_SESSION['panier'] = $panier; // mise à jour de la session panier
 
-        header('Location: index.php?controller=Client&action=displayCart');
+        header('Location: index.php?controller=User&action=displayCart');
     }
 
     // ---------------------------------
-    // METHODE POUR VALIDER LA COMMANDE
+    //  VALIDER LA COMMANDE
     // ---------------------------------
     public function validateOrder()
     {
@@ -475,9 +475,9 @@ class ClientController extends Controller
             $num_commande = (new DateTime())->getTimestamp();
             $date_commande = (new DateTime())->format('Y-m-d');
             $data = [
-                'id_client' => $_SESSION['user']['id_client'],
-                'prenom' => $_SESSION['user']['prenom'],
-                'nom' => $_SESSION['user']['nom'],
+                'id_user' => $_SESSION['user']['id_user'],
+                'firstname' => $_SESSION['user']['firstname'],
+                'lastname' => $_SESSION['user']['lastname'],
                 'num_commande' => $num_commande,
                 'date_commande' => $date_commande,
                 'email' => $_SESSION['user']['email'],
@@ -516,10 +516,10 @@ class ClientController extends Controller
                 throw new Exception("Error sending command data to the API. Error code=" . $http_response_code);
             } else {
 
-                // Succès de la requête HTTP : Envoi du mail de confirmation au client
+                // Succès de la requête HTTP : Envoi du mail de confirmation au user
                 $mail = new Mail();
-                $mail->setPrenom($_SESSION['user']['prenom']);
-                $mail->setNom($_SESSION['user']['nom']);
+                $mail->setFirstname($_SESSION['user']['firstname']);
+                $mail->setLastname($_SESSION['user']['lastname']);
                 $mail->setEmail($_SESSION['user']['email']);
                 $mail->setNum_commande($num_commande);
                 $mail->setDate_commande($date_commande);
@@ -546,42 +546,42 @@ class ClientController extends Controller
     /*
 
     // --------------------------------------------------
-    // METHODE POUR AFFICHER UN FORMULAIRE DE MISE A JOUR
+    //  AFFICHER UN FORMULAIRE DE MISE A JOUR
     // --------------------------------------------------
     public function formUpdate()
     {
         // VERIFICATION DES DROITS D'ACCES
-        if (isset($_SESSION["user"]["id_client"])) {
+        if (isset($_SESSION["user"]["id_user"])) {
 
             // VERIFICATION DU GET
-            if ($_GET["id_client"] ?? null) {
+            if ($_GET["id_user"] ?? null) {
 
                 // CREATION D'UN TOKEN CSRF
                 $this->generateToken();
 
                 // LECTURE DE L'CLIENT
-                $readClient = new Client();
-                $readClient->setId_client($_GET["id_client"]);
-                $readClientModel = new ClientModel();
-                $client = $readClientModel->readById($readClient);
+                $readUser = new User();
+                $readUser->setId_user($_GET["id_user"]);
+                $readUserModel = new UserModel();
+                $user = $readUserModel->readById($readUser);
 
                 // VERIFICATION DE L'EXISTENCE DE L'CLIENT
-                if ($client) {
+                if ($user) {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-                    $this->render("client/formUpdate", ["client" => $client]);
+                    $this->render("user/formUpdate", ["user" => $user]);
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                     $_SESSION["user"]["statut"] === "admin"
-                        ? $this->myHeader("Client", "listAdmin", "error_request")
+                        ? $this->myHeader("User", "listAdmin", "error_request")
                         : $this->myHeader("Home", "home", "error_request");
                 }
             } else {
 
                 // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                 $_SESSION["user"]["statut"] === "admin"
-                    ? $this->myHeader("Client", "listAdmin", "error_id")
+                    ? $this->myHeader("User", "listAdmin", "error_id")
                     : $this->myHeader("Home", "home", "error_id");
             }
         } else {
@@ -592,12 +592,12 @@ class ClientController extends Controller
     }
 
     // -------------------------------
-    // METHODE POUR MODIFIER UN CLIENT
+    //  MODIFIER UN CLIENT
     // -------------------------------
     public function update()
     {
         // VERIFICATION DES DROITS D'ACCES
-        if (isset($_SESSION["user"]["id_client"])) {
+        if (isset($_SESSION["user"]["id_user"])) {
 
             // VERIFICATION DE LA METHODE POST
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -610,44 +610,44 @@ class ClientController extends Controller
                     unset($_SESSION["token"]);
 
                     // VERIFICATION DES CHAMPS
-                    $id_client = $_POST["id_client"] ?? null;
-                    $prenom = $_POST["prenom"] ?? null;
-                    $nom = $_POST["nom"] ?? null;
+                    $id_user = $_POST["id_user"] ?? null;
+                    $firstname = $_POST["firstname"] ?? null;
+                    $lastname = $_POST["lastname"] ?? null;
                     $email = $_POST["email"] ?? null;
                     $mdp = $_POST["mdp"] ?? ""; // Le mot de passe peut être nul.
                     $statut = $_POST["statut"] ?? "user"; // Statut user minimum
-                    if ($id_client && $prenom && $nom && $email) {
+                    if ($id_user && $firstname && $lastname && $email) {
 
                         // MISE A JOUR DE L'CLIENT
-                        $majClient = new Client();
-                        $majClient->setId_client($id_client);
-                        $majClient->setPrenom($prenom);
-                        $majClient->setNom($nom);
-                        $majClient->setEmail($email);
-                        $majClient->setMdp($mdp);
-                        $majClient->setStatut($statut);
+                        $majUser = new User();
+                        $majUser->setId_user($id_user);
+                        $majUser->setFirstname($firstname);
+                        $majUser->setLastname($lastname);
+                        $majUser->setEmail($email);
+                        $majUser->setMdp($mdp);
+                        $majUser->setStatut($statut);
 
-                        $majClientModel = new ClientModel();
-                        $success = $majClientModel->update($majClient);
+                        $majUserModel = new UserModel();
+                        $success = $majUserModel->update($majUser);
 
                         // VERIFICATION DE L'ACCUSE DE TRAITEMENT
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                         if ($success) {
                             $_SESSION["user"]["statut"] === "admin"
-                                ? $this->myHeader("Client", "listAdmin", "success_updateUserByAdmin")
+                                ? $this->myHeader("User", "listAdmin", "success_updateUserByAdmin")
                                 : $this->myHeader("Home", "home", "success_userUpdateUserByUser");
                         } else {
-                            $this->myHeader("Client", "formUpdate", "error_request", ["id_client" => $id_client]);
+                            $this->myHeader("User", "formUpdate", "error_request", ["id_user" => $id_user]);
                         }
                     } else {
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Client", "formUpdate", "error_input", ["id_client" => $id_client]);
+                        $this->myHeader("User", "formUpdate", "error_input", ["id_user" => $id_user]);
                     }
                 } else {
 
                     // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("Client", "formUpdate", "error_token");
+                    $this->myHeader("User", "formUpdate", "error_token");
                 }
             }
         } else {

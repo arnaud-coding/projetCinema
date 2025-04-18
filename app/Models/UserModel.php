@@ -16,7 +16,7 @@ use App\Core\DbConnect;
 class UserModel extends DbConnect
 {
     // -------------------------
-    // METHODE POUR LIRE UN USER
+    //  LIRE UN USER
     // -------------------------
     public function readByID(User $user)
     {
@@ -39,7 +39,7 @@ class UserModel extends DbConnect
     }
 
     // --------------------------------
-    // METHODE POUR LIRE UN UTILISATEUR
+    //  LIRE UN UTILISATEUR
     // --------------------------------
     public function readByEmail(User $user)
     {
@@ -62,7 +62,7 @@ class UserModel extends DbConnect
     }
 
     // ---------------------------------
-    // METHODE POUR LIRE UN UTILISATTEUR
+    //  LIRE UN UTILISATTEUR
     // ---------------------------------
     public function readByToken(User $user)
     {
@@ -85,7 +85,7 @@ class UserModel extends DbConnect
     }
 
     // ----------------------------------
-    // METHODE POUR LIRE LES UTILISATEURS
+    //  LIRE LES UTILISATEURS
     // ----------------------------------
     public function readAll()
     {
@@ -107,7 +107,7 @@ class UserModel extends DbConnect
     }
 
     // ---------------------------------
-    // METHODE POUR CREER UN UTILISATEUR
+    //  CREER UN UTILISATEUR
     // ---------------------------------
     public function create(User $user)
     {
@@ -130,15 +130,15 @@ class UserModel extends DbConnect
         }
     }
     // ------------------------------------
-    // METHODE POUR MODIFIER UN UTILISATEUR
+    //  MODIFIER UN UTILISATEUR
     // ------------------------------------
     public function update(User $majUtilisateur)
     {
         try {
             // CONSTRUCTION DE LA REQUETE EN FONCTION DU PASSWORD
             $sql = "UPDATE com_utilisateur SET
-                prenom = :prenom,
-                nom = :nom,
+                firstname = :firstname,
+                lastname = :lastname,
                 email = :email,
                 statut = :statut";
 
@@ -151,8 +151,8 @@ class UserModel extends DbConnect
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare($sql);
             $this->request->bindValue(":id_utilisateur", $majUtilisateur->getId_utilisateur(), PDO::PARAM_INT);
-            $this->request->bindValue(":prenom", $majUtilisateur->getPrenom(), PDO::PARAM_STR);
-            $this->request->bindValue(":nom", $majUtilisateur->getNom(), PDO::PARAM_STR);
+            $this->request->bindValue(":firstname", $majUtilisateur->getFirstname(), PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $majUtilisateur->getLastname(), PDO::PARAM_STR);
             $this->request->bindValue(":email", $majUtilisateur->getEmail(), PDO::PARAM_STR);
             $this->request->bindValue(":statut", $majUtilisateur->getStatut(), PDO::PARAM_STR);
 
@@ -176,7 +176,7 @@ class UserModel extends DbConnect
     }
 
     // ----------------------------
-    // METHODE POUR MODIFIER UN MDP
+    //  MODIFIER UN MDP
     // ----------------------------
     public function updateToken(User $majUser)
     {
@@ -200,7 +200,7 @@ class UserModel extends DbConnect
     }
 
     // ----------------------------
-    // METHODE POUR MODIFIER UN MDP
+    //  MODIFIER UN MDP
     // ----------------------------
     public function updatePassword(User $majUser)
     {

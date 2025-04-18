@@ -69,7 +69,7 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
         ?>
             <!-- AVIS -->
             <div class="card bg-light m-3 p-3">
-                <p class="card-text"><i><strong><?php echo $value->prenom ?></strong></i>, le <?php echo $date ?></p>
+                <p class="card-text"><i><strong><?php echo $value->firstname ?></strong></i>, le <?php echo $date ?></p>
                 <p class="card-text"><?php echo $value->commentaire ?></p>
                 <div class="card-text">
                     <?php for ($i = 1; $i <= 5; $i++) { ?>

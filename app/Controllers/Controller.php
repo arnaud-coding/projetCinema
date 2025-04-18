@@ -13,7 +13,7 @@ use App\Models\MessageModel;
 abstract class Controller
 {
     // -----------------------------------
-    // METHODE POUR LE RENDU VERS LES VUES
+    //  LE RENDU VERS LES VUES
     // -----------------------------------
     public function render($view, $data = [])
     {
@@ -27,7 +27,7 @@ abstract class Controller
 
 
     // ----------------------------------
-    // METHODE POUR GENERER UN TOKEN CSRF
+    //  GENERER UN TOKEN CSRF
     // ----------------------------------
     public function generateToken()
     {

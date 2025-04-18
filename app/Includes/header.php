@@ -56,11 +56,12 @@
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR ET BOUTON PANIER-->
                 <?php if (!isset($_SESSION["user"]["id_client"])) : ?>
-                    <a class="btn btn-dark text-white px-4 py-2" href="index.php?controller=Client&action=formLogin">Se connecter</a>
+                    <a class="btn btn-dark text-white px-4 py-2" href="index.php?controller=User&action=formSignup">S'inscrire</a>
+                    <a class="btn btn-dark text-white px-4 py-2" href="index.php?controller=User&action=formLogin">Se connecter</a>
                 <?php else : ?>
                     <div class="dropdown">
                         <button id="dropdownMenuButton" class="btn btn-dark text-white dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php echo htmlspecialchars($_SESSION["user"]["prenom"], ENT_QUOTES, "UTF-8"); ?>
+                            <?php echo htmlspecialchars($_SESSION["user"]["firstname"], ENT_QUOTES, "UTF-8"); ?>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item text-dark" href="index.php?controller=Client&action=formUpdate&id_client=<?php echo htmlspecialchars($_SESSION["user"]["id_client"], ENT_QUOTES, "UTF-8"); ?>">Mon profil</a></li>

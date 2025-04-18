@@ -19,7 +19,7 @@ require "PHPMailer/src/PHPMailer.php";
 class MailModel
 {
     // -------------------------------------------------
-    // METHODE POUR ENVOYER UN MAIL DE REINITIAILISATION
+    //  ENVOYER UN MAIL DE REINITIAILISATION
     // -------------------------------------------------
     public function mdpForget(Mail $majMdpMail)
     {
@@ -44,7 +44,7 @@ class MailModel
             $mail->AddEmbeddedImage("../public/images/mail/font.jpg", "font");
 
             // CORPS DU MAIL
-            $prenomNom = $majMdpMail->getPrenom() . " " . $majMdpMail->getNom();
+            $prenomNom = $majMdpMail->getFirstname() . " " . $majMdpMail->getLastname();
             $token = $majMdpMail->getToken();
             ob_start();
             include "../views/email/mailNewMDP.php";
@@ -62,7 +62,7 @@ class MailModel
     }
 
     // ------------------------------------------------------------------------------------------
-    // METHODE POUR ENVOYER UN MAIL DE CONFIRMATION AU CLIENT LORSQU'IL CLIENT PASSE UNE COMMANDE
+    //  ENVOYER UN MAIL DE CONFIRMATION AU CLIENT LORSQU'IL CLIENT PASSE UNE COMMANDE
     // ------------------------------------------------------------------------------------------
     public function validatedOrder(Mail $validatedOrderMail)
     {
@@ -78,7 +78,7 @@ class MailModel
             // $mail->isSMTP(); // Utilisation du serveur SMTP
             // $mail->Host = "sandbox.smtp.mailtrap.io"; // Hôte SMTP de MailTrap
             // $mail->SMTPAuth = true; // Activation de l'authentification SMTP
-            // $mail->Username = "93c4b5511a4b39"; // Votre nom d'utilisateur MailTrap
+            // $mail->Username = "93c4b5511a4b39"; // Votre lastname d'utilisateur MailTrap
             // $mail->Password = "9085b8386fbeca"; // Votre mot de passe MailTrap
             // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurisation via STARTTLS
             // $mail->Port = 2525; // Port SMTP (vous pouvez utiliser 25, 465, 587 ou 2525)
@@ -97,7 +97,7 @@ class MailModel
             $mail->AddEmbeddedImage("../public/images/mail/font.jpg", "font");
 
             // CORPS DU MAIL
-            $prenomNom = $validatedOrderMail->getPrenom() . " " . $validatedOrderMail->getNom();
+            $prenomNom = $validatedOrderMail->getFirstname() . " " . $validatedOrderMail->getLastname();
             $num_commande = $validatedOrderMail->getNum_commande();
             $date_commande = $validatedOrderMail->getDate_commande();
             $montant_commande = $validatedOrderMail->getMontant_commande();
