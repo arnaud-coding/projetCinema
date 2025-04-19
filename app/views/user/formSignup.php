@@ -14,28 +14,16 @@
 </div>
 
 <!-- MESSAGE D'ERREUR -->
-<?php
-$message = isset($_GET['message']) ? $_GET['message'] : '';
-$success = isset($_GET['success']) ? $_GET['success'] : null;
-// Afficher uniquement quand success est passé (true or false)
-if ($success !== null) {
-    if ($success === '1') {
-?>
-        <p class="text-center text-success"><?php echo $message ?></p>
-    <?php
-    } else {
-    ?>
-        <p class="text-center text-danger"><?php echo $message ?></p>
-<?php
-    }
-}
-?>
+<p id="message-failure" class="text-center text-danger"></p>
+<!-- MESSAGE DE SUCCES -->
+<p id="message-success" class="text-center text-success"></p>
+
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="card w-50 mx-auto my-3">
     <div class="card-body">
-        <form method="post" action="index.php?controller=User&action=create" novalidate>
+        <form id="formSignup" method="post" action="index.php?controller=User&action=create" novalidate>
 
             <!-- TOKEN CSRF -->
             <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">

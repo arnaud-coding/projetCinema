@@ -20,9 +20,18 @@
     </div>
 </footer>
 
-<!-- SCRIPTS -->
+<!-- SCRIPTS DE LA PAGE -->
+<?php
+if (isset($scripts)) {
+    foreach ($scripts as $script) {
+?>
+        <script <?php echo $script; ?>></script>
+<?php
+    };
+} ?>
+
+<!-- SCRIPTS GLOBAUX -->
 <script src="../public/js/main.js"></script>
-<script src="../public/js/avis.js"></script>
 </body>
 
 </html>

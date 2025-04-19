@@ -321,9 +321,30 @@ class UserController extends Controller
         $this->generateToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("user/formSignup");
+        $data = [
+            "scripts" => [
+
+                "type='module' src='../public/js/formSignup.js'"
+            ]
+        ];
+        $this->render("user/formSignup", $data);
     }
 
+    public function test()
+    {
+        // $message = "test";
+        // header("Location: index.php?controller=User&action=formSignup&success=" . true . "&message=" . urlencode($message));
+        http_response_code(201);
+        // $message =  "Inscription réussie, connectez vous...";
+        // echo json_encode([
+        //     "redirect" => "index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message)
+        // ]);
+
+        echo json_encode([
+            "message" => "form_success",
+            "success" => true
+        ]);
+    }
     // ----------------------------
     //  CREER UN CLIENT
     // ----------------------------
@@ -372,7 +393,7 @@ class UserController extends Controller
                         header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                     }
                 } else {
-                    $message = "Tous les champs du formulaire doivent être remplis";
+                    $message = "Tous les champs du formulaire doivent être remplis.";
                     header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                 }
             } else {
