@@ -1,108 +1,161 @@
-// -----------------------------------------
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+const lengthRegex = /^.{8,}$/;
+const minRegex = /(?=.*[a-z])/;
+const majRegex = /(?=.*[A-Z])/;
+const numberRegex = /(?=.*\d)/;
+const specialCharRegex = /(?=.*[\W_])/;
+
+const pswStrength = document.querySelector("#psw-strength");
+const inputPassword = document.querySelector('#password');
+const bsProgressBar = document.querySelector('.progress-bar');
+
+const xmarkLength = document.querySelector('#xmarkLength');
+const checkLength = document.querySelector('#checkLength');
+const xmarkMaj = document.querySelector('#xmarkMaj');
+const checkMaj = document.querySelector('#checkMaj');
+const xmarkMin = document.querySelector('#xmarkMin');
+const checkMin = document.querySelector('#checkMin');
+const xmarkNumber = document.querySelector('#xmarkNumber');
+const checkNumber = document.querySelector('#checkNumber');
+const xmarkSpecialChar = document.querySelector('#xmarkSpecialChar');
+const checkSpecialChar = document.querySelector('#checkSpecialChar');
+
+const email = document.querySelector('#email');
+const emailError = document.querySelector('#emailError');
+const pseudo = document.querySelector('#pseudo');
+const pseudoError = document.querySelector('#pseudoError');
+
+// Ajout du gestionnaire d'évènement pour l'input
+inputPassword.addEventListener("input", (event) => {
+    const password = event.target.value;
+    validateAll(password);
+});
+
+// Masquer icone de validation
+const checkIcons = document.querySelectorAll('.fa-check');
+checkIcons.forEach(checkIcon => {
+    checkIcon.hidden = true;
+});
+
+// ------------------------
 // validation du formulaire
-// -----------------------------------------
-document.getElementById('formSignup').addEventListener('submit', function (e) {
+// ------------------------
+document.querySelector('#formSignup').addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
-    /*
 
-    // Validation du titre de la creation
-    const title = document.querySelector('#title');
-    const titleError = document.getElementById('titleError');
-    if (title.value.length < 5) {
-        titleError.textContent = "Le titre de la création doit contenir au moins 5 caractères";
-        titleError.style.display = "block";
+    // Validation email
+    if (emailRegex.test(email.value) === false) {
+        emailError.textContent = "L'adresse mail n'est pas valide.";
+        emailError.hidden = false;
         isValid = false;
     } else {
-        titleError.style.display = "none";
+        emailError.hidden = true;
     }
-
-    // Validation de la description de la creation
-    const description = document.querySelector('#description');
-    const descriptionError = document.getElementById('descriptionError');
-    if (description.value.length < 8) {
-        descriptionError.textContent = "La description de la création doit contenir au moins 8 caractères";
-        descriptionError.style.display = "block";
+    // Validation de la longueur du pseudo
+    if (pseudo.value.length <= 3) {
+        pseudoError.textContent = "Le pseudo doit contenir au moins 3 caractères";
+        pseudoError.hidden = false;
         isValid = false;
     } else {
-        descriptionError.style.display = "none";
+        pseudoError.hidden = true;
     }
 
-    // Validation de la date de création de la creation
-    const created_at = document.querySelector('#created_at');
-    const created_atError = document.getElementById('created_atError');
-    if (created_at.value === '') {
-        created_atError.textContent = "Veuillez renseigner une date de création";
-        created_atError.style.display = "block";
+    // Validation password
+    if (!validateAll(inputPassword.value)) {
         isValid = false;
-    } else {
-        created_atError.style.display = "none";
     }
-
-    // Validation de l'image de la creation
-    const picture = document.querySelector('#picture');
-    const pictureError = document.getElementById('pictureError');
-    if (picture.value === '') {
-        pictureError.textContent = "Veuillez uploader un fichier";
-        pictureError.style.display = "block";
-        isValid = false;
-    } else {
-        pictureError.style.display = "none";
-    }
-
-    // Validation de la catégorie de la creation
-    const categorie = document.querySelector('#categorie');
-    const categorieError = document.getElementById('categorieError');
-    if (categorie.value === '') {
-        categorieError.textContent = "Veuillez sélectionner une catégorie";
-        categorieError.style.display = "block";
-        isValid = false;
-    } else {
-        categorieError.style.display = "none";
-    }
-
-    // test de validation de la globalité du formulaire
-    const formSuccess = document.querySelector('#formSuccess');
-    const formFailure = document.querySelector('#formFailure');
-*/
 
     // ------------ Formulaire validé : soumission du formulaire
     if (isValid) {
         // AJAX
-        document.querySelector('#formSignup').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const msgFailure = document.querySelector("#message-failure");
-            const msgSuccess = document.querySelector("#message-success");
-            msgFailure.innerHTML = "";
-            msgSuccess.innerHTML = "";
+        const formData = new FormData(this);
+        const msgFailure = document.querySelector("#message-failure");
+        const msgSuccess = document.querySelector("#message-success");
+        msgFailure.innerHTML = "";
+        msgSuccess.innerHTML = "";
 
-            fetch("index.php?controller=User&action=create", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.redirect) {
-                        // redirection demandée par la réponse du controlleur
-                        window.location.href = data.redirect;
+        fetch("index.php?controller=User&action=create", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.redirect) {
+                    // redirection demandée par la réponse du controlleur
+                    window.location.href = data.redirect;
+                } else {
+                    // navigation non demandée : afficher message reçu
+                    if (data.success === true) {
+                        this.reset();
+                        // afficher message de succès
+                        msgSuccess.textContent = data.message;
                     } else {
-                        // navigation non demandée : afficher message reçu
-                        if (data.success === true) {
-                            this.reset();
-                            // afficher message de succès
-                            msgSuccess.textContent = data.message;
-                        } else {
-                            // afficher message d'erreur
-                            msgFailure.textContent = data.message;
-                        }
+                        // afficher message d'erreur
+                        msgFailure.textContent = data.message;
                     }
-                })
-                .catch(error => {
-                    console.error(error);
-                    msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
-                });
-        });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
+            });
+
     }
 })
+
+// --------------------------
+// validation du mot de passe
+// --------------------------
+function validateOne(regex, password, check, xmark) {
+
+    if (regex.exec(password)) {
+        check.hidden = false;
+        xmark.hidden = true;
+        return 1;
+    } else {
+        check.hidden = true;
+        xmark.hidden = false;
+        return 0;
+    }
+}
+
+function validateAll(password) {
+    pswStrength.hidden = false;
+    let res = false;
+    let checkCount = 0;
+
+    checkCount += validateOne(lengthRegex, password, checkLength, xmarkLength); // Validation de la longueur
+    checkCount += validateOne(majRegex, password, checkMaj, xmarkMaj); // Présence d'une majuscule
+    checkCount += validateOne(minRegex, password, checkMin, xmarkMin); // Présence d'une minuscule
+    checkCount += validateOne(numberRegex, password, checkNumber, xmarkNumber); // Présence d'une chiffre
+    checkCount += validateOne(specialCharRegex, password, checkSpecialChar, xmarkSpecialChar); // Présence d'un caractère spécial
+
+    const percent = `${checkCount * 20}%`;
+    bsProgressBar.style.width = percent;
+
+    bsProgressBar.classList.remove('bg-success', 'bg-warning', 'bg-danger');
+
+    switch (checkCount) {
+        case 0:
+        case 1:
+        case 2:
+            //red
+            bsProgressBar.classList.add('bg-danger');
+            break;
+
+        case 5:
+            // green
+            bsProgressBar.classList.add('bg-success');
+            res = true
+            break;
+
+        default:
+            // orange
+            bsProgressBar.classList.add('bg-warning');
+            break;
+    }
+    return res;
+};

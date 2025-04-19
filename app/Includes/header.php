@@ -6,18 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="img/png" href="img/logo.png">
     <title>MovieLovers</title>
-
-    <!-- CSS Bootstrap -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> -->
     <link rel="stylesheet" href="../public/icons/bootstrap-icons.min.css">
-
-    <!-- CSS perso -->
     <link rel="stylesheet" href="../public/css/style.css">
-
-    <!-- JS Bootstrap -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script> -->
+    <script src="https://kit.fontawesome.com/421fcfdcfb.js" crossorigin="anonymous" defer></script>
     <script src="../public/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
