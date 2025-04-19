@@ -123,12 +123,7 @@ class UserModel extends DbConnect
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
             return $this->request->execute();
         } catch (PDOException $e) {
-            $errCode = $e->errorInfo[1];
-            if ($errCode == 1062) {
-                return "not_unique";
-            } else {
-                return "unknown_error" . $errCode;
-            }
+            return $e->errorInfo[1];
         }
     }
     /*

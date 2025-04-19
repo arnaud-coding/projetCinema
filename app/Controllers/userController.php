@@ -330,26 +330,15 @@ class UserController extends Controller
         $this->render("user/formSignup", $data);
     }
 
-    public function test()
-    {
-        // $message = "test";
-        // header("Location: index.php?controller=User&action=formSignup&success=" . true . "&message=" . urlencode($message));
-        http_response_code(201);
-        // $message =  "Inscription réussie, connectez vous...";
-        // echo json_encode([
-        //     "redirect" => "index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message)
-        // ]);
-
-        echo json_encode([
-            "message" => "form_success",
-            "success" => true
-        ]);
-    }
     // ----------------------------
     //  CREER UN CLIENT
     // ----------------------------
     public function create()
     {
+        $redirect = null;
+        $message = "";
+        $success = false;
+
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -376,31 +365,36 @@ class UserController extends Controller
                     $user->setPassword($password);
                     $user->setType($type);
 
-
                     $userModel = new UserModel();
                     $success = $userModel->create($user);
 
                     if ($success === true) {
                         // SUCCES : REDIRECTION VERS LA PAGE LOGIN
                         $message = "Félicitations, vous êtes des notres ! Connectez vous maintenant...";
-                        header("Location: index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message));
+                        $redirect = "index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message);
                     } else {
-                        if ($success === "not_unique") {
+                        if ($success === 1062) {
                             $message = "Le pseudo ou l'adresse mail existe déja.";
                         } else {
                             $message = "Unexpected error occured. Please try later.";
                         }
-                        header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                     }
                 } else {
                     $message = "Tous les champs du formulaire doivent être remplis.";
-                    header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
                 }
             } else {
                 $message = "Token error.";
-                header("Location: index.php?controller=User&action=formSignup&success=" . false . "&message=" . urlencode($message));
             }
+        } else {
+            $message = "internal error.";
         }
+
+        // Sortie commune à tous les cas de figure
+        echo json_encode([
+            "redirect" => $redirect,
+            "message" => $message,
+            "success" => $success
+        ]);
     }
 
 

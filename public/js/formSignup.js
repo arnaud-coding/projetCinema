@@ -72,36 +72,36 @@ document.getElementById('formSignup').addEventListener('submit', function (e) {
         document.querySelector('#formSignup').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
-            fetch("index.php?controller=User&action=test", {
+            const msgFailure = document.querySelector("#message-failure");
+            const msgSuccess = document.querySelector("#message-success");
+            msgFailure.innerHTML = "";
+            msgSuccess.innerHTML = "";
+
+            fetch("index.php?controller=User&action=create", {
                 method: "POST",
                 body: formData
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     if (data.redirect) {
                         // redirection demandée par la réponse du controlleur
                         window.location.href = data.redirect;
                     } else {
                         // navigation non demandée : afficher message reçu
-                        if (data.success) {
+                        if (data.success === true) {
                             this.reset();
                             // afficher message de succès
-                            const message = document.querySelector("#message-success");
-                            message.innerHTML = "";
-                            message.textContent = data.message;
+                            msgSuccess.textContent = data.message;
                         } else {
                             // afficher message d'erreur
-                            const message = document.querySelector("#message-failure");
-                            message.innerHTML = "";
-                            message.textContent = data.message;
+                            msgFailure.textContent = data.message;
                         }
                     }
                 })
                 .catch(error => {
                     console.error(error);
-                    const message = document.querySelector("#message-failure");
-                    message.innerHTML = "";
-                    message.textContent = "Erreur lors de l'envoi du formulaire";
+                    msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
                 });
         });
     }
