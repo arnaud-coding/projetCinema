@@ -105,3 +105,45 @@ arrowScroll.addEventListener('click', () => {
         behavior: 'smooth' // Pour un défilement doux
     });
 });
+
+
+// ----------------------------
+// FORM VALIDATION (common part)
+// ----------------------------
+//! Les formulaires utilisant cette function doivent comporter les éléments msgFailure/success
+function validateForm(formData, isValid) {
+    if (isValid) {
+        const msgFailure = document.querySelector("#message-failure");
+        const msgSuccess = document.querySelector("#message-success");
+        msgFailure.innerHTML = "";
+        msgSuccess.innerHTML = "";
+
+        fetch("index.php?controller=User&action=create", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.redirect) {
+                    // redirection demandée par la réponse du controlleur
+                    window.location.href = data.redirect;
+                } else {
+                    // navigation non demandée : afficher message reçu
+                    if (data.success === true) {
+                        this.reset();
+                        // afficher message de succès
+                        msgSuccess.textContent = data.message;
+                    } else {
+                        // afficher message d'erreur
+                        msgFailure.textContent = data.message;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
+            });
+
+    }
+}

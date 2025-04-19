@@ -68,42 +68,7 @@ document.querySelector('#formSignup').addEventListener('submit', function (e) {
     }
 
     // ------------ Formulaire validé : soumission du formulaire
-    if (isValid) {
-        // AJAX
-        const formData = new FormData(this);
-        const msgFailure = document.querySelector("#message-failure");
-        const msgSuccess = document.querySelector("#message-success");
-        msgFailure.innerHTML = "";
-        msgSuccess.innerHTML = "";
-
-        fetch("index.php?controller=User&action=create", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (data.redirect) {
-                    // redirection demandée par la réponse du controlleur
-                    window.location.href = data.redirect;
-                } else {
-                    // navigation non demandée : afficher message reçu
-                    if (data.success === true) {
-                        this.reset();
-                        // afficher message de succès
-                        msgSuccess.textContent = data.message;
-                    } else {
-                        // afficher message d'erreur
-                        msgFailure.textContent = data.message;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
-            });
-
-    }
+    validateForm(new FormData(this), isValid);
 })
 
 // --------------------------

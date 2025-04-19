@@ -20,6 +20,9 @@
     </div>
 </footer>
 
+<!-- SCRIPTS GLOBAUX -->
+<script src="../public/js/main.js"></script>
+
 <!-- SCRIPTS DE LA PAGE -->
 <?php
 if (isset($scripts)) {
@@ -29,9 +32,6 @@ if (isset($scripts)) {
 <?php
     };
 } ?>
-
-<!-- SCRIPTS GLOBAUX -->
-<script src="../public/js/main.js"></script>
 </body>
 
 </html>
