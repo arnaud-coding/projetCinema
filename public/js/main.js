@@ -124,7 +124,6 @@ btnCookieRefuse.addEventListener("click", () => {
 // SELECTION DE LA FLECHE
 const arrowScroll = document.querySelector("#arrowScroll");
 
-
 // AFFICHAGE DE LA FLECHE AU SCROLL
 window.addEventListener("scroll", () => {
     if (window.scrollY > 100) {

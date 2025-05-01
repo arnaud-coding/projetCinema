@@ -20,10 +20,9 @@
     </div>
 </footer>
 
-<!-- SCRIPTS GLOBAUX -->
-<!-- <script src="../public/js/main.js"></script> -->
+<!-- SCRIPTS DE LA PAGE
+     Chargement dynamique des scripts spécifiques à la page courante -->
 
-<!-- SCRIPTS DE LA PAGE -->
 <?php
 if (isset($scripts)) {
     foreach ($scripts as $script) {

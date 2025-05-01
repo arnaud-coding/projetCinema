@@ -84,12 +84,12 @@
             <!-- CHAMP TYPE D'UTILISATEUR -->
             <?php
             // vérifie qu'aucun utilisateur n'est connecté
-            if (!isset($_SESSION['type'])) {
+            if (!isset($_SESSION["user"]["type"])) {
                 // si aucun utilisateur connecté : on crée un utilisateur de type 'user' par défault
             ?>
                 <input type="hidden" name="type" value="user">
             <?php
-            } elseif ($_SESSION['type'] === 'admin') {
+            } elseif ($_SESSION["user"]['type'] === 'admin') {
                 // 'admin' connecté : il peut choisir de créer un compte 'admin' ou 'user'
             ?>
                 <div class="mb-3 mt-3">

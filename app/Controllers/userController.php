@@ -315,10 +315,7 @@ class UserController extends Controller
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
         $data = [
-            "scripts" => [
-
-                "type='module' src='../public/js/formSignup.js'"
-            ]
+            "scripts" => ["type='module' src='../public/js/formSignup.js'"]
         ];
         $this->render("user/formSignup", $data);
     }

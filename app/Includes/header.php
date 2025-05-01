@@ -54,9 +54,15 @@
                     </button>
                     <ul class="dropdown-menu">
                         <?php if (!isset($_SESSION["user"])) : ?>
+                            <!-- AUCUN UTILISATEUR CONNECTE -->
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
-                        <?php else : ?>
+                            <?php else :
+                            // UTILISATEUR OU ADMIN CONNECTE
+                            if ($_SESSION["user"]["type"] === "admin") { ?>
+                                <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
+                            <?php
+                            } ?>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                         <?php endif; ?>
