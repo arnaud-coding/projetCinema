@@ -54,7 +54,7 @@ class UserController extends Controller
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
         $this->render("user/formLogin");
     }
-    /*
+
     // -------------------------
     //  SE CONNECTER
     // -------------------------
@@ -63,43 +63,38 @@ class UserController extends Controller
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // VERIFICATION DU TOKEN
-            $token = $_POST["token"] ?? "";
-            if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
+            //todo TOKEN
+            // // VERIFICATION DU TOKEN
+            // $token = $_POST["token"] ?? "";
+            // if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
 
-                // SUPPRESSION DU TOKEN
-                unset($_SESSION["token"]);
-
+            //     // SUPPRESSION DU TOKEN
+            //     unset($_SESSION["token"]);
+            if (true) {
                 // VERIFICATION DES CHAMPS
                 $email = $_POST["email"] ?? null;
                 $password = $_POST["password"] ?? null;
-                // var_dump($_POST);
-                // die;
+
                 if ($email && $password) {
 
                     // LECTURE DE L'EMAIL CLIENT
-                    $readUser = new User();
-                    $readUser->setEmail($email);
-                    $readUserModel = new UserModel();
-                    $user = $readUserModel->readByEmail($readUser);
-                    // var_dump($user);
-                    // die;
+                    $user = new User();
+                    $user->setEmail($email);
+                    $userModel = new UserModel();
+                    $user = $userModel->readByEmail($user);
 
                     // VERIFICATION DE L'EXISTENCE DE L'EMAIL CLIENT ET DU MDP
-                    if ($user && (password_verify($password, $user->password))) {
+                    if ($user && password_verify($password, $user->password)) {
 
-                        // CREATION D'UNE NOUVELLE SESSION
+                        // CREATION D'UN NOUVEAU ID DE SESSION
                         session_regenerate_id();
 
                         // DEFINITION DE LA SESSION CLIENT
                         $_SESSION["user"] = [
                             "id_user" => $user->id_user,
-                            "firstname" => $user->firstname,
-                            "lastname" => $user->lastname,
+                            "pseudo" => $user->pseudo,
                             "email" => $user->email,
-                            "adresse" => $user->adresse,
-                            "cp" => $user->cp,
-                            "ville" => $user->ville
+                            "type" => $user->type
                         ];
 
                         // DEFINITION DES COOKIES CLIENT
@@ -110,25 +105,21 @@ class UserController extends Controller
                         // }
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("Home", "home", "success_login");
+                        header("Location: index.php?controller=Home&action=home");
                     } else {
-
-                        // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        $this->myHeader("User", "formLogin", "error_login");
+                        header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Mot de passe ou identifiant incorrect."));
                     }
                 } else {
-
-                    // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                    $this->myHeader("User", "formLogin", "error_input");
+                    header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Le pseudo et l'email doivent être renseignés."));
                 }
             } else {
-
-                // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                $this->myHeader("User", "formLogin", "error_token");
+                header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur inattendue."));
             }
+        } else {
+            header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur interne."));
         }
     }
-
+    /*
     // ---------------------------
     //  SE DECONNECTER
     // ---------------------------
@@ -238,10 +229,10 @@ class UserController extends Controller
             $this->generateToken();
 
             // LECTURE DE L'CLIENT AVEC LE TOKEN
-            $readUser = new User();
-            $readUser->setToken($_GET["token"]);
-            $readUserModel = new UserModel();
-            $user = $readUserModel->readByToken($readUser);
+            $user = new User();
+            $user->setToken($_GET["token"]);
+            $userModel = new UserModel();
+            $user = $userModel->readByToken($user);
             if ($user && ($_GET["token"] === $user->token)) {
 
                 // VERIFICATION DE LA DATE D'EXPIRATION
@@ -342,6 +333,7 @@ class UserController extends Controller
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+            //todo TOKEN
             // VERIFICATION DU TOKEN
             // $token = $_POST["token"] ?? "";
             // if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
@@ -386,7 +378,7 @@ class UserController extends Controller
                 $message = "Token error.";
             }
         } else {
-            $message = "internal error.";
+            $message = "Internal error.";
         }
 
         // Sortie commune à tous les cas de figure
@@ -414,10 +406,10 @@ class UserController extends Controller
                 $this->generateToken();
 
                 // LECTURE DE L'CLIENT
-                $readUser = new User();
-                $readUser->setId_user($_GET["id_user"]);
-                $readUserModel = new UserModel();
-                $user = $readUserModel->readById($readUser);
+                $user = new User();
+                $user->setId_user($_GET["id_user"]);
+                $userModel = new UserModel();
+                $user = $userModel->readById($user);
 
                 // VERIFICATION DE L'EXISTENCE DE L'CLIENT
                 if ($user) {

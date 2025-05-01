@@ -46,8 +46,8 @@ if ($success !== null) {
 
             <!-- CHAMP MDP -->
             <div class="mb-1">
-                <label for="mdp" class="form-label">Mot de passe</label>
-                <input id="mdp" class="form-control" type="password" name="mdp" placeholder="Entrez votre mot de passe">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input id="password" class="form-control" type="password" name="password" placeholder="Entrez votre mot de passe">
             </div>
 
             <!-- LIEN VERS MDP OUBLIE -->
