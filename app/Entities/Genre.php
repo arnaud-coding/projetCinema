@@ -2,9 +2,9 @@
 
 namespace App\Entities;
 
-// -------------------
-// CLASSE ET BDD Genre
-// -------------------
+// ----------------------------------
+// CLASSE DE L'ENTITE genre DE LA BDD
+// ----------------------------------
 class Genre
 {
     private $id_genre;
@@ -14,43 +14,23 @@ class Genre
     //  GETTERS ET SETTERS
     // -------------------
 
-    /**
-     * Get the value of id_genre
-     */
     public function getId_genre()
     {
         return $this->id_genre;
     }
-
-    /**
-     * Set the value of id_genre
-     *
-     * @return  self
-     */
     public function setId_genre($id_genre)
     {
         $this->id_genre = $id_genre;
-
         return $this;
     }
 
-    /**
-     * Get the value of name
-     */
     public function getName()
     {
         return $this->name;
     }
-
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 }

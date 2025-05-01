@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 // ------------------
-// CLASSE ET BDD User
+// CLASSE DE L'ENTITE User
 // ------------------
 class User
 {
@@ -29,7 +29,6 @@ class User
     public function setId_user($id_user)
     {
         $this->id_user = $id_user;
-
         return $this;
     }
 
@@ -41,7 +40,6 @@ class User
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -53,7 +51,6 @@ class User
     public function setPseudo($pseudo)
     {
         $this->pseudo = $pseudo;
-
         return $this;
     }
 
@@ -65,7 +62,6 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -77,7 +73,6 @@ class User
     public function setType($type)
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -89,7 +84,6 @@ class User
     public function setToken($token)
     {
         $this->token = $token;
-
         return $this;
     }
 
@@ -101,7 +95,6 @@ class User
     public function setToken_expire($token_expire)
     {
         $this->token_expire = $token_expire;
-
         return $this;
     }
 }

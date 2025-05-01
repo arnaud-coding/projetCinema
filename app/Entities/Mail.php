@@ -3,14 +3,14 @@
 namespace App\Entities;
 
 
-// ---------------------------------
-// CLASSE MAIL //
-// ---------------------------------
+// ------------------
+// CLASSE ENTITE MAIL
+// ------------------
 class Mail
 {
-    // ---------------------------------
-    // ATTRIBUTS //
-    // ---------------------------------
+    // ---------
+    // ATTRIBUTS
+    // ---------
     private $lastname;
     private $firstname;
     private $email;
@@ -22,19 +22,17 @@ class Mail
     private $code_postal;
     private $ville;
 
-    // ---------------------------------
-    // METHODES GETTER ET SETTER //
-    // ---------------------------------
+    // -------------------------
+    // METHODES GETTER ET SETTER
+    // -------------------------
 
     public function getLastname()
     {
         return $this->lastname;
     }
-
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -42,11 +40,9 @@ class Mail
     {
         return $this->firstname;
     }
-
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-
         return $this;
     }
 
@@ -54,11 +50,9 @@ class Mail
     {
         return $this->email;
     }
-
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -66,11 +60,9 @@ class Mail
     {
         return $this->token;
     }
-
     public function setToken($token)
     {
         $this->token = $token;
-
         return $this;
     }
 
@@ -78,11 +70,9 @@ class Mail
     {
         return $this->num_commande;
     }
-
     public function setNum_commande($num_commande)
     {
         $this->num_commande = $num_commande;
-
         return $this;
     }
 
@@ -90,11 +80,9 @@ class Mail
     {
         return $this->date_commande;
     }
-
     public function setDate_commande($date_commande)
     {
         $this->date_commande = $date_commande;
-
         return $this;
     }
 
@@ -102,11 +90,9 @@ class Mail
     {
         return $this->montant_commande;
     }
-
     public function setMontant_commande($montant_commande)
     {
         $this->montant_commande = $montant_commande;
-
         return $this;
     }
 
@@ -114,11 +100,9 @@ class Mail
     {
         return $this->adresse;
     }
-
     public function setAdresse($adresse)
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
@@ -126,11 +110,9 @@ class Mail
     {
         return $this->code_postal;
     }
-
     public function setCode_postal($code_postal)
     {
         $this->code_postal = $code_postal;
-
         return $this;
     }
 
@@ -138,11 +120,9 @@ class Mail
     {
         return $this->ville;
     }
-
     public function setVille($ville)
     {
         $this->ville = $ville;
-
         return $this;
     }
 }
