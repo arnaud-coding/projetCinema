@@ -21,7 +21,7 @@
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
-<div class="card w-50 mx-auto my-3">
+<div class="card mx-auto my-3 bg-light" style="width: 300px;">
     <div class="card-body">
         <form id="formSignup" method="post" action="index.php?controller=User&action=create" novalidate>
 
@@ -47,7 +47,7 @@
                 <label for="password" class="form-label">Mot de passe</label>
                 <input id="password" class="form-control form-control-sm" type="text" name="password" autocomplete="new-password" placeholder="Entrez votre mot de passe">
                 <!-- PASSWORD STRENGTH INDICATORS -->
-                <div id="psw-strength" class="w-50 px-1 py-4 border-3 border-bottom" hidden>
+                <div id="psw-strength" class="w-100 px-1 py-4" hidden>
                     <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-success" role="progressbar" style="width: 0" aria-valuenow="2"
                             aria-valuemin="0" aria-valuemax="5">
@@ -145,7 +145,7 @@
 
             <!-- BOUTON D'ENVOI -->
             <div class="d-flex justify-content-center">
-                <button class="btn btn-secondary" type="submit">Valider</button>
+                <button class="btn btn-dark" type="submit">Valider</button>
             </div>
         </form>
     </div>

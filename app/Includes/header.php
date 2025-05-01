@@ -44,8 +44,11 @@
                         <?php
                         if (isset($_SESSION["user"])) {
                             echo htmlspecialchars($_SESSION["user"]["pseudo"], ENT_QUOTES, "UTF-8");
+                            if ($_SESSION["user"]["type"] === "admin") {
+                                echo " (admin)";
+                            }
                         } else {
-                            echo "Mon profil";
+                            echo "Mon compte";
                         }
                         ?>
                     </button>
@@ -67,7 +70,7 @@
         </nav>
 
         <!-- NAV : CATEGORIES -->
-        <nav class="navbar navbar-expand-md pb-3">
+        <nav class="navbar navbar-expand-md mb-2">
             <div class="container">
                 <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                     <ul class="navbar-nav fs-5 fw-medium">
