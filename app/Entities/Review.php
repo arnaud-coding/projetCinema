@@ -2,10 +2,12 @@
 
 namespace App\Entities;
 
-// ----------------------------------------
-// CLASSE DE L'ENTITE film_review DE LA BDD
-// ----------------------------------------
-class Film_review
+// -----------------------------------
+// CLASSE DE L'ENTITE review DE LA BDD
+//
+// (Critiques d'un film)
+// -----------------------------------
+class Review
 {
     private $id_review;
     private $content;

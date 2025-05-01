@@ -2,10 +2,12 @@
 
 namespace App\Entities;
 
-// ---------------------------------------------------
-// CLASSE DE L'ENTITE film_selection_comment DE LA BDD
-// ---------------------------------------------------
-class Film_selection_comment
+// ------------------------------------
+// CLASSE DE L'ENTITE comment DE LA BDD
+//
+// (Commentaires d'autres utilisateurs sur une sélection)
+// ------------------------------------
+class Comment
 {
     private $id_comment;
     private $content;

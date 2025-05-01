@@ -2,10 +2,13 @@
 
 namespace App\Entities;
 
-// ---------------------------------
-// CLASSE DE L'ENTITE User_film_selection
-// ---------------------------------
-class User_film_selection
+// ----------------------------
+// CLASSE DE L'ENTITE selection
+//
+// (ID et titre d'une sélection)
+// (L'entité Film_Selection permet de retrouver les films d'une sélection)
+// ----------------------------
+class Selection
 {
     private $id_selection;
     private $title;
