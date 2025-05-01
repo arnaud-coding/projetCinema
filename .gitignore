@@ -1,1 +1,7 @@
 DbConnect.php
+
+# Ignorer tous les fichiers OpenOffice temporaires
+*.odt#
+
+# Ignorer tous les fichiers Looping temporaires
+*.lo1
