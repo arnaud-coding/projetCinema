@@ -7,9 +7,11 @@ namespace App\Controllers;
 use App\Models\MessageModel;
 
 
-// ---------------------------
-// CLASSE CONTROLEUR PRINCIPAL
-// ---------------------------
+// -------------------------
+// CLASSE CONTROLEUR DE BASE
+//
+// Classe mère dont tous les controllers vont hériter
+// -------------------------
 abstract class Controller
 {
     // -----------------------------------

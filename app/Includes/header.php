@@ -80,11 +80,10 @@
             <div class="container">
                 <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                     <ul class="navbar-nav fs-5 fw-medium">
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=1">Audio</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=2">Téléphone</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=3">PC portable</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=4">PC de bureau</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=5">Télévision</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
                     </ul>
                 </div>
             </div>
