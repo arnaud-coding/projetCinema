@@ -12,9 +12,9 @@
     <div class="container">
         <p class="mb-0">Suivez nous sur les réseaux sociaux !</p>
         <div class="socialMedias">
-            <a href="#"><i class="bi bi-twitter-x text-dark"></i></a>
-            <a href="#"><i class="bi bi-facebook text-dark px-2"></i></a>
-            <a href="#"><i class="bi bi-instagram text-dark"></i></a>
+            <a href="#"><i class="bi bi-twitter-x socialIcons darkTypo menuLinks"></i></a>
+            <a href="#"><i class="bi bi-facebook px-2 socialIcons darkTypo menuLinks"></i></a>
+            <a href="#"><i class="bi bi-instagram socialIcons darkTypo menuLinks"></i></a>
         </div>
         <p>&copy; 2025 MovieLovers - Production interne - &reg; Tous droits réservés.</p>
     </div>

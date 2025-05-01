@@ -16,7 +16,7 @@
 <body>
     <header class="border-bottom shadow-sm">
         <!-- BARRE DE NAVIGATION -->
-        <nav class="navbar navbar-expand-md bg-white pt-3">
+        <nav class="navbar navbar-expand-md pt-3">
             <div class="container">
 
                 <!-- BOUTON MENU BURGER -->
@@ -25,24 +25,20 @@
                 </button>
 
                 <!-- LOGO -->
-                <a class="navbar-brand fs-2 fw-bold text-dark" href="index.php">
+                <a class="navbar-brand fs-2 fw-bold" href="index.php">
                     <img src="img/logo.png" alt="Logo" width="50" height="50">
-                    MovieLovers
+                    <i class="darkTypo menuLinks">MovieLovers</i>
                 </a>
 
                 <!-- CHAMP DE RECHERCHE -->
                 <form class="d-flex me-3" method="post" action="index.php?controller=Produit&action=search" style="width: 410px;">
                     <input class="form-control me-2 border-secondary" type="text" name="search" placeholder="Rechercher un film, un acteur ou un réalisateur" aria-label="Search">
-                    <button class="btn btn-outline-dark" type="submit"><span class="bi bi-search"></span></button>
+                    <button class="btn btn-outline-dark buttonLinks" type="submit"><span class="bi bi-search buttonLinks"></span></button>
                 </form>
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
                 <div class="dropdown">
-
-                    <!-- MODE CLAIR/SOMBRE -->
-                    <i id="btnModeDark" class="bi bi-lightbulb-fill text-warning me-3" style="cursor: pointer;"></i>
-
-                    <button class="btn btn-dark text-white dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">Mon profil</button>
+                    <button class="btn darkBtn profileBtn dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">Mon profil</button>
                     <ul class="dropdown-menu">
                         <?php if (!isset($_SESSION["user"])) : ?>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
@@ -53,24 +49,27 @@
                         <?php endif; ?>
                     </ul>
                 </div>
+
+                <!-- MODE CLAIR/SOMBRE -->
+                <i id="btnModeDark" class="bi bi-moon-fill text-dark fs-3 me-3" style="cursor: pointer;"></i>
+
             </div>
         </nav>
 
         <!-- NAV : CATEGORIES -->
-        <nav class="navbar navbar-expand-md bg-white pb-3">
+        <nav class="navbar navbar-expand-md pb-3">
             <div class="container">
                 <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                     <ul class="navbar-nav fs-5 fw-medium">
-                        <li class="nav-item"><a class="nav_cat nav-link text-dark" href="index.php?controller=Produit&action=listByCategory&id_categorie=1">Audio</a></li>
-                        <li class="nav-item"><a class="nav_cat nav-link text-dark" href="index.php?controller=Produit&action=listByCategory&id_categorie=2">Téléphone</a></li>
-                        <li class="nav-item"><a class="nav_cat nav-link text-dark" href="index.php?controller=Produit&action=listByCategory&id_categorie=3">PC portable</a></li>
-                        <li class="nav-item"><a class="nav_cat nav-link text-dark" href="index.php?controller=Produit&action=listByCategory&id_categorie=4">PC de bureau</a></li>
-                        <li class="nav-item"><a class="nav_cat nav-link text-dark" href="index.php?controller=Produit&action=listByCategory&id_categorie=5">Télévision</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=1">Audio</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=2">Téléphone</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=3">PC portable</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=4">PC de bureau</a></li>
+                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Produit&action=listByCategory&id_categorie=5">Télévision</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-
     </header>
 
 

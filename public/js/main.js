@@ -4,12 +4,16 @@
 
 // SELECTION DES ELEMENTS DU DOM
 const btnModeDark = document.querySelector("#btnModeDark");
+const navs = document.querySelectorAll(".navbar");
 const main = document.querySelector("main");
-const h1 = document.querySelector("h1");
+const footer = document.querySelector("footer");
+const buttonLinks = document.querySelectorAll(".buttonLinks");
+const profileBtn = document.querySelectorAll(".profileBtn");
+const menuLinks = document.querySelectorAll(".menuLinks");
+const socialIcons = document.querySelectorAll(".socialIcons");
 
 // RECUPERATION DU MODE DANS LE LOCALSTORAGE
 let darkMode = JSON.parse(localStorage.getItem("darkMode"));
-
 
 // INITIALISATION DU MODE
 if (darkMode) {
@@ -24,13 +28,45 @@ btnModeDark.addEventListener("click", () => {
 
 // FONCTION CHANGEMENT DE MODE
 function fctDarkMode() {
-    btnModeDark.classList.toggle("text-black");
+    btnModeDark.classList.toggle("bi-moon-fill");
+    btnModeDark.classList.toggle("bi-sun-fill");
     btnModeDark.classList.toggle("text-warning");
-    main.classList.toggle("bg-secondary");
-    main.classList.toggle("bg-light");
-    h1.classList.toggle("text-white");
-    h1.classList.toggle("text-black");
+    btnModeDark.classList.toggle("text-dark");
+
+    navs.forEach((nav) => {
+        nav.classList.toggle("darkBg");
+    });
+    buttonLinks.forEach((button) => {
+        button.classList.toggle("btn-outline-dark");
+        button.classList.toggle("btn-outline-light");
+    });
+    profileBtn.forEach((button) => {
+        button.classList.toggle("darkBtn");
+        button.classList.toggle("lightBtn");
+    });
+    menuLinks.forEach((icon) => {
+        icon.classList.toggle("darkTypo");
+        icon.classList.toggle("lightTypo");
+    });
+    main.classList.toggle("darkBg");
+    footer.classList.toggle("darkBg");
 }
+
+// OPACITE AU SURVOL
+btnModeDark.addEventListener("mouseover", () => {
+    btnModeDark.classList.add("opacity-75");
+});
+btnModeDark.addEventListener("mouseout", () => {
+    btnModeDark.classList.remove("opacity-75");
+});
+socialIcons.forEach((icon) => {
+    icon.addEventListener("mouseover", () => {
+        icon.classList.add("opacity-75");
+    });
+    icon.addEventListener("mouseout", () => {
+        icon.classList.remove("opacity-75");
+    });
+});
 
 
 // ------------

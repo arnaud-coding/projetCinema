@@ -8,10 +8,42 @@ main {
     flex: 1;
 }
 
+.darkBg {
+    background-color: #121212;
+    color: #FFF;
+}
+
+.lightBg {
+    background-color: #FFF;
+    color: #121212;
+}
+
+.darkBtn {
+    background-color: #121212;
+    color: #FFF;
+    border: solid #121212 2px !important;
+    border-radius: 8px !important;
+}
+
+.lightBtn {
+    background-color: #FFF;
+    color: #121212;
+    border: solid #FFF 2px !important;
+    border-radius: 8px !important;
+}
+
+.lightTypo {
+    color: #FFF !important;
+}
+
+.darkTypo {
+    color: black !important;
+}
+
 .nav_cat {
     position: relative;
+    /* inline-block important pour que la largeur colle au texte */
     display: inline-block;
-    /* Important pour que la largeur colle au texte */
     text-decoration: none;
 }
 
@@ -22,7 +54,7 @@ main {
     bottom: 0;
     height: 2px;
     width: 100%;
-    background-color: black;
+    background-color: indigo;
     transform: scaleX(0);
     transform-origin: bottom left;
     transition: transform 0.3s ease;
@@ -68,13 +100,7 @@ main {
     transition: 0.4s
 }
 
-/* Panier */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
+/* ----------------------------
 /* Donner son avis avec étoiles */
 .star {
     font-size: 1.5rem;
