@@ -98,11 +98,12 @@ class UserController extends Controller
                         ];
 
                         // DEFINITION DES COOKIES CLIENT
-                        // if ($_COOKIE["ackCookie"] === "yes") {
-                        //     foreach ($_SESSION["user"] as $name => $value) {
-                        //         setcookie($name, $value, time() + 86400, "/");
-                        //     }
-                        // }
+                        // inutilisé : exemple de stockage d'infos utilisateur dans les cookies
+                        if ($_COOKIE["ackCookie"] === "yes") {
+                            foreach ($_SESSION["user"] as $key => $value) {
+                                setcookie($key, $value, time() + 86400, "/");
+                            }
+                        }
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                         header("Location: index.php?controller=Home&action=home");
@@ -119,15 +120,15 @@ class UserController extends Controller
             header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur interne."));
         }
     }
-    /*
     // ---------------------------
     //  SE DECONNECTER
     // ---------------------------
     public function logout()
     {
         // DESTRUCTION DES COOKIES CLIENT
-        foreach ($_SESSION["user"] as $name => $value) {
-            setcookie($name, "", time() - 3600, "/");
+        // inutilisé : exemple de suppression d'infos utilisateur des cookies
+        foreach ($_SESSION["user"] as $key => $value) { // "=> $value" requis sinon "key" contient la valeur
+            setcookie($key, "", time() - 3600, "/");
         }
 
         // DESTRUCTION DE LA SESSION CLIENT
@@ -135,9 +136,10 @@ class UserController extends Controller
         session_destroy();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-        $this->myHeader("Home", "home", "success_logout");
+        header("Location: index.php?controller=Home&action=home");
     }
-*/
+    /*
+
     // -------------------------------------------------------
     //  AFFICHER UN FORMULAIRE DE REINISIALISATION
     // -------------------------------------------------------

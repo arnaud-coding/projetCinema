@@ -41,13 +41,13 @@ if ($success !== null) {
             <!-- CHAMP EMAIL -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input id="email" type="email" class="form-control" name="email" placeholder="Entrez votre email">
+                <input id="email" type="email" class="form-control" name="email" placeholder="Entrez votre email" value="bob@gmail.com">
             </div>
 
             <!-- CHAMP MDP -->
             <div class="mb-1">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input id="password" class="form-control" type="password" name="password" placeholder="Entrez votre mot de passe">
+                <input id="password" class="form-control" type="password" name="password" placeholder="Entrez votre mot de passe" value="superBob=0!">
             </div>
 
             <!-- LIEN VERS MDP OUBLIE -->

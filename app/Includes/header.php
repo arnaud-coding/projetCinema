@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <script src="https://kit.fontawesome.com/421fcfdcfb.js" crossorigin="anonymous" defer></script>
     <script src="../public/js/bootstrap.bundle.min.js" defer></script>
+    <!-- SCRIPTS GLOBAUX -->
+    <script src="../public/js/main.js" defer></script>
 </head>
 
 <body>
@@ -38,14 +40,22 @@
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
                 <div class="dropdown">
-                    <button class="btn darkBtn profileBtn dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">Mon profil</button>
+                    <button class="btn darkBtn profileBtn dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php
+                        if (isset($_SESSION["user"])) {
+                            echo htmlspecialchars($_SESSION["user"]["pseudo"], ENT_QUOTES, "UTF-8");
+                        } else {
+                            echo "Mon profil";
+                        }
+                        ?>
+                    </button>
                     <ul class="dropdown-menu">
                         <?php if (!isset($_SESSION["user"])) : ?>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
                             <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                         <?php else : ?>
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=Client&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=Client&action=logout">Se déconnecter</a></li>
+                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
+                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
