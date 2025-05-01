@@ -1,9 +1,7 @@
 <?php
 
-// DEFINITION DE L'ESPACE DE NOM
 namespace App\Models;
 
-// IMPORT DE CLASSES
 use PDO;
 use PDOException;
 use App\Entities\User;

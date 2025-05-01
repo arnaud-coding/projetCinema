@@ -32,7 +32,6 @@ session_start();
 // INCLUSION DE L'AUTOLOADER
 require_once '../app/Autoloader.php';
 
-// IMPORT DE CLASSES
 use App\Autoloader;
 use App\Core\Router;
 

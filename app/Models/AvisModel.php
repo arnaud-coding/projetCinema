@@ -1,9 +1,7 @@
 <?php
 
-// DEFINITION DE L'ESPACE DE NOM
 namespace App\Models;
 
-// IMPORT DE CLASSES
 use App\Core\DbConnect;
 use App\Entities\Avis;
 use PDO;

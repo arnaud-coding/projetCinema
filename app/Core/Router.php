@@ -1,6 +1,5 @@
 <?php
 
-// DEFINITION DE L'ESPACE DE NOM
 namespace App\Core;
 
 // IMPORT DE CLASSES

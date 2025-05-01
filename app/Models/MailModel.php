@@ -1,9 +1,7 @@
 <?php
 
-// DEFINITION DE L'ESPACE DE NOM
 namespace App\Models;
 
-// IMPORT DE CLASSES
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use App\Entities\Mail as Mail;

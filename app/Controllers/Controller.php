@@ -1,9 +1,7 @@
 <?php
 
-// DEFINITION DE L'ESPACE DE NOM
 namespace App\Controllers;
 
-// IMPORT DE CLASSES
 use App\Models\MessageModel;
 
 
