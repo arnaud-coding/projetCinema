@@ -37,4 +37,24 @@ abstract class Controller
             "token_expiration" => $token_expiration
         ];
     }
+
+    // ----------------------------------
+    // CONVERTIT DES MINUTES AU FORMAT H/m
+    // exemple : converit "121" en "2 h 01 min"
+    // ----------------------------------
+    function convertMinutesToHours($minutesStr)
+    {
+        // Convertir la chaîne en entier
+        $minutes = (int)$minutesStr;
+
+        // Calcul des heures et minutes
+        $hours = intdiv($minutes, 60);
+        $remainingMinutes = $minutes % 60;
+
+        // Formater les minutes avec un zéro devant si nécessaire
+        $formattedMinutes = str_pad($remainingMinutes, 2, '0', STR_PAD_LEFT);
+
+        // Retourner la chaîne formatée
+        return "{$hours} h {$formattedMinutes} min";
+    }
 }

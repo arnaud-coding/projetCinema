@@ -32,7 +32,7 @@ class UserModel extends DbConnect
             // RETOUR DU RESULTAT
             return $user;
         } catch (PDOException $e) {
-            die($e->getMessage());
+            return $e->errorInfo[1];
         }
     }
 
@@ -55,7 +55,7 @@ class UserModel extends DbConnect
             // RETOUR DU RESULTAT
             return $user;
         } catch (PDOException $e) {
-            die($e->getMessage());
+            return $e->errorInfo[1];
         }
     }
 
@@ -78,7 +78,7 @@ class UserModel extends DbConnect
             // RETOUR DU RESULTAT
             return $user;
         } catch (PDOException $e) {
-            die($e->getMessage());
+            return $e->errorInfo[1];
         }
     }
 
@@ -100,7 +100,7 @@ class UserModel extends DbConnect
             // RETOUR DES RESULTATS
             return $users;
         } catch (PDOException $e) {
-            die($e->getMessage());
+            return $e->errorInfo[1];
         }
     }
 

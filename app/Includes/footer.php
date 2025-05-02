@@ -25,11 +25,11 @@
 
 <?php
 if (isset($scripts)) {
-    foreach ($scripts as $script) {
+    foreach ($scripts as $script) :
 ?>
         <script <?php echo $script; ?>></script>
 <?php
-    };
+    endforeach;
 } ?>
 </body>
 

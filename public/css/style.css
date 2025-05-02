@@ -8,6 +8,8 @@ main {
     flex: 1;
 }
 
+/* -----------
+/* Dark/Light mode */
 .darkBg {
     background-color: #121212;
     color: #FFF;
@@ -40,10 +42,12 @@ main {
     color: black !important;
 }
 
+/* -----------
+/* Menu principal de l'app */
 .nav_cat {
     position: relative;
-    /* inline-block important pour que la largeur colle au texte */
     display: inline-block;
+    /* inline-block important pour que la largeur colle au texte */
     text-decoration: none;
 }
 
@@ -54,7 +58,7 @@ main {
     bottom: 0;
     height: 2px;
     width: 100%;
-    background-color: indigo;
+    background-color: red;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -68,10 +72,14 @@ main {
     color: red !important;
 }
 
+/* -----------
+/* Footer */
 .socialMedias {
     font-size: 24px;
 }
 
+/* -----------
+/* Flèche de scroll vers haut de page */
 #arrowScroll {
     display: flex;
     justify-content: center;
@@ -100,7 +108,7 @@ main {
     transition: 0.4s
 }
 
-/* ----------------------------
+/* -----------
 /* Donner son avis avec étoiles */
 .star {
     font-size: 1.5rem;
@@ -113,7 +121,7 @@ main {
     color: gold;
 }
 
-/* -------------------------------
+/* -----------
 /* Notes sur les avis déja publiés */
 .starr {
     font-size: 1.5rem;
@@ -122,4 +130,19 @@ main {
 
 .starr.active {
     color: gold;
+}
+
+/* -----------
+/* Affichage des films par genre : responsive & scroll horizontal */
+#filmScroll::-webkit-scrollbar {
+    display: none;
+    /* Masque la scrollbar sur Chrome/Safari */
+}
+
+#filmScroll {
+    -ms-overflow-style: none;
+    /* IE et Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    scroll-behavior: smooth;
 }
