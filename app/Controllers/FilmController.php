@@ -18,11 +18,61 @@ class FilmController extends Controller
     // --------------------
     public function home()
     {
-        $filmsByGenre = $this->displayByGenre(); // Récupération des films par leur genre
+
+        $genres = [
+            "Science-fiction" => 7,
+            "Action" => 1,
+            "Drame" => 5,
+            "Horreur" => 6,
+            "Thriller" => 9
+        ];
+
+        /*
+        Résultat :
+            Un tableau à 3 dimensions contenant :
+                - dimension 1 : key = index du tableau de cette dimension (pas utilisé) ; value = tableau (cf dimension 2)
+                - dimension 2 : key = nom du genre ; value = tableau (cf dimension 3)
+                - dimension 3 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
+        Exemple :
+            D1[0]= D2[]                         (key= index 0, value= D2[genre 0])
+                D2['sci-fi'] = D3[]                 (key= genre, value= D3[genre 0])
+                    D3[0]= film 0 du genre 0            object film
+                    D3[1]= film 1 du genre 0            object film
+                    D3[2]= film 2 du genre 0            object film
+                D2 [1]
+            D1[1]= D2[]                         (key= index 1, value= D2[genre 1])
+                D2['action'] = D3[]                 (key= genre, value= D3[genre 0])
+                    D3[0]= film 0 du genre 1            object film
+                    D3[0]= film 0 du genre 2            object film
+
+        */
+        $filmsByGenres = [];
+        foreach ($genres as $name => $id) {
+
+            $films = $this->displayByGenre($id);    // renvoie un tableau de type D3 (cf exemple)
+            $filmsByGenre = [$name => $films];      // fabrique un élément de type D2
+            $filmsByGenres[] = $filmsByGenre;       // ajoute le D2 au D1
+        }
+
+        // for the wiew  =========================================
+        // Parcours dimension 1
+        // foreach ($filmsByGenres as $filmsByGenre) {
+
+        //     // Parcours dimension 2
+        //     foreach ($filmsByGenre as $name => $films) {
+        //         var_dump($name);
+
+        //         // Parcours dimension 3
+        //         foreach ($films as $film) {
+        //             print_r($film->title . ", ");
+        //         }
+        //     }
+        // }
+        // ============================
 
         // SCRIPTS JS
         $data = [
-            "filmsByGenre" => $filmsByGenre,
+            "filmsByGenres" => $filmsByGenres,
             "scripts" => ["type='module' src='../public/js/filmsByGenre.js'"]
         ];
 
@@ -33,10 +83,8 @@ class FilmController extends Controller
 
     // AFFICHAGE DE FILMS PAR GENRE
     // --------------------
-    public function displayByGenre()
+    public function displayByGenre($id_genre)
     {
-
-        $id_genre = 7; // Science-fiction
 
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
@@ -51,8 +99,6 @@ class FilmController extends Controller
                 // ID GENRE FOURNI NE CORRESPONDANT A AUCUN GENRE DE LA BDD
                 // todo : erreur etrange "applications vous a redirigé à de trop nombreuses reprises."
                 return [];
-                // $message = "Le genre donné n'existe pas dans notre base de données.";
-                // header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
             } else {
 
                 // GENRE OK : LECTURE DES FILMS PAR GENRE
@@ -62,8 +108,6 @@ class FilmController extends Controller
                 if (!$filmsByGenre) {
                     // AUCUN FILM POUR LE GENRE FOURNI
                     return [];
-                    // $message = "Il n'y a pas de films appartenant à ce genre.";
-                    // header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
                 } else {
 
                     // CONVERSION DES MINUTES EN HEURES/MINUTES

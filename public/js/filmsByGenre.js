@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fonction pour défiler vers la gauche
     function scrollLeftFunc() {
         scrollContainer.scrollBy({
-            left: -200, // Pixels à défiler vers la gauche
+            left: -1000, // Pixels à défiler vers la gauche
             behavior: 'smooth'
         });
     }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fonction pour défiler vers la droite
     function scrollRightFunc() {
         scrollContainer.scrollBy({
-            left: 200, // Pixels à défiler vers la droite
+            left: 1000, // Pixels à défiler vers la droite
             behavior: 'smooth'
         });
     }
