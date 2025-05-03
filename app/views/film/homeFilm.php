@@ -54,10 +54,13 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             // ------------------------------------------------
             ?>
             <!-- Carroussel container -->
-            <div id="filmScroll" class="d-flex overflow-auto py-3 px-2 gap-3">
+            <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
                 <!-- Flèche gauche (masquée sur petit écran) -->
-                <button id="scrollLeft" class="btn btn-dark position-absolute top-50 start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+                <!-- <button class="scrollLeft btn btn-dark position-absolute top-50 start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+                    <i class="bi bi-chevron-left"></i>
+                </button> -->
+                <button class="scrollLeft btn btn-dark position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
                     <i class="bi bi-chevron-left"></i>
                 </button>
 
@@ -77,7 +80,10 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                 ?>
 
                 <!-- Flèche droite (masquée sur petit écran) -->
-                <button id="scrollRight" class="btn btn-dark position-absolute top-50 end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+                <!-- <button class="scrollRight btn btn-dark position-absolute top-50 end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+                    <i class="bi bi-chevron-right"></i>
+                </button> -->
+                <button class="scrollRight btn btn-dark position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
                     <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
@@ -85,7 +91,6 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 
         }
     }
-    die;
     ?>
 
 

@@ -134,12 +134,12 @@ main {
 
 /* -----------
 /* Affichage des films par genre : responsive & scroll horizontal */
-#filmScroll::-webkit-scrollbar {
+.filmScroll::-webkit-scrollbar {
     display: none;
     /* Masque la scrollbar sur Chrome/Safari */
 }
 
-#filmScroll {
+.filmScroll {
     -ms-overflow-style: none;
     /* IE et Edge */
     scrollbar-width: none;
