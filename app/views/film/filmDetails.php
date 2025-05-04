@@ -1,9 +1,9 @@
 <?php
-if (!$details) {
+if (!$film) {
 ?>
     <p class="d-flex justify-content-center">Le film n'existe pas.</p>
 <?php
 } else {
     // todo afficher details film
-    var_dump($details);
+    var_dump($film);
 }

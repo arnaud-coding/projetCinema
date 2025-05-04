@@ -3,9 +3,12 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
-use App\Entities\Film as Film;
-use App\Entities\Genre as Genre;
+// use App\Entities\Film as Film;
+// use App\Entities\Actor as Actor;
+// use App\Entities\Director as Director;
 use App\Models\FilmModel as FilmModel;
+use App\Models\ActorModel as ActorModel;
+use App\Models\DirectorModel as DirectorModel;
 use App\Models\GenreModel as GenreModel;
 use Exception;
 
@@ -112,11 +115,11 @@ class FilmController extends Controller
         }
 
         // RECUPERE DONNEES FILM
-        $details = $this->getFilmDetails($id_film);
+        $film = $this->getFilmDetails($id_film);
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
-            "details" => $details,
+            "film" => $film,
             "scripts" => []
         ];
         // NAVIGATION VERS PAGE
@@ -134,13 +137,27 @@ class FilmController extends Controller
             exit;
         }
 
-        // VERIFIE QUE LE FILM EXISTE EN BDD
+        $film = [];
+
+        // RECUPERE LE FILM EN BDD
         $filmModel = new FilmModel();
-        $film = $filmModel->readByID($id_film);
-        if (!$film) {
-            // ID FILM FOURNI NE CORRESPONDANT A AUCUN FILM DE LA BDD
+        $details = $filmModel->readByID($id_film);
+        if (!$details) {
+            // RETOUR SI FILM INEXISTANT
             return null;
         }
+        $film['details'] = $details;
+
+        // RECUPERE LES ACTEURS DU FILM EN BDD
+        $actorModel = new ActorModel();
+        $actors = $actorModel->getAllByFilmId();
+
+        $film['actors'] = $actors;
+
+        // RECUPERE LES REALISATEURS DU FILM EN BDD
+        $directorModel = new DirectorModel();
+        $directors = $directorModel->getAllByFilmId();
+        $film['directors'] = $directors;
 
         return $film;
     }

@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models;
+
+use PDO;
+use PDOException;
+use App\Entities\Actor;
+use App\Entities\Film;
+use App\Core\DbConnect;
+
+
+// -----------------------------
+// CLASSE MODEL DE L'ENTITE ACTOR
+// -----------------------------
+class ActorModel extends DbConnect
+{
+    // ---------------
+    //  LIRE UN ACTOR PAR SON ID
+    // ---------------
+    public function readByID($id_actor)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare("SELECT * FROM ppc_actor WHERE id_actor = :id_actor");
+            $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $actor = $this->request->fetch();
+
+            // RETOUR DU RESULTAT
+            return $actor;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
+    }
+    public function getAllByFilmId()
+    {
+        // todo requete SQL sur ppc_film_actor WHERE id_film = ...
+        return ["actors"];
+    }
+}
