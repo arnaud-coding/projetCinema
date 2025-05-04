@@ -29,46 +29,26 @@ class FilmController extends Controller
 
         /*
         Résultat :
-            Un tableau à 3 dimensions contenant :
-                - dimension 1 : key = index du tableau de cette dimension (pas utilisé) ; value = tableau (cf dimension 2)
-                - dimension 2 : key = nom du genre ; value = tableau (cf dimension 3)
-                - dimension 3 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
+            Un tableau à 2 dimensions contenant :
+                - dimension 1 : key = nom du genre ; value = tableau de films (cf dimension 2)
+                - dimension 2 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
         Exemple :
-            D1[0]= D2[]                         (key= index 0, value= D2[genre 0])
-                D2['sci-fi'] = D3[]                 (key= genre, value= D3[genre 0])
-                    D3[0]= film 0 du genre 0            object film
-                    D3[1]= film 1 du genre 0            object film
-                    D3[2]= film 2 du genre 0            object film
+            D1['sci-fi']= D2[]                         (key= genre, value= D2[genre 0])
+                D2[0]= film 0 du genre 0                    object film
+                D2[1]= film 1 du genre 0                    object film
+                D2[2]= film 2 du genre 0                    object film
                 D2 [1]
-            D1[1]= D2[]                         (key= index 1, value= D2[genre 1])
-                D2['action'] = D3[]                 (key= genre, value= D3[genre 0])
-                    D3[0]= film 0 du genre 1            object film
-                    D3[0]= film 0 du genre 2            object film
+            D1['action']= D2[]                         (key= index 1, value= D2[genre 1])
+                D2[0]= film 0 du genre 1                    object film
+                D2[0]= film 0 du genre 2                    object film
 
         */
         $filmsByGenres = [];
         foreach ($genres as $name => $id) {
 
-            $films = $this->displayByGenre($id);    // renvoie un tableau de type D3 (cf exemple)
-            $filmsByGenre = [$name => $films];      // fabrique un élément de type D2
-            $filmsByGenres[] = $filmsByGenre;       // ajoute le D2 au D1
+            $films = $this->displayByGenre($id);    // renvoie un tableau de type D2 (cf exemple)
+            $filmsByGenres[$name] = $films;       // ajoute le D2 au D1
         }
-
-        // for the wiew  =========================================
-        // Parcours dimension 1
-        // foreach ($filmsByGenres as $filmsByGenre) {
-
-        //     // Parcours dimension 2
-        //     foreach ($filmsByGenre as $name => $films) {
-        //         var_dump($name);
-
-        //         // Parcours dimension 3
-        //         foreach ($films as $film) {
-        //             print_r($film->title . ", ");
-        //         }
-        //     }
-        // }
-        // ============================
 
         // SCRIPTS JS
         $data = [

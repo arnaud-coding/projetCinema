@@ -2,21 +2,19 @@
 <p><?php echo $message ?></p>
 <!--
 $filmsByGenres :
-    Un tableau à 3 dimensions contenant :
-        - dimension 1 : key = index du tableau de cette dimension (pas utilisé) ; value = tableau (cf dimension 2)
-        - dimension 2 : key = nom du genre ; value = tableau (cf dimension 3)
-        - dimension 3 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
+Un tableau à 2 dimensions contenant :
+             - dimension 1 : key = nom du genre ; value = tableau de films (cf dimension 2)
+             - dimension 2 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
 Exemple :
-    D1[0]= D2[]                         (key= index 0, value= D2[genre 0])
-        D2['sci-fi'] = D3[]                 (key= genre, value= D3[genre 0])
-            D3[0]= film 0 du genre 0            object film
-            D3[1]= film 1 du genre 0            object film
-            D3[2]= film 2 du genre 0            object film
+    D1['sci-fi']= D2[]                         (key= genre, value= D2[genre 0])
+        D2[0]= film 0 du genre 0                    object film
+        D2[1]= film 1 du genre 0                    object film
+        D2[2]= film 2 du genre 0                    object film
         D2 [1]
-    D1[1]= D2[]                         (key= index 1, value= D2[genre 1])
-        D2['action'] = D3[]                 (key= genre, value= D3[genre 0])
-            D3[0]= film 0 du genre 1            object film
-            D3[0]= film 0 du genre 2            object film
+    D1['action']= D2[]                         (key= index 1, value= D2[genre 1])
+        D2[0]= film 0 du genre 1                    object film
+        D2[0]= film 0 du genre 2                    object film
+
 -->
 
 <!--
@@ -40,56 +38,52 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 
     // Parcours dimension 1 : les genres et leurs films
     // ------------------------------------------------
-    foreach ($filmsByGenres as $filmsByGenre) {
+    foreach ($filmsByGenres as $genre => $films) { ?>
 
-        // Parcours dimension 2 : un genre et ses films
+        <!-- Titre du "carroussel netflix" -->
+        <h3 class="mb-0"><?= $genre ?></h3>
+        <?php
+
+        // Parcours dimension 2 : les films du genre courant
         // ------------------------------------------------
-        foreach ($filmsByGenre as $genre => $films) { ?>
+        ?>
+        <!-- Carroussel container -->
+        <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
-            <!-- Titre du "carroussel netflix" -->
-            <h3 class="mb-0"><?= $genre ?></h3>
+            <!-- Flèche gauche (masquée sur petit écran) -->
+            <!-- <button class="scrollLeft btn btn-dark position-absolute top-50 start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+                    <i class="bi bi-chevron-left"></i>
+                </button> -->
+            <button class="scrollLeft btn btn-dark position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+
             <?php
+            // Liste des films en scroll horizontal
+            foreach ($films as $film) { ?>
+                <div class="flex-shrink-0" style="width: 150px;">
+                    <object data="img/img_films/<?= $film->picture ?>" class="img-fluid rounded shadow-sm" alt="<?= $film->title; ?>">
+                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                    </object>
 
-            // Parcours dimension 3 : les films du genre courant
-            // ------------------------------------------------
+                    <p class="text-center fw-bold mt-2 mb-0"><?= $film->title ?></p>
+                    <p class="text-center mt-0"><?= $film->duration ?></p>
+                </div>
+            <?php
+            }
             ?>
-            <!-- Carroussel container -->
-            <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
-                <!-- Flèche gauche (masquée sur petit écran) -->
-                <!-- <button class="scrollLeft btn btn-dark position-absolute top-50 start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
-                    <i class="bi bi-chevron-left"></i>
-                </button> -->
-                <button class="scrollLeft btn btn-dark position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
-                    <i class="bi bi-chevron-left"></i>
-                </button>
-
-                <?php
-                // Liste des films en scroll horizontal
-                foreach ($films as $film) { ?>
-                    <div class="flex-shrink-0" style="width: 150px;">
-                        <object data="img/img_films/<?= $film->picture ?>" class="img-fluid rounded shadow-sm" alt="<?= $film->title; ?>">
-                            <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
-                        </object>
-
-                        <p class="text-center fw-bold mt-2 mb-0"><?= $film->title ?></p>
-                        <p class="text-center mt-0"><?= $film->duration ?></p>
-                    </div>
-                <?php
-                }
-                ?>
-
-                <!-- Flèche droite (masquée sur petit écran) -->
-                <!-- <button class="scrollRight btn btn-dark position-absolute top-50 end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
+            <!-- Flèche droite (masquée sur petit écran) -->
+            <!-- <button class="scrollRight btn btn-dark position-absolute top-50 end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;">
                     <i class="bi bi-chevron-right"></i>
                 </button> -->
-                <button class="scrollRight btn btn-dark position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
-            </div>
+            <button class="scrollRight btn btn-dark position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
     <?php
 
-        }
+
     }
     ?>
 
