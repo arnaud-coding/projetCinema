@@ -61,14 +61,16 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             <?php
             // Liste des films en scroll horizontal
             foreach ($films as $film) { ?>
-                <div class="flex-shrink-0" style="width: 150px;">
-                    <object data="img/img_films/<?= $film->picture ?>" class="img-fluid rounded shadow-sm" alt="<?= $film->title; ?>">
-                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
-                    </object>
+                <a href="index.php?controller=Film&action=details&id_film=<?= $film->id_film ?>" class="filmLink darkTypo" style="text-decoration: none;">
+                    <div class="flex-shrink-0" style="width: 150px;">
+                        <object data="img/img_films/<?= $film->picture ?>" class="img-fluid rounded shadow-sm" alt="<?= $film->title; ?>">
+                            <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                        </object>
 
-                    <p class="text-center fw-bold mt-2 mb-0"><?= $film->title ?></p>
-                    <p class="text-center mt-0"><?= $film->duration ?></p>
-                </div>
+                        <p class="text-center fw-bold mt-2 mb-0"><?= $film->title ?></p>
+                        <p class="text-center mt-0"><?= $film->duration ?></p>
+                    </div>
+                </a>
             <?php
             }
             ?>

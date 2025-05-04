@@ -133,7 +133,7 @@ main {
 }
 
 /* -----------
-/* Affichage des films par genre : responsive & scroll horizontal */
+/* Affichage des films par genre : responsive & scroll horizontal  */
 .filmScroll::-webkit-scrollbar {
     display: none;
     /* Masque la scrollbar sur Chrome/Safari */
@@ -145,4 +145,12 @@ main {
     scrollbar-width: none;
     /* Firefox */
     scroll-behavior: smooth;
+}
+
+.filmLink {
+    transition: all .2s ease-in-out;
+}
+
+.filmLink:hover {
+    transform: scale(1.1)
 }

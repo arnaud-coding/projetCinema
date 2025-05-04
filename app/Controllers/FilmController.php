@@ -14,7 +14,7 @@ use Exception;
 // ----------------------------------
 class FilmController extends Controller
 {
-    // RENDU ACCEUIL FILMS
+    // NAVIGUE VERS ACCEUIL FILMS
     // --------------------
     public function home()
     {
@@ -46,7 +46,7 @@ class FilmController extends Controller
         $filmsByGenres = [];
         foreach ($genres as $name => $id) {
 
-            $films = $this->displayByGenre($id);    // renvoie un tableau de type D2 (cf exemple)
+            $films = $this->getFilmsByGenre($id);    // renvoie un tableau de type D2 (cf exemple)
             $filmsByGenres[$name] = $films;       // ajoute le D2 au D1
         }
 
@@ -61,44 +61,87 @@ class FilmController extends Controller
     }
 
 
-    // AFFICHAGE DE FILMS PAR GENRE
+    // RETOURNE LISTE DE FILMS POUR UN GENRE DONNE
     // --------------------
-    public function displayByGenre($id_genre)
+    private function getFilmsByGenre($id_genre)
     {
 
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue.";
             header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
-        } else {
-            // VERIFIE QUE LE GENRE EXISTE EN BDD
-            $genreModel = new GenreModel();
-            $genre = $genreModel->readByID($id_genre);
-
-            if (!$genre) {
-                // ID GENRE FOURNI NE CORRESPONDANT A AUCUN GENRE DE LA BDD
-                // todo : erreur etrange "applications vous a redirigé à de trop nombreuses reprises."
-                return [];
-            } else {
-
-                // GENRE OK : LECTURE DES FILMS PAR GENRE
-                $filmModel = new FilmModel();
-                $filmsByGenre = $filmModel->readByGenre($id_genre);
-
-                if (!$filmsByGenre) {
-                    // AUCUN FILM POUR LE GENRE FOURNI
-                    return [];
-                } else {
-
-                    // CONVERSION DES MINUTES EN HEURES/MINUTES
-                    foreach ($filmsByGenre as $film) {
-                        $film->duration = $this->convertMinutesToHours($film->duration);
-                    }
-
-                    // FILMS EXISTANTS : RETOUR DU RESULTAT
-                    return $filmsByGenre;
-                }
-            }
+            exit;
         }
+
+        // VERIFIE QUE LE GENRE EXISTE EN BDD
+        $genreModel = new GenreModel();
+        $genre = $genreModel->readByID($id_genre);
+        if (!$genre) {
+            // ID GENRE FOURNI NE CORRESPONDANT A AUCUN GENRE DE LA BDD
+            // todo : erreur etrange "applications vous a redirigé à de trop nombreuses reprises."
+            return [];
+        }
+
+        // GENRE OK : LECTURE DES FILMS PAR GENRE
+        $filmModel = new FilmModel();
+        $filmsByGenre = $filmModel->readByGenre($id_genre);
+        if (!$filmsByGenre) {
+            // AUCUN FILM POUR LE GENRE FOURNI
+            return [];
+        }
+
+        // CONVERSION DES MINUTES EN HEURES/MINUTES
+        foreach ($filmsByGenre as $film) {
+            $film->duration = $this->convertMinutesToHours($film->duration);
+        }
+
+        // FILMS EXISTANTS : RETOUR DU RESULTAT
+        return $filmsByGenre;
+    }
+
+    // NAVIGUE VERS LA PAGE DETAILS FILM
+    // --------------------
+    public function details()
+    {
+        // RECUPERE ID FILM DEPUIS URL
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
+        if (!$id_film) {
+            $message = "Erreur systeme: Contactez l'administrateur du système.";
+            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            exit;
+        }
+
+        // RECUPERE DONNEES FILM
+        $details = $this->getFilmDetails($id_film);
+
+        // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
+        $data = [
+            "details" => $details,
+            "scripts" => []
+        ];
+        // NAVIGATION VERS PAGE
+        $this->render("film/filmDetails", $data);
+    }
+
+    // RETOURNE DETAILS D'UN FILM POUR UN FILM DONNE
+    // --------------------
+    private function getFilmDetails($id_film)
+    {
+        if (!$id_film) {
+            // AUCUN FILM FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
+            $message = "Erreur innatendue.";
+            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            exit;
+        }
+
+        // VERIFIE QUE LE FILM EXISTE EN BDD
+        $filmModel = new FilmModel();
+        $film = $filmModel->readByID($id_film);
+        if (!$film) {
+            // ID FILM FOURNI NE CORRESPONDANT A AUCUN FILM DE LA BDD
+            return null;
+        }
+
+        return $film;
     }
 }

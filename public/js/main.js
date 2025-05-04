@@ -11,6 +11,7 @@ const buttonLinks = document.querySelectorAll(".buttonLinks");
 const profileBtn = document.querySelectorAll(".profileBtn");
 const menuLinks = document.querySelectorAll(".menuLinks");
 const socialIcons = document.querySelectorAll(".socialIcons");
+const filmsLink = document.querySelectorAll(".filmLink");
 
 // RECUPERATION DU MODE DANS LE LOCALSTORAGE
 let darkMode = JSON.parse(localStorage.getItem("darkMode"));
@@ -48,6 +49,10 @@ function fctDarkMode() {
         icon.classList.toggle("darkTypo");
         icon.classList.toggle("lightTypo");
     });
+    filmsLink.forEach((link) => {
+        link.classList.toggle("darkTypo");
+        link.classList.toggle("lightTypo");
+    })
     main.classList.toggle("darkBg");
     footer.classList.toggle("darkBg");
 }
