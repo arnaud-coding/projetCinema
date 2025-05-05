@@ -2,7 +2,7 @@
 <?php include "popUpCookie.php"; ?>
 
 <!-- SCROLL TO TOP BUTTON -->
-<div id="arrowScroll" class="position-fixed bottom-0 end-0 m-4">
+<div id="arrowScroll" class="position-fixed darkBtn profileBtn bottom-0 end-0 m-4">
     <i class="bi bi-arrow-up" title="Remonter en haut de la page"></i>
 </div>
 </div>
