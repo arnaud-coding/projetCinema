@@ -21,15 +21,15 @@ main {
 }
 
 .darkBtn {
-    background-color: #121212;
-    color: #FFF;
+    background-color: #121212 !important;
+    color: #FFF !important;
     border: solid #FFF 2px;
     border-radius: 8px;
 }
 
 .darkBtn:hover {
-    background-color: #FFF;
-    color: #121212;
+    background-color: #FFF !important;
+    color: #121212 !important;
     border: solid #121212 2px;
     border-radius: 8px;
     transition: 0.3s;
@@ -37,15 +37,15 @@ main {
 }
 
 .lightBtn {
-    background-color: #FFF;
-    color: #121212;
+    background-color: #FFF !important;
+    color: #121212 !important;
     border: solid #121212 2px;
     border-radius: 8px;
 }
 
 .lightBtn:hover {
-    background-color: #121212;
-    color: #FFF;
+    background-color: #121212 !important;
+    color: #FFF !important;
     border: solid #FFF 2px;
     border-radius: 8px;
     transition: 0.3s;

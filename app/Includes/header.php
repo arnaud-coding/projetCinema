@@ -40,7 +40,7 @@
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
                 <div class="dropdown">
-                    <i id="userIcon" class="bi bi-person-fill text-dark d-md-none" style="font-size: 34px;"></i>
+                    <i id="userIcon" class="bi bi-person-fill text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px;"></i>
                     <button class="btn darkBtn profileBtn dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         if (isset($_SESSION["user"])) {
@@ -53,19 +53,19 @@
                         }
                         ?>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu darkBtn profileBtn py-0">
                         <?php if (!isset($_SESSION["user"])) : ?>
                             <!-- AUCUN UTILISATEUR CONNECTE -->
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
+                            <li><a class="dropdownUserLinks darkBtn profileBtn dropdown-item" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
+                            <li><a class="dropdownUserLinks darkBtn profileBtn dropdown-item" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                             <?php else :
                             // UTILISATEUR OU ADMIN CONNECTE
                             if ($_SESSION["user"]["type"] === "admin") { ?>
                                 <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                             <?php
                             } ?>
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
-                            <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
+                            <li><a class="dropdownUserLinks dropdown-item text-light" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
+                            <li><a class="dropdownUserLinks dropdown-item text-light" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>

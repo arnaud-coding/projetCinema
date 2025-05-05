@@ -10,6 +10,7 @@ const footer = document.querySelector("footer");
 const buttonLinks = document.querySelectorAll(".buttonLinks");
 const profileBtn = document.querySelectorAll(".profileBtn");
 const userIcon = document.querySelector("#userIcon");
+const dropdownUserLinks = document.querySelectorAll(".dropdownUserLinks");
 const menuLinks = document.querySelectorAll(".menuLinks");
 const socialIcons = document.querySelectorAll(".socialIcons");
 const filmsLink = document.querySelectorAll(".filmLink");
@@ -50,9 +51,13 @@ function toggleDarkMode() {
         button.classList.toggle("darkBtn");
         button.classList.toggle("lightBtn");
     });
-    menuLinks.forEach((icon) => {
-        icon.classList.toggle("darkTypo");
-        icon.classList.toggle("lightTypo");
+    dropdownUserLinks.forEach((link) => {
+        link.classList.toggle("darkBg");
+        link.classList.toggle("lightBg");
+    });
+    menuLinks.forEach((link) => {
+        link.classList.toggle("darkTypo");
+        link.classList.toggle("lightTypo");
     });
     filmsLink.forEach((link) => {
         link.classList.toggle("darkTypo");
