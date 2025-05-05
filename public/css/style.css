@@ -105,20 +105,10 @@ main {
     transition: visibility 0.3s;
     width: 1.5em;
     height: 1.5em;
-    /* background-color: #121212;
-    color: #FFF;
-    border: 3px solid #121212; */
     border-radius: 50%;
     font-size: 2.5em;
     cursor: pointer;
 }
-
-/* #arrowScroll:hover {
-    background-color: #121212;
-    border: solid 2px #FFF;
-    color: #FFF;
-    transition: 0.4s
-} */
 
 /* -----------
 /* Donner son avis avec étoiles */
