@@ -40,16 +40,16 @@ class ActorModel extends DbConnect
     {
         try {
             // PREPARATION DE LA REQUETE SQL
-            $this->request = $this->connection->prepare("SELECT
-                                                            CONCAT(a.firstname, ' ', a.lastname) AS fullname,
-                                                            fa.id_film,
-                                                            fa.id_actor
-                                                         FROM
-                                                            ppc_actor a
-                                                         INNER JOIN
-                                                            ppc_film_actor fa ON fa.id_actor = a.id_actor
-                                                         WHERE
-                                                            id_film = :id_film");
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    a.*
+                 FROM
+                    ppc_actor a
+                 INNER JOIN
+                    ppc_film_actor fa ON fa.id_actor = a.id_actor
+                 WHERE
+                    id_film = :id_film"
+            );
             $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
 
             // EXECUTION DE LA REQUETE SQL
