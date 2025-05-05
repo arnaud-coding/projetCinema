@@ -11,13 +11,13 @@ main {
 /* -----------
 /* Dark/Light mode */
 .darkBg {
-    background-color: #121212;
-    color: #FFF;
+    background-color: #121212 !important;
+    color: #FFF !important;
 }
 
 .lightBg {
-    background-color: #FFF;
-    color: #121212;
+    background-color: #FFF !important;
+    color: #121212 !important;
 }
 
 .darkBtn {
@@ -28,8 +28,8 @@ main {
 }
 
 .lightBtn {
-    background-color: #FFF;
-    color: #121212;
+    background-color: #FFF !important;
+    color: #121212 !important;
     border: solid #FFF 2px !important;
     border-radius: 8px !important;
 }

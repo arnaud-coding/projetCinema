@@ -9,6 +9,7 @@ const main = document.querySelector("main");
 const footer = document.querySelector("footer");
 const buttonLinks = document.querySelectorAll(".buttonLinks");
 const profileBtn = document.querySelectorAll(".profileBtn");
+const userIcon = document.querySelector("#userIcon");
 const menuLinks = document.querySelectorAll(".menuLinks");
 const socialIcons = document.querySelectorAll(".socialIcons");
 const filmsLink = document.querySelectorAll(".filmLink");
@@ -34,6 +35,9 @@ function toggleDarkMode() {
     btnModeDark.classList.toggle("bi-sun-fill");
     btnModeDark.classList.toggle("text-warning");
     btnModeDark.classList.toggle("text-dark");
+
+    userIcon.classList.toggle("text-dark");
+    userIcon.classList.toggle("text-light");
 
     navs.forEach((nav) => {
         nav.classList.toggle("darkBg");
