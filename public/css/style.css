@@ -32,7 +32,7 @@ main {
     color: #121212;
     border: solid #121212 2px;
     border-radius: 8px;
-    transition: 0.5s;
+    transition: 0.3s;
 
 }
 
@@ -48,7 +48,7 @@ main {
     color: #FFF;
     border: solid #FFF 2px;
     border-radius: 8px;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .lightTypo {
