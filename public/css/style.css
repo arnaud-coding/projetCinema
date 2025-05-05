@@ -23,15 +23,29 @@ main {
 .darkBtn {
     background-color: #121212;
     color: #FFF;
-    border: solid #121212 2px !important;
-    border-radius: 8px !important;
+    border: solid #FFF 2px;
+    border-radius: 8px;
+}
+
+.darkBtn:hover {
+    background-color: #FFF;
+    color: #121212;
+    border: solid #121212 2px;
+    border-radius: 8px;
 }
 
 .lightBtn {
-    background-color: #FFF !important;
-    color: #121212 !important;
-    border: solid #FFF 2px !important;
-    border-radius: 8px !important;
+    background-color: #FFF;
+    color: #121212;
+    border: solid #121212 2px;
+    border-radius: 8px;
+}
+
+.lightBtn:hover {
+    background-color: #121212;
+    color: #FFF;
+    border: solid #FFF 2px;
+    border-radius: 8px;
 }
 
 .lightTypo {
