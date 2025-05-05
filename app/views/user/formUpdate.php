@@ -4,7 +4,7 @@
 <div class="d-flex align-items-center">
 
     <!-- TITRE -->
-    <h1 class="flex-grow-1 text-center fs-3 fst-italic">Créer un compte utilisateur</h1>
+    <h1 class="flex-grow-1 text-center fs-3 fst-italic">Modifier un compte utilisateur</h1>
 
     <!-- BOUTON RETOUR -->
     <?php if (($_SESSION["user"]["statut"] ?? null) == "admin") : ?>
@@ -28,27 +28,21 @@
         <form method="post" action="index.php?controller=Utilisateur&action=update">
 
             <!-- TOKEN CSRF -->
-            <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">
+            <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8"); ?>">
 
             <!-- CHAMP ID UTILISATEUR -->
-            <input type="hidden" name="id_utilisateur" value="<?php echo htmlspecialchars($utilisateur->id_utilisateur, ENT_QUOTES, "UTF-8"); ?>">
+            <input type="hidden" name="id_utilisateur" value="<?php echo htmlspecialchars($user->id_user, ENT_QUOTES, "UTF-8"); ?>">
 
-            <!-- CHAMP PRENOM -->
+            <!-- CHAMP PSEUDO -->
             <div class="mb-3">
-                <label for="firstname" class="form-label">Prénom</label>
-                <input id="firstname" class="form-control form-control-sm" type="text" name="firstname" value="<?php echo htmlspecialchars($utilisateur->firstname, ENT_QUOTES, "UTF-8"); ?>">
-            </div>
-
-            <!-- CHAMP NOM -->
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Nom</label>
-                <input id="lastname" class="form-control form-control-sm" type="text" name="lastname" value="<?php echo htmlspecialchars($utilisateur->lastname, ENT_QUOTES, "UTF-8"); ?>">
+                <label for="pseudo" class="form-label">Pseudo</label>
+                <input id="pseudo" class="form-control form-control-sm" type="text" name="pseudo" value="<?php echo htmlspecialchars($user->pseudo, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <!-- CHAMP EMAIL -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input id="email" class="form-control form-control-sm" type="email" name="email" value="<?php echo htmlspecialchars($utilisateur->email, ENT_QUOTES, "UTF-8"); ?>">
+                <input id="email" class="form-control form-control-sm" type="email" name="email" value="<?php echo htmlspecialchars($user->email, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <!-- CHAMP MDP -->
@@ -59,14 +53,14 @@
             </div>
 
             <!-- CHAMP STATUT -->
-            <?php if (($_SESSION["user"]["statut"] ?? null) == "admin") : ?>
+            <?php if (($_SESSION["user"]["type"] ?? null) == "admin") : ?>
                 <div class="mb-3">
                     <label for="statut" class="form-label">Statut</label>
                     <select id="statut" class="form-select form-select-sm" name="statut">
                         <?php
                         $options = ["admin", "user"];
                         foreach ($options as $option) :
-                            $selected = ($utilisateur->statut == $option) ? "selected" : "";
+                            $selected = ($user->type == $option) ? "selected" : "";
                         ?>
                             <option value="<?php echo $option; ?>" <?php echo $selected; ?>><?php echo $option; ?></option>
                         <?php endforeach; ?>

@@ -19,11 +19,11 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
 if ($success !== null) {
     if ($success === '1') {
 ?>
-        <p class="text-center text-success"><?php echo $message ?></p>
+        <p class="text-center text-success"><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
     <?php
     } else {
     ?>
-        <p class="text-center text-danger"><?php echo $message ?></p>
+        <p class="text-center text-danger"><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
 <?php
     }
 }
@@ -36,7 +36,7 @@ if ($success !== null) {
         <form method="post" action="index.php?controller=User&action=login" novalidate>
 
             <!-- TOKEN CSRF -->
-            <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">
+            <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8") ?>">
 
             <!-- CHAMP EMAIL -->
             <div class="mb-3">

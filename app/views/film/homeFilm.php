@@ -1,5 +1,5 @@
 <?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
-<p><?php echo $message ?></p>
+<p><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
 <!--
 $filmsByGenres :
 Un tableau à 2 dimensions contenant :
@@ -41,7 +41,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
     foreach ($filmsByGenres as $genre => $films) { ?>
 
         <!-- Titre du "carroussel netflix" -->
-        <h3 class="mb-0"><?= $genre ?></h3>
+        <h3 class="mb-0"><?= htmlspecialchars($genre, ENT_QUOTES, "UTF-8")  ?></h3>
         <?php
 
         // Parcours dimension 2 : les films du genre courant
@@ -51,21 +51,21 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
         <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
             <!-- Flèche gauche (masquée sur petit écran) -->
-            <button class="scrollLeft btn btn-dark position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
+            <button class="scrollLeft btn btn-secondary position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
                 <i class="bi bi-chevron-left"></i>
             </button>
 
             <?php
             // Liste des films en scroll horizontal
             foreach ($films as $film) { ?>
-                <a href="index.php?controller=Film&action=details&id_film=<?= $film->id_film ?>" class="filmLink darkTypo" style="text-decoration: none;">
+                <a href="index.php?controller=Film&action=details&id_film=<?= htmlspecialchars($film->id_film, ENT_QUOTES, "UTF-8") ?>" class="filmLink darkTypo" style="text-decoration: none;">
                     <div class="flex-shrink-0" style="width: 150px;">
-                        <object data="img/img_films/<?= $film->picture ?>" class="img-fluid rounded shadow-sm" alt="<?= $film->title; ?>">
+                        <object data="img/img_films/<?= htmlspecialchars($film->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?>">
                             <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
                         </object>
 
-                        <p class="text-center fw-bold mt-2 mb-0"><?= $film->title ?></p>
-                        <p class="text-center mt-0"><?= $film->duration ?></p>
+                        <p class="text-center fw-bold mt-2 mb-0"><?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?></p>
+                        <p class="text-center mt-0"><?= htmlspecialchars($film->duration, ENT_QUOTES, "UTF-8") ?></p>
                     </div>
                 </a>
             <?php
@@ -73,15 +73,11 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             ?>
 
             <!-- Flèche droite (masquée sur petit écran) -->
-            <button class="scrollRight btn btn-dark position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
+            <button class="scrollRight btn btn-secondary position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
                 <i class="bi bi-chevron-right"></i>
             </button>
         </div>
     <?php
-
-
     }
     ?>
-
-
 </div>

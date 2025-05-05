@@ -14,8 +14,8 @@
         <form method="post" action="index.php?controller=Utilisateur&action=forgetMdp">
 
             <!-- TOKEN CSRF -->
-            <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"]; ?>">
-             
+            <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8"); ?>">
+
             <!-- CHAMP EMAIL -->
             <div class="mb-3">
                 <label class="form-label" for="email">Email</label>
@@ -27,7 +27,7 @@
                 <button class="btn btn-secondary" type="submit">Envoyer le lien</button>
             </div>
         </form>
-        
+
         <!-- RETOUR EN ARRIERE -->
         <div class="text-center mt-3">
             <a class="text-decoration-none" href="index.php?controller=Utilisateur&action=formlogon">

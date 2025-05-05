@@ -14,7 +14,7 @@
         <form method="post" action="index.php?controller=Utilisateur&action=updateMdp">
 
             <!-- CHAMP TOKEN -->
-            <input type="hidden" name="token" value="<?php echo $_SESSION["token"]["id"];; ?>">  
+            <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8") ?>">
 
             <!-- CHAMP MDP -->
             <div class="mb-3">
