@@ -36,9 +36,32 @@ class ActorModel extends DbConnect
             return $e->errorInfo[1];
         }
     }
-    public function getAllByFilmId()
+    public function getAllByFilmId($id_film)
     {
-        // todo requete SQL sur ppc_film_actor WHERE id_film = ...
-        return ["actors"];
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare("SELECT
+                                                            CONCAT(a.firstname, ' ', a.lastname) AS fullname,
+                                                            fa.id_film,
+                                                            fa.id_actor
+                                                         FROM
+                                                            ppc_actor a
+                                                         INNER JOIN
+                                                            ppc_film_actor fa ON fa.id_actor = a.id_actor
+                                                         WHERE
+                                                            id_film = :id_film");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $actors = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $actors;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
     }
 }

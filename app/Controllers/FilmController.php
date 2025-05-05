@@ -150,13 +150,13 @@ class FilmController extends Controller
 
         // RECUPERE LES ACTEURS DU FILM EN BDD
         $actorModel = new ActorModel();
-        $actors = $actorModel->getAllByFilmId();
+        $actors = $actorModel->getAllByFilmId($id_film);
 
         $film['actors'] = $actors;
 
         // RECUPERE LES REALISATEURS DU FILM EN BDD
         $directorModel = new DirectorModel();
-        $directors = $directorModel->getAllByFilmId();
+        $directors = $directorModel->getAllByFilmId($id_film);
         $film['directors'] = $directors;
 
         return $film;
