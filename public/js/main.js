@@ -14,21 +14,22 @@ const socialIcons = document.querySelectorAll(".socialIcons");
 const filmsLink = document.querySelectorAll(".filmLink");
 
 // RECUPERATION DU MODE DANS LE LOCALSTORAGE
-let darkMode = JSON.parse(localStorage.getItem("darkMode"));
+let darkMode = localStorage.getItem("darkMode") === 'true';
 
 // INITIALISATION DU MODE
 if (darkMode) {
-    fctDarkMode();
+    toggleDarkMode();
 }
 
 // CHANGEMENT DE MODE AU CLICK
 btnModeDark.addEventListener("click", () => {
-    fctDarkMode();
-    localStorage.setItem("darkMode", JSON.stringify(!darkMode));
+    darkMode = !darkMode;
+    toggleDarkMode();
 });
 
 // FONCTION CHANGEMENT DE MODE
-function fctDarkMode() {
+function toggleDarkMode() {
+
     btnModeDark.classList.toggle("bi-moon-fill");
     btnModeDark.classList.toggle("bi-sun-fill");
     btnModeDark.classList.toggle("text-warning");
@@ -55,6 +56,8 @@ function fctDarkMode() {
     })
     main.classList.toggle("darkBg");
     footer.classList.toggle("darkBg");
+
+    localStorage.setItem("darkMode", darkMode);
 }
 
 // OPACITE AU SURVOL
