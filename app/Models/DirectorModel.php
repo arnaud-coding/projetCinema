@@ -36,20 +36,26 @@ class DirectorModel extends DbConnect
             return $e->errorInfo[1];
         }
     }
+
     public function getAllByFilmId($id_film)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
-            $this->request = $this->connection->prepare("SELECT
-                                                            CONCAT(d.firstname, ' ', d.lastname) AS fullname,
-                                                            fd.id_film,
-                                                            fd.id_director
-                                                         FROM
-                                                            ppc_director d
-                                                         INNER JOIN
-                                                            ppc_film_director fd ON fd.id_director = d.id_director
-                                                         WHERE
-                                                            id_film = :id_film");
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    CONCAT(d.firstname, ' ', d.lastname) AS name,
+                    d.birth_date,
+                    d.death_date,
+                    d.picture,
+                    fd.id_film,
+                    fd.id_director
+                 FROM
+                    ppc_director d
+                 INNER JOIN
+                    ppc_film_director fd ON fd.id_director = d.id_director
+                 WHERE
+                    id_film = :id_film"
+            );
             $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
 
             // EXECUTION DE LA REQUETE SQL

@@ -51,7 +51,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
         <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
             <!-- Flèche gauche (masquée sur petit écran) -->
-            <button class="scrollLeft btn btn-secondary position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
+            <button class="scrollLeft btn darkBtn btnWithBorders position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
                 <i class="bi bi-chevron-left"></i>
             </button>
 
@@ -73,7 +73,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             ?>
 
             <!-- Flèche droite (masquée sur petit écran) -->
-            <button class="scrollRight btn btn-secondary position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
+            <button class="scrollRight btn darkBtn btnWithBorders position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
                 <i class="bi bi-chevron-right"></i>
             </button>
         </div>

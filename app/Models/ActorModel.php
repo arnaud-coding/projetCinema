@@ -36,13 +36,19 @@ class ActorModel extends DbConnect
             return $e->errorInfo[1];
         }
     }
+
     public function getAllByFilmId($id_film)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
-                    a.*
+                    CONCAT(a.firstname, ' ', a.lastname) AS name,
+                    a.birth_date,
+                    a.death_date,
+                    a.picture,
+                    fa.id_film,
+                    fa.id_actor
                  FROM
                     ppc_actor a
                  INNER JOIN

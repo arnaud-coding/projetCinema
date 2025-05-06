@@ -8,7 +8,7 @@ const navs = document.querySelectorAll(".navbar");
 const main = document.querySelector("main");
 const footer = document.querySelector("footer");
 const buttonLinks = document.querySelectorAll(".buttonLinks");
-const profileBtn = document.querySelectorAll(".profileBtn");
+const btnWithBorders = document.querySelectorAll(".btnWithBorders");
 const userIcon = document.querySelector("#userIcon");
 const dropdownUserLinks = document.querySelectorAll(".dropdownUserLinks");
 const menuLinks = document.querySelectorAll(".menuLinks");
@@ -47,7 +47,7 @@ function toggleDarkMode() {
         button.classList.toggle("btn-outline-dark");
         button.classList.toggle("btn-outline-light");
     });
-    profileBtn.forEach((button) => {
+    btnWithBorders.forEach((button) => {
         button.classList.toggle("darkBtn");
         button.classList.toggle("lightBtn");
     });

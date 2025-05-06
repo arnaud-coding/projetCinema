@@ -148,10 +148,17 @@ class FilmController extends Controller
         }
         $film['details'] = $details;
 
+        // CONVERSION DES MINUTES EN HEURES/MINUTES
+        $film['details']->duration = $this->convertMinutesToHours($film['details']->duration);
+
+        // RECUPERE LE(S) GENRE(S)
+        $genreModel = new GenreModel();
+        $genres = $genreModel->getAllByFilmId($id_film);
+        $film["genres"] = $genres;
+
         // RECUPERE LES ACTEURS DU FILM EN BDD
         $actorModel = new ActorModel();
         $actors = $actorModel->getAllByFilmId($id_film);
-
         $film['actors'] = $actors;
 
         // RECUPERE LES REALISATEURS DU FILM EN BDD
