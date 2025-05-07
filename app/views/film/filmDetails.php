@@ -1,4 +1,29 @@
 <?php
+
+function displayNames($persons, $max = null)
+{
+    $count = count($persons);
+    $max = $max == null ? $count : $max;
+    for ($i = 0; $i < $count; $i++) {
+        if ($i === $max - 1) {
+            // affichage du dernier élément
+            $name = $persons[$i]->name; ?>
+            <a href="" class="darkTypo menuLinks">
+                <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
+            </a>
+        <?php
+            break;
+        } else {
+            // affichage du 1er à l'avant dernier élément
+            $name = $persons[$i]->name . ", "; ?>
+            <a href="" class="darkTypo menuLinks">
+                <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
+            </a>
+    <?php
+        }
+    }
+};
+
 if (!$film) { ?>
     <p class="d-flex justify-content-center">Le film n'existe pas.</p>
 <?php
@@ -10,7 +35,7 @@ if (!$film) { ?>
 
         <!-- MENU DES DÉTAILS DU FILM -->
         <nav class="d-flex justify-content-center mt-4 mb-4">
-            <div class="nav nav-pills" id="pills-tab" role="tablist">
+            <div class="nav nav-pills d-flex flex-nowrap" id="pills-tab" role="tablist">
                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
                 <button class="nav-link" id="pills-casting-tab" data-bs-toggle="pill" data-bs-target="#pills-casting" type="button" role="tab" aria-controls="pill-casting" aria-selected="false">Casting</button>
                 <button class="nav-link" id="pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pill-reviews" aria-selected="false">Critiques</button>
@@ -21,7 +46,7 @@ if (!$film) { ?>
         <!-- CONTENU PRINCIPAL DE LA PAGE -->
         <div class="tab-content" id="pills-tabContent">
 
-            <!-- ACCEUIL DETAILS -->
+            <!-- ACCUEIL DETAILS -->
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="d-flex mb-3">
                     <!-- AFFICHE FILM -->
@@ -36,56 +61,59 @@ if (!$film) { ?>
                         <p>
                             Sorti en <?= "<b>" . htmlspecialchars($film["details"]->release_year, ENT_QUOTES, "UTF-8") . "</b> | "
                                             . htmlspecialchars($film["details"]->duration, ENT_QUOTES, "UTF-8") . " | " ?>
-                            <a href="" class="darkTypo menuLinks">
-                                <b><?= htmlspecialchars($film["genres"][0]->name, ENT_QUOTES, "UTF-8") . ", " ?></b>
-                            </a>
-                            <a href="" class="darkTypo menuLinks">
-                                <b><?= htmlspecialchars($film["genres"][1]->name, ENT_QUOTES, "UTF-8")  ?></b>
-                            </a>
+                            <?php
+                            displayNames($film["genres"]);
+                            ?>
                         </p>
                         <!-- REALISATEURS(S) -->
                         <p>
-                            Réalisé par
-                            <?php
-                            if (count($film["directors"]) === 1) { ?>
-                                <a href="" class="darkTypo menuLinks">
-                                    <b><?= htmlspecialchars($film["directors"][0]->name, ENT_QUOTES, "UTF-8") ?></b>
-                                </a>
-                            <?php
-                            } else { ?>
-                                <a href="" class="darkTypo menuLinks">
-                                    <b><?= htmlspecialchars($film["directors"][0]->name, ENT_QUOTES, "UTF-8") . ", " ?></b>
-                                </a>
-                                <a href="" class="darkTypo menuLinks">
-                                    <b><?= htmlspecialchars($film["directors"][1]->name, ENT_QUOTES, "UTF-8") ?></b>
-                                </a>
-                            <?php
-                            } ?>
-
+                            Réalisé par <?php displayNames($film["directors"]) ?>
                         </p>
                         <!-- LES 3 ACTEURS PRINCIPAUX -->
                         <p>
-                            Avec
-                            <a href="" class="darkTypo menuLinks">
-                                <b><?= htmlspecialchars($film["actors"][0]->name, ENT_QUOTES, "UTF-8") . ", " ?></b>
-                            </a>
-                            <a href="" class="darkTypo menuLinks">
-                                <b><?= htmlspecialchars($film["actors"][1]->name, ENT_QUOTES, "UTF-8") . ", " ?></b>
-                            </a>
-                            <a href="" class="darkTypo menuLinks">
-                                <b><?= htmlspecialchars($film["actors"][2]->name, ENT_QUOTES, "UTF-8") ?></b>
-                            </a>
+                            Avec <?php displayNames($film["actors"], 3) ?>
                         </p>
                     </div>
                 </div>
                 <!-- SYNOPSIS -->
-                <h5>Synopsis :</h5>
+                <h4>Synopsis :</h4>
                 <p><?= htmlspecialchars($film["details"]->synopsis, ENT_QUOTES, "UTF-8") ?></p>
             </div>
 
             <!-- CASTING -->
             <div class="tab-pane fade" id="pills-casting" role="tabpanel" aria-labelledby="pills-casting-tab" tabindex="0">
-                VADOR : JE SUIS ...
+                <div>
+                    <h3 class="mb-4">Réalisateur(s)</h3>
+                    <div>
+                        <?php foreach ($film["directors"] as $director) { ?>
+                            <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo" style="text-decoration: none;">
+                                <div class="flex-shrink-0" style="width: 150px;">
+                                    <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>">
+                                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                                    </object>
+                                    <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?></p>
+                                </div>
+                            </a>
+                        <?php
+                        } ?>
+                    </div>
+                </div>
+                <div class="container-fluid mt-5">
+                    <h3 class="mb-4">Acteurs</h3>
+                    <div class="row">
+                        <?php foreach ($film["actors"] as $actor) { ?>
+                            <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 darkTypo" style="text-decoration: none;">
+                                <div style="width: 150px;">
+                                    <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>">
+                                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                                    </object>
+                                    <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?></p>
+                                </div>
+                            </a>
+                        <?php
+                        } ?>
+                    </div>
+                </div>
             </div>
 
             <!-- CRITIQUES -->
@@ -99,6 +127,5 @@ if (!$film) { ?>
             </div>
         </div>
     </div>
-<?php
-    var_dump($film);
+<?php var_dump($film);
 } ?>
