@@ -1,5 +1,5 @@
 <?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
-<p><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
+<p><?= $message ?></p>
 <!--
 $filmsByGenres :
 Un tableau à 2 dimensions contenant :

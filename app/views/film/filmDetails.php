@@ -1,22 +1,35 @@
 <?php
 
-function displayNames($persons, $max = null)
+function displayNames($items, $max = null, $controller = null)
 {
-    $count = count($persons);
+    $count = count($items);
     $max = $max == null ? $count : $max;
+
     for ($i = 0; $i < $count; $i++) {
+
+        if ($controller === "Genre") {
+            $key = "id_genre";
+            $id = $items[$i]->id_genre;
+        } elseif ($controller === "Actor") {
+            $key = "id_actor";
+            $id = $items[$i]->id_actor;
+        } elseif ($controller === "Director") {
+            $key = "id_director";
+            $id = $items[$i]->id_director;
+        }
+
         if ($i === $max - 1) {
             // affichage du dernier élément
-            $name = $persons[$i]->name; ?>
-            <a href="" class="darkTypo menuLinks">
+            $name = $items[$i]->name; ?>
+            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks linksOnHover">
                 <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
             </a>
         <?php
             break;
         } else {
             // affichage du 1er à l'avant dernier élément
-            $name = $persons[$i]->name . ", "; ?>
-            <a href="" class="darkTypo menuLinks">
+            $name = $items[$i]->name . ", "; ?>
+            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks linksOnHover">
                 <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
             </a>
     <?php
@@ -25,7 +38,7 @@ function displayNames($persons, $max = null)
 };
 
 if (!$film) { ?>
-    <p class="d-flex justify-content-center">Le film n'existe pas.</p>
+    <p class="d-flex justify-content-center">Aucune donnée trouvée pour ce film</p>
 <?php
 } else { ?>
 
@@ -62,16 +75,16 @@ if (!$film) { ?>
                             Sorti en <?= "<b>" . htmlspecialchars($film["details"]->release_year, ENT_QUOTES, "UTF-8") . "</b> | "
                                             . htmlspecialchars($film["details"]->duration, ENT_QUOTES, "UTF-8") . " | " ?>
                             <?php
-                            displayNames($film["genres"]);
+                            displayNames($film["genres"], null, "Genre");
                             ?>
                         </p>
                         <!-- REALISATEURS(S) -->
                         <p>
-                            Réalisé par <?php displayNames($film["directors"]) ?>
+                            Réalisé par <?php displayNames($film["directors"], null, "Director") ?>
                         </p>
                         <!-- LES 3 ACTEURS PRINCIPAUX -->
                         <p>
-                            Avec <?php displayNames($film["actors"], 3) ?>
+                            Avec <?php displayNames($film["actors"], 3, "Actor") ?>
                         </p>
                     </div>
                 </div>
@@ -84,10 +97,10 @@ if (!$film) { ?>
             <div class="tab-pane fade" id="pills-casting" role="tabpanel" aria-labelledby="pills-casting-tab" tabindex="0">
                 <div>
                     <h3 class="mb-4">Réalisateur(s)</h3>
-                    <div>
+                    <div class="d-flex">
                         <?php foreach ($film["directors"] as $director) { ?>
-                            <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo" style="text-decoration: none;">
-                                <div class="flex-shrink-0" style="width: 150px;">
+                            <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks" style="text-decoration: none;">
+                                <div class="me-5" style="width: 150px;">
                                     <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>">
                                         <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
                                     </object>
@@ -102,7 +115,7 @@ if (!$film) { ?>
                     <h3 class="mb-4">Acteurs</h3>
                     <div class="row">
                         <?php foreach ($film["actors"] as $actor) { ?>
-                            <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 darkTypo" style="text-decoration: none;">
+                            <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 darkTypo menuLinks" style="text-decoration: none;">
                                 <div style="width: 150px;">
                                     <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>">
                                         <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
@@ -127,5 +140,5 @@ if (!$film) { ?>
             </div>
         </div>
     </div>
-<?php var_dump($film);
+<?php
 } ?>

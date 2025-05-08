@@ -21,7 +21,19 @@ class DirectorModel extends DbConnect
     {
         try {
             // PREPARATION DE LA REQUETE SQL
-            $this->request = $this->connection->prepare("SELECT * FROM ppc_director WHERE id_director = :id_director");
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    CONCAT(firstname, ' ', lastname) AS name,
+                    birth_date,
+                    death_date,
+                    biography,
+                    nationality,
+                    picture
+                FROM
+                    ppc_director
+                WHERE
+                    id_director = :id_director"
+            );
             $this->request->bindValue(":id_director", $id_director, PDO::PARAM_INT);
 
             // EXECUTION DE LA REQUETE SQL
@@ -44,8 +56,6 @@ class DirectorModel extends DbConnect
             $this->request = $this->connection->prepare(
                 "SELECT
                     CONCAT(d.firstname, ' ', d.lastname) AS name,
-                    d.birth_date,
-                    d.death_date,
                     d.picture,
                     fd.id_film,
                     fd.id_director

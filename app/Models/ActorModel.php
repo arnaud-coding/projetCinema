@@ -14,14 +14,23 @@ use App\Core\DbConnect;
 // -----------------------------
 class ActorModel extends DbConnect
 {
-    // ---------------
-    //  LIRE UN ACTOR PAR SON ID
-    // ---------------
     public function readByID($id_actor)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
-            $this->request = $this->connection->prepare("SELECT * FROM ppc_actor WHERE id_actor = :id_actor");
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    CONCAT(firstname, ' ', lastname) AS name,
+                    birth_date,
+                    death_date,
+                    biography,
+                    nationality,
+                    picture
+                 FROM
+                     ppc_actor
+                 WHERE
+                     id_actor = :id_actor"
+            );
             $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
 
             // EXECUTION DE LA REQUETE SQL
@@ -44,8 +53,6 @@ class ActorModel extends DbConnect
             $this->request = $this->connection->prepare(
                 "SELECT
                     CONCAT(a.firstname, ' ', a.lastname) AS name,
-                    a.birth_date,
-                    a.death_date,
                     a.picture,
                     fa.id_film,
                     fa.id_actor

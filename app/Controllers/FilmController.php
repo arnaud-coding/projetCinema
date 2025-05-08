@@ -27,7 +27,8 @@ class FilmController extends Controller
             "Action" => 1,
             "Drame" => 5,
             "Horreur" => 6,
-            "Thriller" => 9
+            "Thriller" => 9,
+            "Crime" => 19
         ];
 
         /*
@@ -87,7 +88,7 @@ class FilmController extends Controller
 
         // GENRE OK : LECTURE DES FILMS PAR GENRE
         $filmModel = new FilmModel();
-        $filmsByGenre = $filmModel->readByGenre($id_genre);
+        $filmsByGenre = $filmModel->readAllByGenre($id_genre);
         if (!$filmsByGenre) {
             // AUCUN FILM POUR LE GENRE FOURNI
             return [];

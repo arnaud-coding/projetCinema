@@ -37,9 +37,65 @@ class FilmModel extends DbConnect
     }
 
     // ---------------
+    //  LIRE LES FILMS D'UN ACTEUR
+    // ---------------
+    public function readAllByActorId($id_actor)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "SELECT f.*
+                 FROM ppc_film f
+                 INNER JOIN ppc_film_actor fa ON f.id_film = fa.id_film
+                 WHERE fa.id_actor = :id_actor"
+            );
+            $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $films = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $films;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
+    }
+
+    // ---------------
+    //  LIRE LES FILMS D'UN REALISATEUR
+    // ---------------
+    public function readAllByDirectorId($id_director)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "SELECT f.*
+                 FROM ppc_film f
+                 INNER JOIN ppc_film_director fd ON f.id_film = fd.id_film
+                 WHERE fd.id_director = :id_director"
+            );
+            $this->request->bindValue(":id_director", $id_director, PDO::PARAM_INT);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $films = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $films;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
+    }
+
+    // ---------------
     //  LIRE DES FILM PAR GENRE
     // ---------------
-    public function readByGenre($id_genre)
+    public function readAllByGenre($id_genre)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
@@ -95,7 +151,7 @@ class FilmModel extends DbConnect
                 WHERE f.id_film IN (
                     SELECT id_film
                     FROM ppc_film_genre
-                    WHERE id_genre = 7
+                    WHERE id_genre = :id_genre
                 )
                 GROUP BY f.id_film;"
             );
