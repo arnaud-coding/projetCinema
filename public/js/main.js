@@ -12,7 +12,7 @@ const btnWithBorders = document.querySelectorAll(".btnWithBorders");
 const userIcon = document.querySelector("#userIcon");
 const dropdownUserLinks = document.querySelectorAll(".dropdownUserLinks");
 const menuLinks = document.querySelectorAll(".menuLinks");
-const socialIcons = document.querySelectorAll(".socialIcons");
+const linksOnHover = document.querySelectorAll(".linksOnHover");
 const filmsLink = document.querySelectorAll(".filmLink");
 
 // RECUPERATION DU MODE DANS LE LOCALSTORAGE
@@ -76,7 +76,7 @@ btnModeDark.addEventListener("mouseover", () => {
 btnModeDark.addEventListener("mouseout", () => {
     btnModeDark.classList.remove("opacity-75");
 });
-socialIcons.forEach((icon) => {
+linksOnHover.forEach((icon) => {
     icon.addEventListener("mouseover", () => {
         icon.classList.add("opacity-75");
     });

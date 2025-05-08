@@ -29,7 +29,7 @@
                 <!-- LOGO -->
                 <a class="navbar-brand fs-2 fw-bold ms-3" href="index.php">
                     <img src="img/logo.png" alt="Logo" width="50" height="50">
-                    <i class="darkTypo menuLinks d-none d-md-inline">MovieLovers</i>
+                    <i class="linksOnHover darkTypo menuLinks d-none d-md-inline">MovieLovers</i>
                 </a>
 
                 <!-- CHAMP DE RECHERCHE -->
@@ -40,7 +40,7 @@
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
                 <div class="dropdown">
-                    <i id="userIcon" class="bi bi-person-fill text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px;"></i>
+                    <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px;"></i>
                     <button class="btn darkBtn btnWithBorders dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         if (isset($_SESSION["user"])) {
