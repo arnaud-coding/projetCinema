@@ -12,7 +12,16 @@ class DirectorController extends Controller
     // RENDU ACCEUIL REALISATEURS
     public function home()
     {
-        $this->render("director/homeDirector");
+        $directorModel = new DirectorModel();
+        $directors = $directorModel->readAll();
+
+        // SCRIPTS JS
+        $data = [
+            "directors" => $directors,
+            "scripts" => []
+        ];
+
+        $this->render("director/homeDirector", $data);
     }
 
     // NAVIGUE VERS LA PAGE DETAILS REALISATEUR

@@ -55,14 +55,16 @@
                         <!-- NAISSANCE -->
                         <p>Naissance <b><?= $formatter->format($birthDate) ?></b></p>
                         <!-- DECES -->
-                        <p>
-                            <?php if ($actor["details"]->death_date !== null) { ?>
+                        <?php if ($actor["details"]->death_date !== null) { ?>
+                            <p>
                                 Décès <b><?= $formatter->format($birthDate) ?></b> à l'âge de <?= $age ?> ans
-                        </p>
-                    <?php } else { ?>
-                        <!-- AGE -->
-                        <p>Age <b><?= $age ?> ans</b></p>
-                    <?php } ?>
+                            </p>
+                        <?php
+                        } else { ?>
+                            <!-- AGE -->
+                            <p>Age <b><?= $age ?> ans</b></p>
+                        <?php
+                        } ?>
                     </div>
                 </div>
             </div>

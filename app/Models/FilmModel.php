@@ -131,7 +131,7 @@ class FilmModel extends DbConnect
     // ---------------
     //  LIRE DES FILMS ET TOUTES DONNEES RELIES A CHAQUE FILM, PAR GENRE DE FILM
     // ---------------
-    public function readAllInfosByGenre($id_genre)
+    public function readAllInfosByGenre($id_genre) // PAS UTILISE
     {
         try {
             // PREPARATION DE LA REQUETE SQL

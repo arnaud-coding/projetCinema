@@ -13,7 +13,17 @@ class ActorController extends Controller
     // ----------------------
     public function home()
     {
-        $this->render("actor/homeActor");
+        $actorModel = new ActorModel();
+        $actors = $actorModel->readAll();
+
+        // SCRIPTS JS
+        $data = [
+            "actors" => $actors,
+            "scripts" => []
+        ];
+
+        // NAVIGATION VERS PAGE
+        $this->render("actor/homeActor", $data);
     }
 
     // NAVIGUE VERS LA PAGE DETAILS FILM

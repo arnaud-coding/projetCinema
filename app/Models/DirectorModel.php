@@ -23,6 +23,7 @@ class DirectorModel extends DbConnect
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
+                    id_director,
                     CONCAT(firstname, ' ', lastname) AS name,
                     birth_date,
                     death_date,
@@ -44,6 +45,31 @@ class DirectorModel extends DbConnect
 
             // RETOUR DU RESULTAT
             return $director;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
+    }
+
+    public function readAll()
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    id_director,
+                    CONCAT(firstname, ' ', lastname) AS name,
+                    picture
+                 FROM ppc_director"
+            );
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $directors = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $directors;
         } catch (PDOException $e) {
             return $e->errorInfo[1];
         }
