@@ -1,32 +1,31 @@
-<?php
-// FORMATAGE DATE ET CALCUL AGE
-$birthDate = new DateTime($director["details"]->birth_date);
-$today = new DateTime();
-$age = $today->diff($birthDate)->y;
-if ($director["details"]->death_date !== null) {
-    $deathDate = new DateTime($director["details"]->death_date);
-    $age = $deathDate->diff($birthDate)->y;
-}
-$formatter = new IntlDateFormatter(
-    'fr_FR',               // Langue : français
-    IntlDateFormatter::LONG,
-    IntlDateFormatter::NONE,
-    'Europe/Paris',        // Fuseau horaire
-    IntlDateFormatter::GREGORIAN,
-    'd MMMM yyyy'          // Format : "4 novembre 1969"
-);
-
-$message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
+<?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
 <p><?= $message ?></p>
 
 <?php if (!$director) { ?>
-    <p class="d-flex justify-content-center">Aucune donnée trouvée pour ce réalisateur</p>
+    <p class="text-center">Aucune donnée trouvée pour ce réalisateur</p>
 <?php
-} else { ?>
+} else {
+
+    // FORMATAGE DATE ET CALCUL AGE
+    $birthDate = new DateTime($director["details"]->birth_date);
+    $today = new DateTime();
+    $age = $today->diff($birthDate)->y;
+    if ($director["details"]->death_date !== null) {
+        $deathDate = new DateTime($director["details"]->death_date);
+        $age = $deathDate->diff($birthDate)->y;
+    }
+    $formatter = new IntlDateFormatter(
+        'fr_FR',               // Langue : français
+        IntlDateFormatter::LONG,
+        IntlDateFormatter::NONE,
+        'Europe/Paris',        // Fuseau horaire
+        IntlDateFormatter::GREGORIAN,
+        'd MMMM yyyy'          // Format : "4 novembre 1969"
+    ) ?>
 
     <div class="container mt-4">
         <!-- TITRE PRINCIPAL = TITRE DU FILM -->
-        <h2 class="d-flex justify-content-center fw-bolder"><?= htmlspecialchars($director["details"]->name, ENT_QUOTES, "UTF-8") ?></h2>
+        <h2 class="text-center fw-bolder"><?= htmlspecialchars($director["details"]->name, ENT_QUOTES, "UTF-8") ?></h2>
 
         <!-- MENU DES DÉTAILS DU FILM -->
         <nav class="d-flex justify-content-center mt-4 mb-4">

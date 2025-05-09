@@ -4,15 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
 use App\Entities\User as User;
-use App\Entities\Mail as Mail;
 use App\Models\UserModel as UserModel;
-use App\Models\MailModel as MailModel;
-use Exception;
-use DateTime;
 
-// ------------------------------------
-// CLASSE CONTROLEUR DE L'ENTITE CLIENT
-// ------------------------------------
 class UserController extends Controller
 {
     // -----------------------------------------------------
@@ -106,16 +99,16 @@ class UserController extends Controller
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
                         header("Location: index.php?controller=Home&action=home");
                     } else {
-                        header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Mot de passe ou identifiant incorrect."));
+                        header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Mot de passe ou identifiant incorrect"));
                     }
                 } else {
-                    header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Le pseudo et l'email doivent être renseignés."));
+                    header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Le pseudo et l'email doivent être renseignés"));
                 }
             } else {
-                header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur inattendue."));
+                header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur inattendue"));
             }
         } else {
-            header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur interne."));
+            header("Location: index.php?controller=User&action=formLogin&success=" . false . "&message=" . urlencode("Erreur interne"));
         }
     }
     // ---------------------------
@@ -363,19 +356,19 @@ class UserController extends Controller
                         $redirect = "index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message);
                     } else {
                         if ($success === 1062) {
-                            $message = "Le pseudo ou l'adresse mail existe déja.";
+                            $message = "Le pseudo ou l'adresse mail existe déja";
                         } else {
-                            $message = "Unexpected error occured. Please try later.";
+                            $message = "Erreur innatendue";
                         }
                     }
                 } else {
-                    $message = "Tous les champs du formulaire doivent être remplis.";
+                    $message = "Tous les champs du formulaire doivent être remplis";
                 }
             } else {
-                $message = "Token error.";
+                $message = "Token error";
             }
         } else {
-            $message = "Internal error.";
+            $message = "Internal error";
         }
 
         // Sortie commune à tous les cas de figure

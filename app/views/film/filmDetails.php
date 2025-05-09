@@ -38,13 +38,13 @@ function displayNames($items, $max = null, $controller = null)
 };
 
 if (!$film) { ?>
-    <p class="d-flex justify-content-center">Aucune donnée trouvée pour ce film</p>
+    <p class="text-center">Aucune donnée trouvée pour ce film</p>
 <?php
 } else { ?>
 
     <div class="container mt-4">
         <!-- TITRE PRINCIPAL = TITRE DU FILM -->
-        <h2 class="d-flex justify-content-center fw-bolder"><?= htmlspecialchars($film["details"]->title, ENT_QUOTES, "UTF-8") ?></h2>
+        <h2 class="text-center fw-bolder"><?= htmlspecialchars($film["details"]->title, ENT_QUOTES, "UTF-8") ?></h2>
 
         <!-- MENU DES DÉTAILS DU FILM -->
         <nav class="d-flex justify-content-center mt-4 mb-4">

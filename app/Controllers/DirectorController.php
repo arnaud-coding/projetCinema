@@ -3,14 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
-// use App\Entities\Director as Director;
 use App\Models\DirectorModel as DirectorModel;
 use App\Models\FilmModel as FilmModel;
-use Exception;
 
-// ------------------------------------
-// CLASSE CONTROLEUR DE LA PAGE REALISATEURS
-// ------------------------------------
 class DirectorController extends Controller
 {
 
@@ -27,7 +22,7 @@ class DirectorController extends Controller
         // RECUPERE ID FILM DEPUIS URL
         $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : null;
         if (!$id_director) {
-            $message = "Erreur systeme: Contactez l'administrateur du système.";
+            $message = "Erreur systeme: Contactez l'administrateur du système";
             header("Location: index.php?controller=Director&action=home&message=" . urlencode($message));
             exit;
         }
@@ -50,7 +45,7 @@ class DirectorController extends Controller
     {
         if (!$id_director) {
             // AUCUN ACTEUR FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue.";
+            $message = "Erreur innatendue";
             header("Location: index.php?controller=Director&action=home&message=" . urlencode($message));
             exit;
         }

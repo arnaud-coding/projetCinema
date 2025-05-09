@@ -3,18 +3,11 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
-// use App\Entities\Film as Film;
-// use App\Entities\Actor as Actor;
-// use App\Entities\Director as Director;
 use App\Models\FilmModel as FilmModel;
 use App\Models\ActorModel as ActorModel;
 use App\Models\DirectorModel as DirectorModel;
 use App\Models\GenreModel as GenreModel;
-use Exception;
 
-// ----------------------------------
-// CLASSE CONTROLEUR DE LA PAGE FILMS
-// ----------------------------------
 class FilmController extends Controller
 {
     // NAVIGUE VERS ACCEUIL FILMS
@@ -72,7 +65,7 @@ class FilmController extends Controller
 
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue.";
+            $message = "Erreur innatendue";
             header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
             exit;
         }
@@ -82,7 +75,6 @@ class FilmController extends Controller
         $genre = $genreModel->readByID($id_genre);
         if (!$genre) {
             // ID GENRE FOURNI NE CORRESPONDANT A AUCUN GENRE DE LA BDD
-            // todo : erreur etrange "applications vous a redirigé à de trop nombreuses reprises."
             return [];
         }
 
@@ -110,7 +102,7 @@ class FilmController extends Controller
         // RECUPERE ID FILM DEPUIS URL
         $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
         if (!$id_film) {
-            $message = "Erreur systeme: Contactez l'administrateur du système.";
+            $message = "Erreur systeme: Contactez l'administrateur du système";
             header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
             exit;
         }
@@ -133,7 +125,7 @@ class FilmController extends Controller
     {
         if (!$id_film) {
             // AUCUN FILM FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue.";
+            $message = "Erreur innatendue";
             header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
             exit;
         }
