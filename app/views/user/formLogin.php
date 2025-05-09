@@ -7,7 +7,7 @@
     <h1 class="flex-grow-1 text-center fs-3 fst-italic">Se connecter à mon compte</h1>
 
     <!-- BOUTON RETOUR -->
-    <a class="btn btn-outline-secondary" href="index.php?controller=Home&action=home"
+    <a class="btn darkBtn btnWithBorders" href="index.php?controller=Home&action=home"
         title="Retour en arrière">
         <i class="bi bi-x-lg"></i>
     </a>
@@ -31,8 +31,8 @@ if ($success !== null) {
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
-<div class="card mx-auto my-3 bg-light" style="width: 300px;">
-    <div class="card-body">
+<div class="card mx-auto my-3" style="width: 300px;">
+    <div class="card-body lightBg dropdownUserLinks">
         <form method="post" action="index.php?controller=User&action=login" novalidate>
 
             <!-- TOKEN CSRF -->
@@ -57,14 +57,14 @@ if ($success !== null) {
 
             <!-- BOUTON D'ENVOI -->
             <div class="d-grid">
-                <button class="btn btn-dark" type="submit">Valider</button>
+                <button class="btn darkBtn btnWithBorders" type="submit">Valider</button>
             </div>
         </form>
 
         <!-- LIEN VERS LA CREATION DE COMPTE -->
         <div class="text-center mt-4">
             <p class="fw-bold">Vous n'avez pas enore de compte ?</p>
-            <a class="btn btn-outline-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a>
+            <a class="btn lightBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a>
         </div>
     </div>
 </div>

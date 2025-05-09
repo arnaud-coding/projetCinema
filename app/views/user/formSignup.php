@@ -7,7 +7,7 @@
     <h1 class="flex-grow-1 text-center fs-3 fst-italic">Inscription</h1>
 
     <!-- BOUTON RETOUR -->
-    <a class="btn btn-outline-secondary" href="index.php?controller=User&action=formLogin"
+    <a class="btn darkBtn btnWithBorders" href="index.php?controller=User&action=formLogin"
         title="Retour en arrière">
         <i class="bi bi-x-lg"></i>
     </a>
@@ -21,8 +21,8 @@
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
-<div class="card mx-auto my-3 bg-light" style="width: 300px;">
-    <div class="card-body">
+<div class="card mx-auto my-3" style="width: 300px;">
+    <div class="card-body lightBg dropdownUserLinks">
         <form id="formSignup" method="post" action="index.php?controller=User&action=create" novalidate>
 
             <!-- TOKEN CSRF -->
@@ -145,7 +145,7 @@
 
             <!-- BOUTON D'ENVOI -->
             <div class="d-flex justify-content-center">
-                <button class="btn btn-dark" type="submit">Valider</button>
+                <button class="btn darkBtn btnWithBorders" type="submit">Valider</button>
             </div>
         </form>
     </div>
