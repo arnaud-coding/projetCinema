@@ -22,7 +22,7 @@
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="card mx-auto my-3" style="width: 300px;">
-    <div class="card-body lightBg dropdownUserLinks">
+    <div class="card-body lightForm formDarkMode">
         <form id="formSignup" method="post" action="index.php?controller=User&action=create" novalidate>
 
             <!-- TOKEN CSRF -->

@@ -10,7 +10,8 @@ const footer = document.querySelector("footer");
 const buttonLinks = document.querySelectorAll(".buttonLinks");
 const btnWithBorders = document.querySelectorAll(".btnWithBorders");
 const userIcon = document.querySelector("#userIcon");
-const dropdownUserLinks = document.querySelectorAll(".dropdownUserLinks");
+const dropdownUserBtn = document.querySelectorAll(".dropdownUserBtn");
+const formDarkMode = document.querySelectorAll(".formDarkMode");
 const menuLinks = document.querySelectorAll(".menuLinks");
 const linksOnHover = document.querySelectorAll(".linksOnHover");
 const filmsLink = document.querySelectorAll(".filmLink");
@@ -51,9 +52,13 @@ function toggleDarkMode() {
         button.classList.toggle("darkBtn");
         button.classList.toggle("lightBtn");
     });
-    dropdownUserLinks.forEach((link) => {
-        link.classList.toggle("darkBg");
-        link.classList.toggle("lightBg");
+    dropdownUserBtn.forEach((btn) => {
+        btn.classList.toggle("darkBg");
+        btn.classList.toggle("lightBg");
+    });
+    formDarkMode.forEach((form) => {
+        form.classList.toggle("darkForm");
+        form.classList.toggle("lightForm");
     });
     menuLinks.forEach((link) => {
         link.classList.toggle("darkTypo");

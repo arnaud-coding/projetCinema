@@ -22,7 +22,7 @@
             <div class="container flex-nowrap">
 
                 <!-- BOUTON MENU BURGER -->
-                <button class="navbar-toggler lightBg my-3 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarCat" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler my-3 lightBg border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarCat" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -56,16 +56,16 @@
                     <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                         <?php if (!isset($_SESSION["user"])) : ?>
                             <!-- AUCUN UTILISATEUR CONNECTE -->
-                            <li><a class="dropdownUserLinks darkBtn btnWithBorders dropdown-item" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
-                            <li><a class="dropdownUserLinks darkBtn btnWithBorders dropdown-item" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
+                            <li><a class="dropdownUserBtn darkBtn btnWithBorders dropdown-item" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
+                            <li><a class="dropdownUserBtn darkBtn btnWithBorders dropdown-item" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                             <?php else :
                             // UTILISATEUR OU ADMIN CONNECTE
                             if ($_SESSION["user"]["type"] === "admin") { ?>
                                 <li><a class="dropdown-item text-dark" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                             <?php
                             } ?>
-                            <li><a class="dropdownUserLinks dropdown-item text-light" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
-                            <li><a class="dropdownUserLinks dropdown-item text-light" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
+                            <li><a class="dropdownUserBtn dropdown-item text-light" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
+                            <li><a class="dropdownUserBtn dropdown-item text-light" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
