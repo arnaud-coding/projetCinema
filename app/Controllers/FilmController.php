@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
 use App\Models\FilmModel as FilmModel;
+use App\Models\GenreModel as GenreModel;
 use App\Models\ActorModel as ActorModel;
 use App\Models\DirectorModel as DirectorModel;
-use App\Models\GenreModel as GenreModel;
+use App\Models\ReviewModel as ReviewModel;
 
 class FilmController extends Controller
 {
@@ -113,7 +114,7 @@ class FilmController extends Controller
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
             "film" => $film,
-            "scripts" => []
+            "scripts" => ["type='module' src='../public/js/reviews.js'"]
         ];
         // NAVIGATION VERS PAGE
         $this->render("film/filmDetails", $data);
@@ -132,7 +133,7 @@ class FilmController extends Controller
 
         $film = [];
 
-        // RECUPERE LE FILM EN BDD
+        // RECUPERE LE FILM
         $filmModel = new FilmModel();
         $details = $filmModel->readByID($id_film);
         if (!$details) {
@@ -149,15 +150,20 @@ class FilmController extends Controller
         $genres = $genreModel->getAllByFilmId($id_film);
         $film["genres"] = $genres;
 
-        // RECUPERE LES ACTEURS DU FILM EN BDD
+        // RECUPERE LES ACTEURS DU FILM
         $actorModel = new ActorModel();
         $actors = $actorModel->getAllByFilmId($id_film);
         $film['actors'] = $actors;
 
-        // RECUPERE LES REALISATEURS DU FILM EN BDD
+        // RECUPERE LES REALISATEURS DU FILM
         $directorModel = new DirectorModel();
         $directors = $directorModel->getAllByFilmId($id_film);
         $film['directors'] = $directors;
+
+        // RECUPERE LES CRITIQUES DU FILM
+        $reviewModel = new ReviewModel();
+        $reviews = $reviewModel->readAllByFilmId($id_film);
+        $film['reviews'] = $reviews;
 
         return $film;
     }

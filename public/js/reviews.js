@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     star.addEventListener("click", function () {
       ratingValue = this.getAttribute("data-value");
-      document.getElementById("rating-value").innerText = `Note : ${ratingValue}/5`;
-      document.getElementById("note").value = ratingValue;
+      document.getElementById("ratingValue").innerText = `Note : ${ratingValue}/5`;
+      document.getElementById("rating").value = ratingValue;
     });
   });
 

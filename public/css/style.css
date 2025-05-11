@@ -26,13 +26,13 @@ a {
 
 .darkForm {
     background-color: #121212 !important;
-    color: #e1e1e1 !important;
-    border: solid #e1e1e1 2px !important;
+    color: #F8F9FA !important;
+    border: solid #F8F9FA 2px !important;
     border-radius: 8px !important;
 }
 
 .lightForm {
-    background-color: #e1e1e1 !important;
+    background-color: #F8F9FA !important;
     color: #121212 !important;
     border: solid #121212 2px !important;
     border-radius: 8px !important;
@@ -143,12 +143,12 @@ a {
 
 /* -----------
 /* Notes sur les avis déja publiés */
-.starr {
+.publishedReview {
     font-size: 1.5rem;
     color: gray;
 }
 
-.starr.active {
+.publishedReview.active {
     color: gold;
 }
 

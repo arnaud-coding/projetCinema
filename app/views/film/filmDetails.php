@@ -1,5 +1,4 @@
 <?php
-
 function displayNames($items, $max = null, $controller = null)
 {
     $count = count($items);
@@ -131,7 +130,62 @@ if (!$film) { ?>
 
             <!-- CRITIQUES -->
             <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab" tabindex="0">
-                VADOR : TON PERE.
+                <h3 class="text-center mt-5 mb-4">Critiques téléspectateurs</h3>
+                <?php if (!$film["reviews"]) { ?>
+                    <p class="card-text text-center m-3">
+                        Aucune critique pour l'instant,<br>Soyez le premier à donner votre avis sur ce film !
+                    </p>
+                    <?php
+                } else {
+                    // PARCOURS LES CRITIQUES PUBLIÉES SUR LE FILM
+                    foreach ($film["reviews"] as $review) {
+                        $date = new DateTime(htmlspecialchars($review->publication_date, ENT_QUOTES, "UTF-8"));
+                        $formatter = new IntlDateFormatter(
+                            'fr_FR',               // Langue : français
+                            IntlDateFormatter::LONG,
+                            IntlDateFormatter::NONE,
+                            'Europe/Paris',        // Fuseau horaire
+                            IntlDateFormatter::GREGORIAN,
+                            'd MMMM yyyy'          // Format : "4 novembre 1969"
+                        )
+                    ?>
+                        <div class="card lightForm formDarkMode m-3 p-3">
+                            <p class="card-text">
+                                <i><b><?= htmlspecialchars($review->pseudo, ENT_QUOTES, "UTF-8") ?></b></i>, le <?= $formatter->format($date) ?>
+                            </p>
+                            <p class="card-text"><?= htmlspecialchars($review->content, ENT_QUOTES, "UTF-8") ?></p>
+                            <div class="card-text">
+                                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                    <i class="bi bi-star-fill publishedReview <?= $i <= htmlspecialchars($review->rating, ENT_QUOTES, "UTF-8") ? 'active' : '' ?>" data-value="<?= $i ?>"></i>
+                                <?php
+                                } ?>
+                            </div>
+                        </div>
+                <?php
+                    }
+                } ?>
+
+                <!-- FORMULAIRE : PUBLIER UNE CRITIQUE -->
+                <div class="card m-3 lightForm formDarkMode">
+                    <b><label class="form-label fst-italic ms-4 mt-3" for="commentaire">Donnez votre avis !</label></b>
+                    <div id="star-rating" class="ms-4">
+                        <i class="bi bi-star-fill star" data-value="1"></i>
+                        <i class="bi bi-star-fill star" data-value="2"></i>
+                        <i class="bi bi-star-fill star" data-value="3"></i>
+                        <i class="bi bi-star-fill star" data-value="4"></i>
+                        <i class="bi bi-star-fill star" data-value="5"></i>
+                    </div>
+                    <p id="ratingValue" class="mt-2 ms-4" style="display: none;"><b>Note : </b>0/5</p>
+
+                    <form action="index.php?controller=Review&action=add" method="post">
+                        <input type="hidden" name="rating" id="rating">
+                        <input type="hidden" name="id_film" value="<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">
+                        <div class="m-3">
+                            <textarea class="form-control" name="content" placeholder="Ecrivez votre critique ici"></textarea>
+                        </div>
+                        <button class="btn darkBtn btnWithBorders mx-3 mb-3" type="submit">Publier</button>
+                    </form>
+                </div>
             </div>
 
             <!-- FILMS SIMILAIRES -->

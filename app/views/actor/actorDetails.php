@@ -7,11 +7,11 @@
 } else {
 
     // FORMATAGE DATE ET CALCUL AGE
-    $birthDate = new DateTime($actor["details"]->birth_date);
+    $birthDate = new DateTime(htmlspecialchars($actor["details"]->birth_date, ENT_QUOTES, "UTF-8"));
     $today = new DateTime();
     $age = $today->diff($birthDate)->y;
     if ($actor["details"]->death_date !== null) {
-        $deathDate = new DateTime($actor["details"]->death_date);
+        $deathDate = new DateTime(htmlspecialchars($actor["details"]->death_date, ENT_QUOTES, "UTF-8"));
         $age = $deathDate->diff($birthDate)->y;
     }
     $formatter = new IntlDateFormatter(
