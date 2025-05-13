@@ -16,10 +16,10 @@
 </head>
 
 <body>
-    <header class="border-bottom border-dark border-1 border-opacity-10">
+    <header class="sticky-top lightBg">
         <!-- BARRE DE NAVIGATION PRINCIPALE -->
-        <nav class="navbar navbar-expand-md pt-3">
-            <div class="container flex-nowrap">
+        <nav class="navbar navbar-expand-md pt-2 pb-0">
+            <div class="container-fluid flex-nowrap">
 
                 <!-- BOUTON MENU BURGER -->
                 <button class="navbar-toggler my-3 lightBg border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarCat" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
         <!--BARRE DE NAVIGATION SECONDAIRE -->
         <?php if (!isset($_SESSION["user"]) || $_SESSION["user"]["type"] === "user") { ?>
             <!-- AUCUN ADMIN CONNECTE -->
-            <nav class="navbar navbar-expand-md">
+            <nav class="navbar navbar-expand-md pt-0">
                 <div class="container">
                     <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                         <ul class="navbar-nav fs-5 fw-medium">
@@ -96,7 +96,7 @@
         <?php
         } elseif ($_SESSION["user"]["type"] === "admin") { ?>
             <!-- ADMIN CONNECTE : AFFICHAGE BARRE DE NAVIGATION SECONDAIRE AVEC OPERATIONS DE CRUD -->
-            <nav class="navbar navbar-expand-md">
+            <nav class="navbar navbar-expand-md pb-3">
                 <div class="container">
                     <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                         <ul class="navbar-nav fs-5 fw-medium">
@@ -110,11 +110,12 @@
             </nav>
         <?php
         } ?>
+        <div class="darkTypo border-bottom border-1 border-opacity-10"></div>
     </header>
 
 
     <main>
-        <div class="container mt-5">
+        <div class="container my-5">
 
             <!------------------------------------->
             <!-- POSSIBLE MESSAGE D'INFORMATIONS -->

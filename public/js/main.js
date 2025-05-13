@@ -5,6 +5,7 @@
 // SELECTION DES ELEMENTS DU DOM
 const btnModeDark = document.querySelector("#btnModeDark");
 const navs = document.querySelectorAll(".navbar");
+const header = document.querySelector("header");
 const main = document.querySelector("main");
 const footer = document.querySelector("footer");
 const buttonLinks = document.querySelectorAll(".buttonLinks");
@@ -68,6 +69,7 @@ function toggleDarkMode() {
         link.classList.toggle("darkTypo");
         link.classList.toggle("lightTypo");
     })
+    header.classList.toggle("darkBg");
     main.classList.toggle("darkBg");
     footer.classList.toggle("darkBg");
 
