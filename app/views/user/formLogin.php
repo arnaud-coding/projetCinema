@@ -16,8 +16,8 @@
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
-<div class="card mx-auto my-3" style="width: 300px;">
-    <div class="card-body lightForm formDarkMode">
+<div class="card mx-auto lightForm formDarkMode p-3 my-3" style="width: 300px;">
+    <div class="card-body ">
         <form method="post" action="index.php?controller=User&action=login" novalidate>
 
             <!-- TOKEN CSRF -->
