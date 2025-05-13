@@ -1,4 +1,10 @@
 <?php
+$userType = isset($_SESSION["user"]) ? $_SESSION["user"]["type"] : [];;
+$message = isset($_GET["message"]) ? $_GET["message"] : "";
+?>
+<div id="message" class="text-center"><?= $message ?></div>
+
+<?php
 function displayNames($items, $max = null, $controller = null)
 {
     $count = count($items);
@@ -34,7 +40,7 @@ function displayNames($items, $max = null, $controller = null)
     <?php
         }
     }
-};
+}
 
 if (!$film) { ?>
     <p class="text-center">Aucune donnée trouvée pour ce film</p>
@@ -139,6 +145,7 @@ if (!$film) { ?>
                 } else {
                     // PARCOURS LES CRITIQUES PUBLIÉES SUR LE FILM
                     foreach ($film["reviews"] as $review) {
+
                         $date = new DateTime(htmlspecialchars($review->publication_date, ENT_QUOTES, "UTF-8"));
                         $formatter = new IntlDateFormatter(
                             'fr_FR',               // Langue : français
@@ -147,19 +154,28 @@ if (!$film) { ?>
                             'Europe/Paris',        // Fuseau horaire
                             IntlDateFormatter::GREGORIAN,
                             'd MMMM yyyy'          // Format : "4 novembre 1969"
-                        )
-                    ?>
-                        <div class="card lightForm formDarkMode m-3 p-3">
-                            <p class="card-text">
-                                <i><b><?= htmlspecialchars($review->pseudo, ENT_QUOTES, "UTF-8") ?></b></i>, le <?= $formatter->format($date) ?>
-                            </p>
-                            <p class="card-text"><?= htmlspecialchars($review->content, ENT_QUOTES, "UTF-8") ?></p>
-                            <div class="card-text">
-                                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <i class="bi bi-star-fill publishedReview <?= $i <= htmlspecialchars($review->rating, ENT_QUOTES, "UTF-8") ? 'active' : '' ?>" data-value="<?= $i ?>"></i>
-                                <?php
-                                } ?>
+                        ); ?>
+
+                        <div id="review-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" class="d-flex justify-content-between align-items-center lightForm formDarkMode m-3 p-3">
+                            <div>
+                                <p>
+                                    <i><b><?= htmlspecialchars($review->pseudo, ENT_QUOTES, "UTF-8") ?></b></i>, le <?= $formatter->format($date) ?>
+                                </p>
+                                <p><?= htmlspecialchars($review->content, ENT_QUOTES, "UTF-8") ?></p>
+                                <p>
+                                    <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                        <i class="bi bi-star-fill publishedReview <?= $i <= htmlspecialchars($review->rating, ENT_QUOTES, "UTF-8") ? 'active' : '' ?>" data-value="<?= $i ?>"></i>
+                                    <?php
+                                    } ?>
+                                </p>
                             </div>
+                            <?php if ($userType === "admin") { ?>
+                                <!-- BOUTON ADMIN : SUPPRESSION CRITIQUE -->
+                                <a id="<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" href="index.php?controller=Review&action=delete&id_review=<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" class="deleteLink btn btn-danger ms-5">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            <?php
+                            } ?>
                         </div>
                 <?php
                     }

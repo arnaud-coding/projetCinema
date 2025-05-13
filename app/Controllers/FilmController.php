@@ -114,7 +114,10 @@ class FilmController extends Controller
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
             "film" => $film,
-            "scripts" => ["type='module' src='../public/js/reviews.js'"]
+            "scripts" => [
+                "type='module' src='../public/js/reviews.js'",
+                "type='module' src='../public/js/deleteReview.js'"
+            ]
         ];
         // NAVIGATION VERS PAGE
         $this->render("film/filmDetails", $data);

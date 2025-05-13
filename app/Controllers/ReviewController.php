@@ -62,4 +62,20 @@ class ReviewController extends Controller
       exit();
     }
   }
+
+  // SUPPRIMER UNE CRITIQUE (MODERATION)
+  // -------------------
+  public function delete()
+  {
+    $id_review = isset($_GET['id_review']) ? $_GET['id_review'] : '';
+
+    $reviewModel = new ReviewModel();
+    $success = $reviewModel->delete($id_review);
+
+    echo json_encode([
+      'success' => $success,
+      'message' => $success ? 'Critique supprimée avec succès' : 'Echec de la suppression de la critique'
+    ]);
+    exit();
+  }
 }

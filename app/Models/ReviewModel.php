@@ -129,8 +129,25 @@ class ReviewModel extends DbConnect
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
             return $this->request->execute();
         } catch (PDOException $e) {
-            return false;
             // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    //  SUPPRIMER UNE CRITIQUE
+    // -------------------
+    public function delete($id_review)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare("DELETE FROM ppc_review WHERE id_review = :id_review");
+            $this->request->bindValue(":id_review", $id_review, PDO::PARAM_INT);
+
+            // EXECUTION DE LA REQUETE SQL ET DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 }
