@@ -113,8 +113,8 @@
     </header>
 
 
-    <main class="py-3">
-        <div class="container">
+    <main>
+        <div class="container mt-5">
 
             <!------------------------------------->
             <!-- POSSIBLE MESSAGE D'INFORMATIONS -->

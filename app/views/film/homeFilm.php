@@ -29,7 +29,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                 - RATING MEAN
 -->
 
-<div class="container mt-4 position-relative">
+<div class="container position-relative">
     <!-- Titre principal de la page -->
     <h2 class="d-flex justify-content-center">Les films</h2>
     <?php
