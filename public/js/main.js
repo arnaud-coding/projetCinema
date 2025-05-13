@@ -68,7 +68,7 @@ function toggleDarkMode() {
     filmsLink.forEach((link) => {
         link.classList.toggle("darkTypo");
         link.classList.toggle("lightTypo");
-    })
+    });
     header.classList.toggle("darkBg");
     main.classList.toggle("darkBg");
     footer.classList.toggle("darkBg");

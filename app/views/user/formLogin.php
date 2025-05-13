@@ -42,14 +42,14 @@
 
             <!-- BOUTON D'ENVOI -->
             <div class="d-grid">
-                <button class="btn darkBtn btnWithBorders" type="submit">Valider</button>
+                <button class="btn lightBtn btnWithBorders" type="submit">Valider</button>
             </div>
         </form>
 
         <!-- LIEN VERS LA CREATION DE COMPTE -->
         <div class="text-center mt-4">
             <p class="fw-bold">Vous n'avez pas enore de compte ?</p>
-            <a class="btn lightBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a>
+            <a class="btn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a>
         </div>
     </div>
 </div>

@@ -31,7 +31,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 
 <div class="container position-relative">
     <!-- Titre principal de la page -->
-    <h2 class="d-flex justify-content-center">Les films</h2>
+    <h2 class="text-center fw-bolder">Les films</h2>
     <?php
 
     // Parcours dimension 1 : les genres et leurs films

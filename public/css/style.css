@@ -15,58 +15,58 @@ a {
 /* -----------
 /* Dark/Light mode */
 .darkBg {
-    background-color: #121212;
-    color: #FFF;
+    background-color: #121212 !important;
+    color: #FFF !important;
 }
 
 .lightBg {
-    background-color: #FFF;
-    color: #121212;
+    background-color: #FFF !important;
+    color: #121212 !important;
 }
 
 .darkForm {
-    background-color: #121212;
-    color: #F8F9FA;
-    border: solid #F8F9FA 2px;
-    border-radius: 8px;
+    background-color: #121212 !important;
+    color: #F8F9FA !important;
+    border: solid #F8F9FA 2px !important;
+    border-radius: 8px !important;
 }
 
 .lightForm {
-    background-color: #F8F9FA;
-    color: #121212;
-    border: solid #121212 2px;
-    border-radius: 8px;
+    background-color: #F8F9FA !important;
+    color: #121212 !important;
+    border: solid #121212 2px !important;
+    border-radius: 8px !important;
 }
 
 .darkBtn {
-    background-color: #121212;
-    color: #FFF;
-    border: solid #FFF 2px;
-    border-radius: 8px;
+    background-color: #121212 !important;
+    color: #FFF !important;
+    border: solid #FFF 2px !important;
+    border-radius: 8px !important;
 }
 
 .darkBtn:hover {
-    background-color: #FFF;
-    color: #121212;
-    border: solid #121212 2px;
-    border-radius: 8px;
-    transition: 0.3s;
+    background-color: #FFF !important;
+    color: #121212 !important;
+    border: solid #121212 2px !important;
+    border-radius: 8px !important;
+    transition: 0.3s !important;
 
 }
 
 .lightBtn {
-    background-color: #FFF;
-    color: #121212;
-    border: solid #121212 2px;
-    border-radius: 8px;
+    background-color: #FFF !important;
+    color: #121212 !important;
+    border: solid #121212 2px !important;
+    border-radius: 8px !important;
 }
 
 .lightBtn:hover {
-    background-color: #121212;
-    color: #FFF;
-    border: solid #FFF 2px;
-    border-radius: 8px;
-    transition: 0.3s;
+    background-color: #121212 !important;
+    color: #FFF !important;
+    border: solid #FFF 2px !important;
+    border-radius: 8px !important;
+    transition: 0.3s !important;
 }
 
 .lightTypo {
@@ -169,4 +169,12 @@ a {
 
 .filmLink:hover {
     transform: scale(1.1)
+}
+
+/* -----------
+*/
+
+button.active {
+    background-color: #bfbfbf !important;
+    color: #121212 !important;
 }
