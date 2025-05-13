@@ -12,22 +12,7 @@
         <i class="bi bi-x-lg"></i>
     </a>
 </div>
-<?php
-$message = isset($_GET['message']) ? $_GET['message'] : '';
-$success = isset($_GET['success']) ? $_GET['success'] : null;
-// Afficher uniquement quand success est passé (true or false)
-if ($success !== null) {
-    if ($success === '1') {
-?>
-        <p class="text-center text-success"><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
-    <?php
-    } else {
-    ?>
-        <p class="text-center text-danger"><?= htmlspecialchars($message, ENT_QUOTES, "UTF-8") ?></p>
-<?php
-    }
-}
-?>
+
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->

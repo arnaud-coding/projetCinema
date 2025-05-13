@@ -17,7 +17,7 @@
 
 <body>
     <header class="border-bottom border-dark border-1 border-opacity-10">
-        <!-- BARRE DE NAVIGATION -->
+        <!-- BARRE DE NAVIGATION PRINCIPALE -->
         <nav class="navbar navbar-expand-md pt-3">
             <div class="container flex-nowrap">
 
@@ -40,7 +40,7 @@
 
                 <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
                 <div class="dropdown">
-                    <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px;"></i>
+                    <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px; margin-right: 75px"></i>
                     <button class="btn darkBtn btnWithBorders dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         if (isset($_SESSION["user"])) {
@@ -54,11 +54,12 @@
                         ?>
                     </button>
                     <ul class="dropdown-menu darkBtn btnWithBorders py-0">
-                        <?php if (!isset($_SESSION["user"])) : ?>
+                        <?php if (!isset($_SESSION["user"])) { ?>
                             <!-- AUCUN UTILISATEUR CONNECTE -->
                             <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
                             <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
-                            <?php else :
+                            <?php
+                        } else {
                             // UTILISATEUR OU ADMIN CONNECTE
                             if ($_SESSION["user"]["type"] === "admin") { ?>
                                 <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
@@ -66,7 +67,8 @@
                             } ?>
                             <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
                             <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
-                        <?php endif; ?>
+                        <?php
+                        } ?>
                     </ul>
                 </div>
 
@@ -76,19 +78,38 @@
             </div>
         </nav>
 
-        <!-- NAV : CATEGORIES -->
-        <nav class="navbar navbar-expand-md">
-            <div class="container">
-                <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
-                    <ul class="navbar-nav fs-5 fw-medium">
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
-                        <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
-                    </ul>
+        <!--BARRE DE NAVIGATION SECONDAIRE -->
+        <?php if (!isset($_SESSION["user"]) || $_SESSION["user"]["type"] === "user") { ?>
+            <!-- AUCUN ADMIN CONNECTE -->
+            <nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
+                        <ul class="navbar-nav fs-5 fw-medium">
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        <?php
+        } elseif ($_SESSION["user"]["type"] === "admin") { ?>
+            <!-- ADMIN CONNECTE : AFFICHAGE BARRE DE NAVIGATION SECONDAIRE AVEC OPERATIONS DE CRUD -->
+            <nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
+                        <ul class="navbar-nav fs-5 fw-medium">
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        <?php
+        } ?>
     </header>
 
 
@@ -98,13 +119,17 @@
             <!------------------------------------->
             <!-- POSSIBLE MESSAGE D'INFORMATIONS -->
             <!------------------------------------->
-            <?php if ($_GET["msgOK"] ?? null) : ?>
-                <div id="message" class="alert alert-success py-2" role="alert">
-                    <p class="mb-0"><?php echo htmlspecialchars($_GET["msgOK"], ENT_QUOTES, "UTF-8"); ?></p>
-                </div>
-            <?php endif;
-            if ($_GET["msgKO"] ?? null) : ?>
-                <div id="message" class="alert alert-danger py-2" role="alert">
-                    <p class="mb-0"><?php echo htmlspecialchars($_GET["msgKO"], ENT_QUOTES, "UTF-8"); ?></p>
-                </div>
-            <?php endif; ?>
+            <?php
+            $messageKO = isset($_GET["msgKO"]) ? $_GET["msgKO"] : "";
+            $messageOK = isset($_GET["msgOK"]) ? $_GET["msgKO"] : "";
+            ?>
+            <div id="message" class="text-center">
+                <?php if ($messageKO) { ?>
+                    <p class="text-danger"><?= $messageKO ?></p>
+                <?php
+                }
+                if ($messageOK) { ?>
+                    <p class="text-success"><?= $messageOK ?></p>
+                <?php
+                } ?>
+            </div>

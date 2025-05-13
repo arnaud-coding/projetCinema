@@ -34,7 +34,7 @@ class ActorController extends Controller
         $id_actor = isset($_GET["id_actor"]) ? $_GET["id_actor"] : null;
         if (!$id_actor) {
             $message = "Erreur systeme: Contactez l'administrateur du système";
-            header("Location: index.php?controller=Actor&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Actor&action=home&msgKO=" . urlencode($message));
             exit;
         }
 
@@ -57,7 +57,7 @@ class ActorController extends Controller
         if (!$id_actor) {
             // AUCUN ACTEUR FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue";
-            header("Location: index.php?controller=Actor&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Actor&action=home&msgKO=" . urlencode($message));
             exit;
         }
 

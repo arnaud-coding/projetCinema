@@ -1,10 +1,6 @@
 <?php
 $userType = isset($_SESSION["user"]) ? $_SESSION["user"]["type"] : [];;
-$message = isset($_GET["message"]) ? $_GET["message"] : "";
-?>
-<div id="message" class="text-center"><?= $message ?></div>
 
-<?php
 function displayNames($items, $max = null, $controller = null)
 {
     $count = count($items);

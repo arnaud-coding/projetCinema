@@ -18,7 +18,7 @@ class ReviewController extends Controller
     // Pas d'utilisateur connecté : redirection vers page de login pour se connecter pour pouvoir laisser un review
     if (!isset($_SESSION['user'])) {
       $message = "Vous devez être indentifié pour pouvoir publier une critique";
-      header("Location: index.php?controller=User&action=formLogin&message=" . urlencode($message));
+      header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode($message));
       exit();
     }
 
@@ -35,14 +35,14 @@ class ReviewController extends Controller
       // Vérification qu'une note a bien été attribué au film sinon redirection avec message d'erreur
       if (!$rating) {
         $message = "Vous devez au moins attribuer à ce film une note (comprise entre 1 et 5 étoiles) pour que votre avis soit publié";
-        header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&message=" . urlencode($message));
+        header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgKO=" . urlencode($message));
         exit();
       }
 
       // Vérification que la longueur du contenu de la critique soit suffisante
       if (strlen($content) < 4) {
         $message = "La longueur d'une critique ne peut être inférieure à 4 caractères";
-        header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&message=" . urlencode($message));
+        header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgKO=" . urlencode($message));
         exit();
       }
 
@@ -57,8 +57,15 @@ class ReviewController extends Controller
       // Création de la critique en BDD et redirection vers la page des détails du film
       $reviewModel = new ReviewModel();
       $success = $reviewModel->add($review);
-      $message = $success ? "Votre critique a été publiée avec succès" : "Une erreur est survenue, veuillez réessayer ultérieurement";
-      header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&message=" . urlencode($message));
+
+      if (!$success) {
+        $message = "Une erreur est survenue, veuillez réessayer ultérieurement";
+        header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgKO=" . urlencode($message));
+        exit();
+      }
+
+      $message = "Votre critique a été publiée avec succès";
+      header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgOK=" . urlencode($message));
       exit();
     }
   }

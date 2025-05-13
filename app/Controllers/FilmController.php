@@ -67,7 +67,7 @@ class FilmController extends Controller
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue";
-            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
 
@@ -104,7 +104,7 @@ class FilmController extends Controller
         $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
         if (!$id_film) {
             $message = "Erreur systeme: Contactez l'administrateur du système";
-            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
 
@@ -130,7 +130,7 @@ class FilmController extends Controller
         if (!$id_film) {
             // AUCUN FILM FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue";
-            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
 

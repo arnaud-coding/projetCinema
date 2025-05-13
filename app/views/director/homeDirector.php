@@ -1,6 +1,3 @@
-<?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
-<p><?= $message ?></p>
-
 <div class="container-fluid mt-5">
     <h3 class="text-center mb-4">Les réalisateurs</h3>
     <div class="row mx-auto">

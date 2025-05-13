@@ -32,7 +32,7 @@ class DirectorController extends Controller
         $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : null;
         if (!$id_director) {
             $message = "Erreur systeme: Contactez l'administrateur du système";
-            header("Location: index.php?controller=Director&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Director&action=home&msgKO=" . urlencode($message));
             exit;
         }
 
@@ -55,7 +55,7 @@ class DirectorController extends Controller
         if (!$id_director) {
             // AUCUN ACTEUR FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue";
-            header("Location: index.php?controller=Director&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Director&action=home&msgKO=" . urlencode($message));
             exit;
         }
 

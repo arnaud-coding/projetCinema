@@ -9,64 +9,64 @@ main {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 /* -----------
 /* Dark/Light mode */
 .darkBg {
-    background-color: #121212 !important;
-    color: #FFF !important;
+    background-color: #121212;
+    color: #FFF;
 }
 
 .lightBg {
-    background-color: #FFF !important;
-    color: #121212 !important;
+    background-color: #FFF;
+    color: #121212;
 }
 
 .darkForm {
-    background-color: #121212 !important;
-    color: #F8F9FA !important;
-    border: solid #F8F9FA 2px !important;
-    border-radius: 8px !important;
+    background-color: #121212;
+    color: #F8F9FA;
+    border: solid #F8F9FA 2px;
+    border-radius: 8px;
 }
 
 .lightForm {
-    background-color: #F8F9FA !important;
-    color: #121212 !important;
-    border: solid #121212 2px !important;
-    border-radius: 8px !important;
+    background-color: #F8F9FA;
+    color: #121212;
+    border: solid #121212 2px;
+    border-radius: 8px;
 }
 
 .darkBtn {
-    background-color: #121212 !important;
-    color: #FFF !important;
-    border: solid #FFF 2px !important;
+    background-color: #121212;
+    color: #FFF;
+    border: solid #FFF 2px;
     border-radius: 8px;
 }
 
 .darkBtn:hover {
-    background-color: #FFF !important;
-    color: #121212 !important;
-    border: solid #121212 2px !important;
-    border-radius: 8px !important;
+    background-color: #FFF;
+    color: #121212;
+    border: solid #121212 2px;
+    border-radius: 8px;
     transition: 0.3s;
 
 }
 
 .lightBtn {
-    background-color: #FFF !important;
-    color: #121212 !important;
-    border: solid #121212 2px !important;
-    border-radius: 8px !important;
+    background-color: #FFF;
+    color: #121212;
+    border: solid #121212 2px;
+    border-radius: 8px;
 }
 
 .lightBtn:hover {
-    background-color: #121212 !important;
-    color: #FFF !important;
-    border: solid #FFF 2px !important;
-    border-radius: 8px !important;
-    transition: 0.3s !important;
+    background-color: #121212;
+    color: #FFF;
+    border: solid #FFF 2px;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
 .lightTypo {
@@ -101,10 +101,6 @@ a {
 
 .nav_cat:hover::after {
     transform: scaleX(1);
-}
-
-.nav_main:hover {
-    color: red !important;
 }
 
 /* -----------

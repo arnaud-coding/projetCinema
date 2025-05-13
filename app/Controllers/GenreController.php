@@ -16,7 +16,7 @@ class GenreController extends Controller
         $id_genre = isset($_GET["id_genre"]) ? $_GET["id_genre"] : null;
         if (!$id_genre) {
             $message = "Erreur systeme: Contactez l'administrateur du système";
-            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
 
@@ -40,7 +40,7 @@ class GenreController extends Controller
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
             $message = "Erreur innatendue.";
-            header("Location: index.php?controller=Film&action=home&message=" . urlencode($message));
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
 

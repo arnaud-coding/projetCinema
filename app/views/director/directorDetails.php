@@ -1,6 +1,3 @@
-<?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
-<p><?= $message ?></p>
-
 <?php if (!$director) { ?>
     <p class="text-center">Aucune donnée trouvée pour ce réalisateur</p>
 <?php
