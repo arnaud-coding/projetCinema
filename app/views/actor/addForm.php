@@ -19,7 +19,7 @@
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="mx-auto lightForm formDarkMode p-3 my-3 w-75">
-    <form id="addActorForm" method="post" action="index.php?controller=Actor&action=add" enctype="multipart/form-data" novalidate>
+    <form id="addActorForm" method="post" action="#" enctype="multipart/form-data" novalidate>
 
         <!-- TOKEN CSRF -->
         <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8") ?>">
@@ -28,7 +28,7 @@
         <div class="mb-3">
             <label for="firstname" class="form-label">Prénom</label>
             <input id="firstname" class="form-control" type="text" name="firstname" placeholder="Entrez le prénom">
-            <span id="firstnameError" class="d-none text-danger"></span>
+            <p id="firstnameError" class="d-none text-danger"></p>
         </div>
 
         <!-- CHAMP NOM -->
@@ -54,8 +54,8 @@
 
         <!-- CHAMP BIOGRAPHIE -->
         <div class="mb-3">
-            <label for="biograpgy" class="form-label">Biographie (optionnel)</label>
-            <textarea id="biograpgy" class="form-control" type="text" name="biograpgy" rows="5" placeholder="Renseignez une biographie"></textarea>
+            <label for="biography" class="form-label">Biographie (optionnel)</label>
+            <textarea id="biography" class="form-control" type="text" name="biography" rows="5" placeholder="Renseignez une biographie"></textarea>
             <span id="biographyError" class="d-none text-danger"></span>
         </div>
 

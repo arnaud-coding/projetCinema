@@ -112,6 +112,18 @@ class ActorController extends Controller
         $biography = $_POST['biography'] ?? null;
         $nationality = $_POST['nationality'] ?? null;
 
+        // Verification que l'acteur ne soit pas deja en BDD
+        $actorModel = new ActorModel();
+        $count = $actorModel->countByFullName($firstname, $lastname);
+        if ($count) {
+            echo json_encode([
+                'success' => false,
+                'message' => "L'acteur " . $firstname . " " . $lastname . " existe déja"
+            ]);
+            exit();
+        }
+
+
         // Gestion de l'upload
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
@@ -140,7 +152,6 @@ class ActorController extends Controller
         $actor->setPicture($uploadName);
 
         // Appel de la methode d'ajout d'acteur dans la BDD
-        $actorModel = new ActorModel();
         $success = $actorModel->add($actor);
 
         echo json_encode([

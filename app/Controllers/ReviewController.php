@@ -17,7 +17,7 @@ class ReviewController extends Controller
 
     // Pas d'utilisateur connecté : redirection vers page de login pour se connecter pour pouvoir laisser un review
     if (!isset($_SESSION['user'])) {
-      $message = "Vous devez être indentifié pour pouvoir publier une critique";
+      $message = "Vous devez être identifié pour publier une critique";
       header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode($message));
       exit();
     }

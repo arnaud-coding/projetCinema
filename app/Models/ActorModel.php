@@ -13,6 +13,34 @@ use App\Core\DbConnect;
 // -----------------------------
 class ActorModel extends DbConnect
 {
+    public function countByFullName($firstname, $lastname)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    COUNT(*)
+                 FROM
+                     ppc_actor
+                 WHERE
+                     LOWER(firstname) = LOWER(:firstname) AND LOWER(lastname) = LOWER(:lastname)"
+            );
+            $this->request->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $actor = $this->request->fetch();
+
+            // RETOUR DU RESULTAT
+            return $actor;
+        } catch (PDOException $e) {
+            return $e->errorInfo[1];
+        }
+    }
+
     public function readByID($id_actor)
     {
         try {

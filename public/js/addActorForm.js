@@ -1,7 +1,7 @@
 // -----------
 // Fonctions de vérification des <input type="date">
 // -----------
-function birthDateChecking(dateStr) {
+function checkBirthDate(dateStr) {
     // Vérifie que la date soit bien au format YYYY-MM-DD et soit renseignée
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(dateStr || dateStr.length === "")) {
@@ -35,9 +35,9 @@ function birthDateChecking(dateStr) {
     }
 }
 
-function deathDateChecking(dateStr) {
+function checkDeathDate(dateStr) {
     // Si une date de décès est saisie, on la vérifie
-    if (deathDateValue !== "") {
+    if (dateStr !== "") {
 
         // Vérifie si la date est bien au format YYYY-MM-DD
         const regex = /^\d{4}-\d{2}-\d{2}$/;
@@ -54,10 +54,10 @@ function deathDateChecking(dateStr) {
         // Date actuelle
         const today = new Date()
 
-        if (inputDate > today) {
-            return { valid: true };
-        } else {
+        if (inputDate >= today) {
             return { valid: false, message: "La date de décès ne peut pas être postérieure à la date actuelle" };
+        } else {
+            return { valid: true };
         }
 
     } else {
@@ -69,109 +69,115 @@ function deathDateChecking(dateStr) {
 // ---------------------
 // validation du formulaire
 // ---------------------
-document.getElementById('creationForm').addEventListener('submit', function (e) {
+document.querySelector('#addActorForm').addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
 
-    // Validation du nom et du  prénom de l'acteur
+    // Validation du prénom
     const firstname = document.querySelector('#firstname');
-    const firstnameError = document.getElementById('#firstnameError');
-    const lastname = document.querySelector('#lastname');
-    const lastnameError = document.getElementById('#lastnameError');
-    if (title.value.length < 2 &&) {
+    const firstnameError = document.querySelector('#firstnameError');
+    if (firstname.value.length < 2) {
+        console.log("entered here")
         firstnameError.textContent = "Le prénom de l'acteur doit contenir au moins 2 caractères";
-        firstnameError.style.display = "block";
-        lastnameError.textContent = "Le nom de l'acteur doit contenir au moins 2 caractères";
-        lastnameError.style.display = "block";
+        firstnameError.classList.remove("d-none");
         isValid = false;
     } else {
-        firstnameError.style.display = "none";
-        lastnameError.style.display = "none";
+        firstnameError.classList.add("d-none");
+    }
+
+    // Validation du nom
+    const lastname = document.querySelector('#lastname');
+    const lastnameError = document.querySelector('#lastnameError');
+    if (lastname.value.length < 2) {
+        lastnameError.textContent = "Le nom de l'acteur doit contenir au moins 2 caractères";
+        lastnameError.classList.remove("d-none");
+        isValid = false;
+    } else {
+        lastnameError.classList.add("d-none");
     }
 
     // Validation de la date de naissance de l'acteur
     const birth_date = document.querySelector('#birth_date');
     const birthDateError = document.querySelector('#birthDateError');
-    const birthCheck = birthDateChecking(birth_date.value);
+    const birthCheck = checkBirthDate(birth_date.value);
     if (birthCheck.valid === false) {
         birthDateError.textContent = birthCheck.message;
-        birthDateError.style.display = "block";
+        birthDateError.classList.remove("d-none");
         isValid = false;
     } else {
-        birthDateError.style.display = "none";
-    };
+        birthDateError.classList.add("d-none");
+    }
 
     // Validation de la date de décès de l'acteur
     const death_date = document.querySelector('#death_date');
     const deathDateError = document.querySelector('#deathDateError');
-    const deathCheck = deathDateChecking(death_date.value);
-    if (birthCheck.valid === false) {
-        deathDateError.textContent = birthCheck.message;
-        deathDateError.style.display = "block";
+    const deathCheck = checkDeathDate(death_date.value);
+    if (deathCheck.valid === false) {
+        deathDateError.textContent = deathCheck.message;
+        deathDateError.classList.remove("d-none");
         isValid = false;
     } else {
-        deathDateError.style.display = "none";
-    };
+        deathDateError.classList.add("d-none");
+    }
 
     // Validation de la biographie de l'acteur
     const biography = document.querySelector('#biography');
     const biographyError = document.querySelector('#biographyError');
-    if (biographie.value !== "") {
+    if (biography.value !== "") {
         // Si une biographie est saisie, on la vérifie
         if (biography.value.length <= 50) {
             biographyError.textContent = "La biographie doit contenir au moin 30 caractères";
-            biographyError.style.display = "block";
+            biographyError.classList.remove("d-none");
             isValid = false;
         } else {
-            biographyError.style.display = "none";
+            biographyError.classList.add("d-none");
         }
     } else {
         // Champ vide : pas d'erreur (colonne biographie NULL)
-        biographyError.style.display = "none";
+        biographyError.classList.add("d-none");
     }
-    ;
 
     // Validation de la nationalité de l'acteur
     const nationality = document.querySelector('#nationality');
     const nationalityError = document.querySelector('#nationalityError');
-    if (biographie.value !== "") {
+    if (nationality.value !== "") {
         // Si une nationalité est saisie, on la vérifie
         if (nationality.value.length <= 5) {
             nationalityError.textContent = "La nationalité doit contenir au moin 5 caractères";
-            nationalityError.style.display = "block";
+            nationalityError.classList.remove("d-none");
             isValid = false;
         } else {
-            nationalityError.style.display = "none";
+            nationalityError.classList.add("d-none");
         }
     } else {
-        // Champ vide : pas d'erreur (colonne biographie NULL)
-        nationalityError.style.display = "none";
+        // Champ vide : pas d'erreur (colonne nationality NULL)
+        nationalityError.classList.add("d-none");
     };
 
     // Test de validation de la globalité du formulaire
+    console.log("isvalid", isValid);
     if (isValid) {
-        document.querySelector('#addActorForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const message = document.querySelector('#message');
-            fetch("index.php?controller=Actor&action=add", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.success) {
-                        this.reset();
-                        message.innerHTML = `<p class='text-success'>${data.message}</p>`;
-                    } else {
-                        message.innerHTML = `<p class='text-danger'>${data.message}</p>`;
-                    }
-                })
-                .catch(error => {
-                    message.textContent = "Erreur lors de l'envoi du formulaire";
-                })
+
+        const formData = new FormData(this);
+        const message = document.querySelector('#message');
+        fetch("index.php?controller=Actor&action=add", {
+            method: "POST",
+            body: formData
         })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    this.reset();
+                    message.innerHTML = `<p class='text-success'>${data.message}</p>`;
+                } else {
+                    message.innerHTML = `<p class='text-danger'>${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                message.textContent = "Erreur lors de l'envoi du formulaire";
+            })
+
     }
 });
 
