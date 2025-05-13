@@ -12,6 +12,8 @@ class Actor
     private $lastname;
     private $birth_deate;
     private $death_date;
+    private $biography;
+    private $nationality;
     private $picture;
 
     // -------------------
@@ -65,6 +67,26 @@ class Actor
     public function setDeath_date($death_date)
     {
         $this->death_date = $death_date;
+        return $this;
+    }
+
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+    public function setBiography($biography): self
+    {
+        $this->biography = $biography;
+        return $this;
+    }
+
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+    public function setNationality($nationality): self
+    {
+        $this->nationality = $nationality;
         return $this;
     }
 

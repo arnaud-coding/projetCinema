@@ -9,6 +9,7 @@ class Film
 {
   private $id_film;
   private $title;
+  private $synopsis;
   private $release_year;
   private $duration;
   private $picture;
@@ -34,6 +35,16 @@ class Film
   public function setTitle($title)
   {
     $this->title = $title;
+    return $this;
+  }
+
+  public function getSynopsis()
+  {
+    return $this->synopsis;
+  }
+  public function setSynopsis($synopsis): self
+  {
+    $this->synopsis = $synopsis;
     return $this;
   }
 
