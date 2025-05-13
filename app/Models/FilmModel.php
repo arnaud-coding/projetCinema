@@ -102,10 +102,12 @@ class FilmModel extends DbConnect
             $this->request = $this->connection->prepare(
                 "SELECT
                     f.*,
-                    GROUP_CONCAT(g.name ORDER BY g.name SEPARATOR ', ') AS genres
+                    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name SEPARATOR ', ') AS genres,
+                    ROUND(AVG(r.rating), 1) AS average_rating
                 FROM ppc_film f
                 INNER JOIN ppc_film_genre fg ON f.id_film = fg.id_film
                 INNER JOIN ppc_genre g ON fg.id_genre = g.id_genre
+                LEFT JOIN ppc_review r ON f.id_film = r.id_film
                 WHERE f.id_film IN (
                     SELECT id_film
                     FROM ppc_film_genre

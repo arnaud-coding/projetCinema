@@ -168,6 +168,17 @@ class FilmController extends Controller
         $reviews = $reviewModel->readAllByFilmId($id_film);
         $film['reviews'] = $reviews;
 
+        // CALCUL NOTE MOYENNE DES CRITIQUES
+        $totalRating = 0;
+        $nbReviews = count($reviews);
+        if ($nbReviews > 0) {
+            foreach ($reviews as $review) {
+                $totalRating += $review->rating;
+            }
+            $average_rating = $totalRating / $nbReviews;
+            $film["average_rating"] = round($average_rating, 1);
+        }
+
         return $film;
     }
 }

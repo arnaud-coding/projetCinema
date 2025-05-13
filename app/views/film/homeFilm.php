@@ -32,16 +32,16 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 <div class="container position-relative">
     <!-- Titre principal de la page -->
     <h2 class="text-center fw-bolder">Les films</h2>
-    <?php
 
+    <?php
     // Parcours dimension 1 : les genres et leurs films
     // ------------------------------------------------
     foreach ($filmsByGenres as $genre => $films) { ?>
 
         <!-- Titre du "carroussel netflix" -->
         <h3 class="mb-0"><?= htmlspecialchars($genre, ENT_QUOTES, "UTF-8")  ?></h3>
-        <?php
 
+        <?php
         // Parcours dimension 2 : les films du genre courant
         // ------------------------------------------------
         ?>
@@ -63,7 +63,14 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                         </object>
 
                         <p class="text-center fw-bold mt-2 mb-0"><?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?></p>
-                        <p class="text-center mt-0"><?= htmlspecialchars($film->duration, ENT_QUOTES, "UTF-8") ?></p>
+                        <?php if (isset($film->average_rating)) { ?>
+                            <p class="text-center my-0">
+                                <?= htmlspecialchars($film->average_rating, ENT_QUOTES, "UTF-8") ?>
+                                <i class="bi bi-star-fill text-warning" style="font-size: small;"></i>
+                            </p>
+                        <?php
+                        } ?>
+                        <p class="text-center my-0"><?= htmlspecialchars($film->duration, ENT_QUOTES, "UTF-8") ?></p>
                     </div>
                 </a>
             <?php

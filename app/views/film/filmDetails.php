@@ -1,6 +1,4 @@
-<?php
-
-function displayNames($items, $max = null, $controller = null)
+<?php function displayNames($items, $max = null, $controller = null)
 {
     $count = count($items);
     $max = $max == null ? $count : $max;
@@ -42,7 +40,7 @@ if (!$film) { ?>
 <?php
 } else { ?>
 
-    <!-- TITRE PRINCIPAL = TITRE DU FILM -->
+    <!-- TITRE DU FILM -->
     <h2 class="text-center fw-bolder"><?= htmlspecialchars($film["details"]->title, ENT_QUOTES, "UTF-8") ?></h2>
 
     <!-- MENU DES DÉTAILS DU FILM -->
@@ -63,7 +61,7 @@ if (!$film) { ?>
             <div class="d-flex mb-3">
                 <!-- AFFICHE FILM -->
                 <div id="filmPicture" style="width: 200px;">
-                    <object data="img/img_films/<?= htmlspecialchars($film["details"]->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm">
+                    <object data="img/img_films/<?= htmlspecialchars($film["details"]->picture, ENT_QUOTES, "UTF-8") ?>" class="img_fluid rounded shadow-sm">
                         <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 200px;">
                     </object>
                 </div>
@@ -85,6 +83,18 @@ if (!$film) { ?>
                     <p>
                         Avec <?php displayNames($film["actors"], 3, "Actor") ?>
                     </p>
+                    <?php if (isset($film["average_rating"])) { ?>
+                        <!-- NOTE TELESPECTATEURS -->
+                        <div class="card text-center p-1" style="width: 115px;">
+                            <p class="card-title my-0 fs-6 fw-bold">Spectateurs</p>
+                            <p class="fs-4 mb-0 fw-bolder">
+                                <?= htmlspecialchars($film["average_rating"], ENT_QUOTES, "UTF-8") ?>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </p>
+                            <p class="card-text my-0 py-0" style="font-size:x-small;"><small><?= count($film["reviews"]) . " critiques" ?></small></p>
+                        </div>
+                    <?php
+                    } ?>
                 </div>
             </div>
             <!-- SYNOPSIS -->
@@ -140,6 +150,7 @@ if (!$film) { ?>
                 // PARCOURS LES CRITIQUES PUBLIÉES SUR LE FILM
                 foreach ($film["reviews"] as $review) {
 
+                    // CONVERTIT DATE
                     $date = new DateTime(htmlspecialchars($review->publication_date, ENT_QUOTES, "UTF-8"));
                     $formatter = new IntlDateFormatter(
                         'fr_FR',               // Langue : français
@@ -148,7 +159,7 @@ if (!$film) { ?>
                         'Europe/Paris',        // Fuseau horaire
                         IntlDateFormatter::GREGORIAN,
                         'd MMMM yyyy'          // Format : "4 novembre 1969"
-                    ); ?>
+                    ) ?>
 
                     <div id="review-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" class="d-flex justify-content-between align-items-center lightForm formDarkMode m-3 p-3">
                         <div>
