@@ -19,7 +19,7 @@
     <header class="sticky-top lightBg">
         <!-- BARRE DE NAVIGATION PRINCIPALE -->
         <nav class="navbar navbar-expand-md pt-2 pb-0">
-            <div class="container-fluid flex-nowrap">
+            <div class="container flex-nowrap">
 
                 <!-- BOUTON MENU BURGER -->
                 <button class="navbar-toggler my-3 lightBg border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCat" aria-controls="navbarCat" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,20 +38,18 @@
                     <button class="btn btn-outline-dark buttonLinks d-none d-lg-inline" type="submit"><span class="bi bi-search buttonLinks"></span></button>
                 </form>
 
-                <!-- BOUTON DE CONNEXION OU MENU UTILISATEUR -->
+                <!-- MENU CONNEXION USER/ADMIN -->
                 <div class="dropdown">
                     <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px; margin-right: 75px"></i>
                     <button class="btn darkBtn btnWithBorders dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php
-                        if (isset($_SESSION["user"])) {
+                        <?php if (isset($_SESSION["user"])) {
                             echo htmlspecialchars($_SESSION["user"]["pseudo"], ENT_QUOTES, "UTF-8");
                             if ($_SESSION["user"]["type"] === "admin") {
                                 echo " (admin)";
                             }
                         } else {
                             echo "Mon compte";
-                        }
-                        ?>
+                        } ?>
                     </button>
                     <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                         <?php if (!isset($_SESSION["user"])) { ?>
@@ -79,8 +77,9 @@
         </nav>
 
         <!--BARRE DE NAVIGATION SECONDAIRE -->
-        <?php if (!isset($_SESSION["user"]) || $_SESSION["user"]["type"] === "user") { ?>
-            <!-- AUCUN ADMIN CONNECTE -->
+        <?php
+        if (!isset($_SESSION["user"]) || $_SESSION["user"]["type"] === "user") { ?>
+            <!-- ADMIN NON CONNECTE : AFFICHAGE MENU SIMPLE -->
             <nav class="navbar navbar-expand-md pt-0">
                 <div class="container">
                     <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
@@ -94,16 +93,41 @@
                 </div>
             </nav>
         <?php
-        } elseif ($_SESSION["user"]["type"] === "admin") { ?>
-            <!-- ADMIN CONNECTE : AFFICHAGE BARRE DE NAVIGATION SECONDAIRE AVEC OPERATIONS DE CRUD -->
-            <nav class="navbar navbar-expand-md pb-3">
+        }
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+            <!-- ADMIN CONNECTE : AFFICHAGE MENU AVEC OPERATIONS DE CRUD DISPONIBLES -->
+            <nav class="navbar navbar-expand-md pt-0">
                 <div class="container">
                     <div id="navbarCat" class="collapse navbar-collapse justify-content-center">
                         <ul class="navbar-nav fs-5 fw-medium">
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle menuLinks darkTypo" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Films
+                                </a>
+                                <ul class="dropdown-menu darkBtn btnWithBorders py-0">
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Film&action=home">Listes Films</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Film&action=add">Ajouter Film</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle menuLinks darkTypo" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Acteurs
+                                </a>
+                                <ul class="dropdown-menu darkBtn btnWithBorders py-0">
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Actor&action=home">Liste Acteurs</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Actor&action=add">Ajouter acteur</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle menuLinks darkTypo" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Réalisateurs
+                                </a>
+                                <ul class="dropdown-menu darkBtn btnWithBorders py-0">
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=home">Liste réalisateurs</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=add">Ajouter réalisateurs</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link menuLinks darkTypo" href="index.php?controller=Selection&action=home">Collections</a></li>
                         </ul>
                     </div>
                 </div>
