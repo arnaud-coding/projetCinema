@@ -377,6 +377,7 @@ class UserController extends Controller
             "message" => $message,
             "success" => $success
         ]);
+        exit();
     }
 
 

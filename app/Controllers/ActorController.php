@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
 use App\Models\ActorModel as ActorModel;
+use App\Entities\Actor as Actor;
 use App\Models\FilmModel as FilmModel;
 
 class ActorController extends Controller
@@ -84,6 +85,68 @@ class ActorController extends Controller
     // --------------------
     public function addForm()
     {
-        $this->render("actor/addForm");
+        $data = [
+            "scripts" => ["type='module' src='js/addActorForm.js'"]
+        ];
+
+        $this->render("actor/addForm", $data);
+    }
+
+    // AJOUTER UN ACTEUR
+    // -----------------
+    public function add()
+    {
+        // Verification de la methode de requête
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $message = "Erreur : cette page doit être appelée via une requête POST";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+            exit();
+        }
+
+        // Récupération des données du formulaire
+        $firstname = $_POST['firstname'] ?? null;
+        $lastname = $_POST['lastname'] ?? null;
+        $firstname = $_POST['firstname'] ?? null;
+        $birth_date = $_POST['birth_date'] ?? null;
+        $death_date = $_POST['death_date'] ?? null;
+        $biography = $_POST['biography'] ?? null;
+        $nationality = $_POST['nationality'] ?? null;
+
+        // Gestion de l'upload
+        if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if ($success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image"
+                ]);
+                exit();
+            }
+        }
+
+        // Hydratation de l'instance de l'entité Actor avec les données du formulaire
+        $actor = new Actor();
+        $actor->setFirstname($firstname);
+        $actor->setLastname($lastname);
+        $actor->setBirth_deate($birth_date);
+        $actor->setDeath_date($death_date);
+        $actor->setBiography($biography);
+        $actor->setNationality($nationality);
+        $actor->setPicture($uploadName);
+
+        // Appel de la methode d'ajout d'acteur dans la BDD
+        $actorModel = new ActorModel();
+        $success = $actorModel->add($actor);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "L'acteur a été ajouté avec succès" : "Echec lors de l'ajout de l'acteur"
+        ]);
+        exit();
     }
 }
