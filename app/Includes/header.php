@@ -106,7 +106,7 @@
                                 </a>
                                 <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Film&action=home">Listes Films</a></li>
-                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Film&action=add">Ajouter Film</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Film&action=addForm">Ajouter Film</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -115,7 +115,7 @@
                                 </a>
                                 <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Actor&action=home">Liste Acteurs</a></li>
-                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Actor&action=add">Ajouter acteur</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Actor&action=addForm">Ajouter acteur</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -124,7 +124,7 @@
                                 </a>
                                 <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=home">Liste réalisateurs</a></li>
-                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=add">Ajouter réalisateurs</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=addForm">Ajouter réalisateurs</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link menuLinks darkTypo" href="index.php?controller=Selection&action=home">Collections</a></li>

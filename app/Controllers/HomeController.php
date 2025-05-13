@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function home()
     {
         $data = [
-            "scripts" => ["type='module' src='../public/js/home.js'"]
+            "scripts" => ["type='module' src='js/home.js'"]
         ];
 
         $this->render("home/home", $data);

@@ -79,4 +79,11 @@ class ActorController extends Controller
 
         return $actor;
     }
+
+    // NAVIGATION VERS FORMULAIRE D'AJOUT D'ACTEUR
+    // --------------------
+    public function addForm()
+    {
+        $this->render("actor/addForm");
+    }
 }

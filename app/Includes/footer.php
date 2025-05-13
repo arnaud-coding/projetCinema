@@ -23,11 +23,9 @@
 <!-- SCRIPTS DE LA PAGE
      Chargement dynamique des scripts spécifiques à la page courante -->
 
-<?php
-if (isset($scripts)) {
-    foreach ($scripts as $script) :
-?>
-        <script <?php echo $script; ?>></script>
+<?php if (isset($scripts)) {
+    foreach ($scripts as $script) : ?>
+        <script <?php echo $script ?>></script>
 <?php
     endforeach;
 } ?>

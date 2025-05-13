@@ -125,7 +125,7 @@ a {
     transition: visibility 0.3s;
     width: 1.5em;
     height: 1.5em;
-    border-radius: 50%;
+    border-radius: 50% !important;
     font-size: 2.5em;
     cursor: pointer;
 }
