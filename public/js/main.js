@@ -177,7 +177,7 @@ function validateForm(formData, isValid) {
         msgFailure.innerHTML = "";
         msgSuccess.innerHTML = "";
 
-        fetch("index.php?controller=User&action=create", {
+        fetch("index.php?controller=User&action=signUp", {
             method: "POST",
             body: formData
         })

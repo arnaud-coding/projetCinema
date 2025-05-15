@@ -25,19 +25,6 @@ abstract class Controller
         //exit();
     }
 
-
-    // ----------------------------------
-    //  GENERER UN TOKEN CSRF
-    // ----------------------------------
-    public function generateToken()
-    {
-        $token_expiration = time() + 900; // 15 minutes (900 secondes)
-        $_SESSION["token"] = [
-            "id" => bin2hex(random_bytes(32)),
-            "token_expiration" => $token_expiration
-        ];
-    }
-
     // ----------------------------------
     // CONVERTIT DES MINUTES AU FORMAT H/m
     // exemple : converit "121" en "2 h 01 min"

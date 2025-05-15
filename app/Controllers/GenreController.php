@@ -25,8 +25,7 @@ class GenreController extends Controller
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
-            "genre" => $genre,
-            "scripts" => []
+            "genre" => $genre
         ];
         // NAVIGATION VERS PAGE
         $this->render("genre/genreDetails", $data);

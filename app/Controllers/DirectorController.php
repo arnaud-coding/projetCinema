@@ -17,8 +17,7 @@ class DirectorController extends Controller
 
         // SCRIPTS JS
         $data = [
-            "directors" => $directors,
-            "scripts" => []
+            "directors" => $directors
         ];
 
         $this->render("director/homeDirector", $data);
@@ -41,8 +40,7 @@ class DirectorController extends Controller
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
-            "director" => $director,
-            "scripts" => []
+            "director" => $director
         ];
         // NAVIGATION VERS PAGE
         $this->render("director/directorDetails", $data);

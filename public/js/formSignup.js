@@ -41,7 +41,7 @@ checkIcons.forEach(checkIcon => {
 // ------------------------
 // validation du formulaire
 // ------------------------
-document.querySelector('#formSignup').addEventListener('submit', function (e) {
+document.querySelector('#formSignUp').addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
 

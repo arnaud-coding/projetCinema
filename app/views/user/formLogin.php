@@ -1,3 +1,4 @@
+<?php var_dump($_SESSION) ?>;
 <!---------------------->
 <!-- TITRE DE LA PAGE -->
 <!---------------------->
@@ -21,7 +22,7 @@
         <form method="post" action="index.php?controller=User&action=login" novalidate>
 
             <!-- TOKEN CSRF -->
-            <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8") ?>">
+            <input type="hidden" name="token" value="<?= $token ?>">
 
             <!-- CHAMP EMAIL -->
             <div class="mb-3">

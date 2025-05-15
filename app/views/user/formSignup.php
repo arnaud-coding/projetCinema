@@ -1,3 +1,4 @@
+<?php var_dump($_SESSION) ?>;
 <!---------------------->
 <!-- TITRE DE LA PAGE -->
 <!---------------------->
@@ -22,10 +23,10 @@
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="mx-auto lightForm formDarkMode p-3 my-3" style="width: 300px;">
-    <form id="formSignup" method="post" action="index.php?controller=User&action=create" novalidate>
+    <form id="formSignUp" method="post" action="index.php?controller=User&action=signUp" novalidate>
 
         <!-- TOKEN CSRF -->
-        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8"); ?>">
+        <input type="hidden" name="token" value="<?= $token ?>">
 
         <!-- CHAMP EMAIL -->
         <div class="mb-3">

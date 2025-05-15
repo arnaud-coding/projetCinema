@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
+use App\Core\CSRFTokenManager;
 use App\Entities\User as User;
 use App\Models\UserModel as UserModel;
 
@@ -40,10 +41,10 @@ class UserController extends Controller
     public function formLogin()
     {
         // CREATTION D'UN TOKEN CSRF
-        $this->generateToken();
+        $token = CSRFTokenManager::generateCSRFToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
-        $this->render("user/formLogin");
+        $this->render("user/formLogin", ["token" => $token]);
     }
 
     // -------------------------
@@ -54,14 +55,13 @@ class UserController extends Controller
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            //todo TOKEN
-            // // VERIFICATION DU TOKEN
-            // $token = $_POST["token"] ?? "";
-            // if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
+            // VERIFICATION DU TOKEN
+            $token = $_POST["token"] ?? "";
+            if (CSRFTokenManager::validateCSRFToken($token)) {
 
-            //     // SUPPRESSION DU TOKEN
-            //     unset($_SESSION["token"]);
-            if (true) {
+                // SUPPRESSION DU TOKEN
+                unset($_SESSION["token"]);
+
                 // VERIFICATION DES CHAMPS
                 $email = $_POST["email"] ?? null;
                 $password = $_POST["password"] ?? null;
@@ -105,7 +105,7 @@ class UserController extends Controller
                     header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode("Le pseudo et l'email doivent être renseignés"));
                 }
             } else {
-                header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode("Erreur inattendue"));
+                header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode("Erreur de jeton CSRF"));
             }
         } else {
             header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode("Erreur interne"));
@@ -129,8 +129,8 @@ class UserController extends Controller
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
         header("Location: index.php?controller=Home&action=home");
     }
-    /*
 
+    /*
     // -------------------------------------------------------
     //  AFFICHER UN FORMULAIRE DE REINISIALISATION
     // -------------------------------------------------------
@@ -302,11 +302,12 @@ class UserController extends Controller
     public function formSignUp()
     {
         // CREATION D'UN TOKEN CSRF
-        $this->generateToken();
+        $token = CSRFTokenManager::generateCSRFToken();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR L'AFFICHAGE
         $data = [
-            "scripts" => ["type='module' src='js/formSignup.js'"]
+            "scripts" => ["type='module' src='js/formSignup.js'"],
+            "token" => $token
         ];
         $this->render("user/formSignup", $data);
     }
@@ -314,7 +315,7 @@ class UserController extends Controller
     // ----------------------------
     //  CREER UN CLIENT
     // ----------------------------
-    public function create()
+    public function signUp()
     {
         $redirect = null;
         $message = "";
@@ -323,14 +324,12 @@ class UserController extends Controller
         // VERIFICATION DE LA METHODE POST
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            //todo TOKEN
             // VERIFICATION DU TOKEN
-            // $token = $_POST["token"] ?? "";
-            // if ((hash_equals($_SESSION["token"]["id"], $token)) && (time() < $_SESSION["token"]["token_expiration"])) {
+            $token = $_POST["token"] ?? "";
+            if (CSRFTokenManager::validateCSRFToken($token)) {
 
-            //     // SUPPRESSION DU TOKEN
-            //     unset($_SESSION["token"]);
-            if (true) {
+                // SUPPRESSION DU TOKEN
+                unset($_SESSION["token"]);
 
                 // VERIFICATION DES CHAMPS
                 $pseudo = $_POST["pseudo"] ?? null;
@@ -365,10 +364,10 @@ class UserController extends Controller
                     $message = "Tous les champs du formulaire doivent être remplis";
                 }
             } else {
-                $message = "Token error";
+                $message = "Erreur de jeton CSRF";
             }
         } else {
-            $message = "Internal error";
+            $message = "Erreur interne";
         }
 
         // Sortie commune à tous les cas de figure
@@ -394,7 +393,7 @@ class UserController extends Controller
             if ($_GET["id_user"] ?? null) {
 
                 // CREATION D'UN TOKEN CSRF
-                $this->generateToken();
+                $token = CSRFTokenManager::generateCSRFToken();
 
                 // LECTURE DE L'CLIENT
                 $user = new User();

@@ -19,8 +19,7 @@ class ActorController extends Controller
 
         // SCRIPTS JS
         $data = [
-            "actors" => $actors,
-            "scripts" => []
+            "actors" => $actors
         ];
 
         // NAVIGATION VERS PAGE
@@ -44,8 +43,7 @@ class ActorController extends Controller
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
-            "actor" => $actor,
-            "scripts" => []
+            "actor" => $actor
         ];
         // NAVIGATION VERS PAGE
         $this->render("actor/actorDetails", $data);
