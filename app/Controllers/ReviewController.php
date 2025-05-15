@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
+use App\Core\CSRFTokenManager;
 use App\Entities\Review as Review;
 use App\Models\ReviewModel as ReviewModel;
 use Exception;
@@ -30,12 +31,29 @@ class ReviewController extends Controller
     }
 
     // Récupération des données du formulaire
+    $token = $_POST['token'] ?? null;
     $id_film = intval($_POST['id_film']) ?? null;
     $id_user = $_SESSION['user']['id_user'] ?? null;
     $content = $_POST['content'] ?? null;
     $rating = intval($_POST['rating']) ?? null;
     $publication_date = new DateTime();
     $date = $publication_date->format('Y-m-d');
+
+    // Vérification que l'utilisateur n'a pas déja publié une critique sur ce film
+    $reviewModel = new ReviewModel();
+    $review = $reviewModel->readByUserIdAndFilmId($id_user, $id_film);
+    if ($review) {
+      $message = "Vous ne pouvez publier une deuxième critique sur ce film afin de ne pas fausser la moyenne des notes du film";
+      header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgKO=" . urlencode($message));
+      exit();
+    }
+
+    // Verification jeton CSRF
+    if (!CSRFTokenManager::validateCSRFToken($token)) {
+      $message = "Erreur de jeton CSRF";
+      header("Location: index.php?controller=Film&action=details&id_film=" . $id_film . "&msgKO=" . urlencode($message));
+      exit();
+    }
 
     // Vérification qu'une note a bien été attribué au film sinon redirection avec message d'erreur
     if (!$rating) {
@@ -60,7 +78,6 @@ class ReviewController extends Controller
     $review->setPublication_date($date);
 
     // Création de la critique en BDD et redirection vers la page des détails du film
-    $reviewModel = new ReviewModel();
     $success = $reviewModel->add($review);
 
     if (!$success) {

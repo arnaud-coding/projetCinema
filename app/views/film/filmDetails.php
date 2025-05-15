@@ -1,4 +1,8 @@
-<?php function displayNames($items, $max = null, $controller = null)
+<?php
+
+use App\Core\CSRFTokenManager;
+
+function displayNames($items, $max = null, $controller = null)
 {
     $count = count($items);
     $max = $max == null ? $count : $max;
@@ -189,6 +193,7 @@ if (!$film) { ?>
             <!-- FORMULAIRE : PUBLIER UNE CRITIQUE -->
             <div class="card m-3 lightForm formDarkMode">
                 <b><label class="form-label fst-italic ms-4 mt-3" for="commentaire">Donnez votre avis !</label></b>
+                <!-- Sélection de la note sous forme d'étoiles -->
                 <div id="star-rating" class="ms-4">
                     <i class="bi bi-star-fill star" data-value="1"></i>
                     <i class="bi bi-star-fill star" data-value="2"></i>
@@ -198,9 +203,15 @@ if (!$film) { ?>
                 </div>
                 <p id="ratingValue" class="mt-2 ms-4" style="display: none;"><b>Note : </b>0/5</p>
 
+                <!-- Formulaire -->
                 <form action="index.php?controller=Review&action=add" method="post">
+                    <!-- Token CSRF -->
+                    <input type="hidden" name="token" value="<?php echo CSRFTokenManager::generateCSRFToken() ?>">
+                    <!-- Note -->
                     <input type="hidden" name="rating" id="rating">
+                    <!-- ID film -->
                     <input type="hidden" name="id_film" value="<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">
+                    <!-- Texte critique -->
                     <div class="m-3">
                         <textarea class="form-control" name="content" placeholder="Ecrivez votre critique ici"></textarea>
                     </div>

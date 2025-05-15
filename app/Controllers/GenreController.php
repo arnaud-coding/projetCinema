@@ -12,10 +12,10 @@ class GenreController extends Controller
     // ----------------------
     public function details()
     {
-        // RECUPERE ID FILM DEPUIS URL
+        // RECUPERE L'ID GENRE DEPUIS L'URL
         $id_genre = isset($_GET["id_genre"]) ? $_GET["id_genre"] : null;
         if (!$id_genre) {
-            $message = "Erreur systeme: Contactez l'administrateur du système";
+            $message = "Erreur inattendue: Contactez l'administrateur du système";
             header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
