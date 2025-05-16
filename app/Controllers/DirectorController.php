@@ -55,7 +55,7 @@ class DirectorController extends Controller
     {
         if (!$id_director) {
             // AUCUN ACTEUR FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue";
+            $message = "Erreur inattendue";
             header("Location: index.php?controller=Director&action=home&msgKO=" . urlencode($message));
             exit;
         }
@@ -95,7 +95,7 @@ class DirectorController extends Controller
         $this->render("director/addDirectorForm", $data);
     }
 
-    // AJOUTER UN ACTEUR
+    // MODIFIER UN REALISATEUR
     // -----------------
     public function add()
     {
@@ -112,8 +112,8 @@ class DirectorController extends Controller
         $firstname = $_POST['firstname'] ?? null;
         $birth_date = $_POST['birth_date'] ?? null;
         $death_date = $_POST['death_date'] === "" ? null : $_POST['death_date'];
-        $biography = $_POST['biography'] ?? null;
-        $nationality = $_POST['nationality'] ?? null;
+        $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
+        $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
 
         // Verification que l'acteur ne soit pas deja en BDD
         $directorModel = new DirectorModel();
@@ -167,6 +167,109 @@ class DirectorController extends Controller
         echo json_encode([
             'success' => $success,
             'message' => $success ? "Le réalisateur a été ajouté avec succès" : "Echec lors de l'ajout du réalisateur"
+        ]);
+        exit();
+    }
+
+    // NAVIGATION VERS FORMULAIRE DE MODIFICATION DE REALISATEUR
+    // --------------------
+    public function updateForm()
+    {
+        $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : "";
+        $directorModel = new DirectorModel();
+        $director = $directorModel->readByID($id_director);
+        if (!$director) {
+            $message = "Erreur inattendue : Contactez l'administrateur du système";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+        }
+
+        $token = CSRFTokenManager::generateCSRFToken();
+
+        $data = [
+            "scripts" => ["type='module' src='js/addOrUpdateActorOrDirectorForm.js'"],
+            "director" => $director,
+            "token" => $token,
+            "entity" => "Director",
+            "controllerMethod" => "update"
+        ];
+
+        $this->render("director/updateDirectorForm", $data);
+    }
+
+    // AJOUTER UN ACTEUR
+    // -----------------
+    public function update()
+    {
+        // Verification de la methode de requête
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $message = "Erreur : cette page doit être appelée via une requête POST";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+            exit();
+        }
+
+        // Récupération des données du formulaire
+        $id_director = $_POST['id_director'] ?? null;
+        $firstname = $_POST['firstname'] ?? null;
+        $lastname = $_POST['lastname'] ?? null;
+        $firstname = $_POST['firstname'] ?? null;
+        $birth_date = $_POST['birth_date'] ?? null;
+        $death_date = $_POST['death_date'] === "" ? null : $_POST['death_date'];
+        $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
+        $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
+
+        // Verification que l'acteur ne soit pas deja en BDD
+        $directorModel = new DirectorModel();
+        $director = $directorModel->readByFullName($firstname, $lastname);
+        if ($director) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Le réalisateur " . $firstname . " " . $lastname . " existe déja"
+            ]);
+            exit();
+        }
+
+
+        // GESTION DE L'UPLOAD
+        if (!Validator::validateFiles($_FILES, ["picture"])) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur lors de l'upload de l'image : peut être que l'image est trop volumineuse (poids max : 5 Mo)"
+            ]);
+            exit();
+        }
+
+        // Destination du fichier
+        $uploadDir = 'img/img_directors/'; // S'assurer que ce dossier existe et est accessible en écriture
+        $uploadName = $_FILES['picture']['name'];
+        $uploadFile = $uploadDir . basename($uploadName);
+
+        // Déplacer le fichier uploadé
+        $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+        if (!$success) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur lors du déplacement de l'image vers sa destination"
+            ]);
+            exit();
+        }
+
+        // Hydratation de l'instance de l'entité Actor avec les données du formulaire
+        $director = new Director();
+        $director->setId_director($id_director);
+        $director->setFirstname($firstname);
+        $director->setLastname($lastname);
+        $director->setBirth_deate($birth_date);
+        $director->setDeath_date($death_date);
+        $director->setBiography($biography);
+        $director->setNationality($nationality);
+        $director->setPicture($uploadName);
+
+        // Appel de la methode d'ajout d'acteur dans la BDD
+        $success = $directorModel->update($director);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "Le réalisateur a été mis à jour avec succès" : "Echec lors de la mise à jour du réalisateur"
         ]);
         exit();
     }

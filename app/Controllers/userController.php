@@ -357,7 +357,7 @@ class UserController extends Controller
                         if ($success === 1062) {
                             $message = "Le pseudo ou l'adresse mail existe déja";
                         } else {
-                            $message = "Erreur innatendue";
+                            $message = "Erreur inattendue";
                         }
                     }
                 } else {

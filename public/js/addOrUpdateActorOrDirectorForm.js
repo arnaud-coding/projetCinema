@@ -82,7 +82,7 @@ function checkDeathDate(dateStr) {
 const entity = document.querySelector("#entity").value;
 const controllerMethod = document.querySelector("#controllerMethod").value;
 
-document.querySelector('#addForm').addEventListener('submit', function (e) {
+document.querySelector(`#${entity}Form`).addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
 

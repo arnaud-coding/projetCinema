@@ -49,13 +49,8 @@ class DirectorModel extends DbConnect
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
-                    id_director,
-                    CONCAT(firstname, ' ', lastname) AS name,
-                    birth_date,
-                    death_date,
-                    biography,
-                    nationality,
-                    picture
+                    *,
+                    CONCAT(firstname, ' ', lastname) AS name
                 FROM
                     ppc_director
                 WHERE
@@ -152,6 +147,43 @@ class DirectorModel extends DbConnect
                      :nationality,
                      :picture)"
             );
+            $this->request->bindValue(":firstame", $director->getFirstname(), PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $director->getLastname(), PDO::PARAM_STR);
+            $this->request->bindValue(":birth_date", $director->getBirth_deate(), PDO::PARAM_STR);
+            $this->request->bindValue(":death_date", $director->getDeath_date(), PDO::PARAM_STR);
+            $this->request->bindValue(":biography", $director->getBiography(), PDO::PARAM_STR);
+            $this->request->bindValue(":nationality", $director->getNationality(), PDO::PARAM_STR);
+            $this->request->bindValue(":picture", $director->getPicture(), PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    //  METTRE A JOUR UN REALISATEUR
+    // -----------------
+    public function update(Director $director)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "UPDATE
+                    ppc_director
+                 SET
+                    firstname = :firstame,
+                    lastname = :lastname,
+                    birth_date = :birth_date,
+                    death_date = :death_date,
+                    biography = :biography,
+                    nationality = :nationality,
+                    picture = :picture
+                WHERE
+                    id_director = :id_director"
+            );
+            $this->request->bindValue(":id_director", $director->getId_director(), PDO::PARAM_STR);
             $this->request->bindValue(":firstame", $director->getFirstname(), PDO::PARAM_STR);
             $this->request->bindValue(":lastname", $director->getLastname(), PDO::PARAM_STR);
             $this->request->bindValue(":birth_date", $director->getBirth_deate(), PDO::PARAM_STR);

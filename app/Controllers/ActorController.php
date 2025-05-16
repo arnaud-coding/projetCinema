@@ -57,7 +57,7 @@ class ActorController extends Controller
     {
         if (!$id_actor) {
             // AUCUN ACTEUR FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue";
+            $message = "Erreur inattendue";
             header("Location: index.php?controller=Actor&action=home&msgKO=" . urlencode($message));
             exit;
         }
@@ -114,8 +114,8 @@ class ActorController extends Controller
         $firstname = $_POST['firstname'] ?? null;
         $birth_date = $_POST['birth_date'] ?? null;
         $death_date = $_POST['death_date'] === "" ? null : $_POST['death_date'];
-        $biography = $_POST['biography'] ?? null;
-        $nationality = $_POST['nationality'] ?? null;
+        $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
+        $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
 
         // Verification que l'acteur ne soit pas deja en BDD
         $actorModel = new ActorModel();

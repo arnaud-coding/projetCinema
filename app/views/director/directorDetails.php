@@ -23,6 +23,8 @@
     <!-- TITRE PRINCIPAL = TITRE DU FILM -->
     <h2 class="text-center fw-bolder"><?= htmlspecialchars($director["details"]->name, ENT_QUOTES, "UTF-8") ?></h2>
 
+
+
     <!-- MENU DES DÉTAILS DU FILM -->
     <nav class="d-flex justify-content-center mt-4 mb-4">
         <div class="nav nav-pills d-flex flex-nowrap" id="pills-tab" role="tablist">
@@ -30,6 +32,11 @@
             <button class="nav-link menuLinks darkTypo" id="pills-biography-tab" data-bs-toggle="pill" data-bs-target="#pills-biography" type="button" role="tab" aria-controls="pill-biography" aria-selected="false">Biographie</button>
             <button class="nav-link menuLinks darkTypo" id="pills-filmography-tab" data-bs-toggle="pill" data-bs-target="#pills-filmography" type="button" role="tab" aria-controls="pill-filmography" aria-selected="false">Filmographie</button>
         </div>
+        <!-- BOUTON MODIFIER/METTRE A JOUR -->
+        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+            <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Director&action=updateForm&id_director=<?= htmlspecialchars($director["details"]->id_director, ENT_QUOTES, "UTF-8") ?>">Mettre à jour</a>
+        <?php
+        } ?>
     </nav>
 
     <!-- CONTENU PRINCIPAL DE LA PAGE -->

@@ -38,7 +38,7 @@ class GenreController extends Controller
 
         if (!$id_genre) {
             // AUCUN GENRE FOURNI : REDIRECTION AVEC MESSAGE D'ERREUR
-            $message = "Erreur innatendue.";
+            $message = "Erreur inattendue.";
             header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
             exit;
         }
