@@ -13,13 +13,13 @@ use App\Core\DbConnect;
 // -----------------------------
 class ActorModel extends DbConnect
 {
-    public function countByFullName($firstname, $lastname)
+    public function readByFullName($firstname, $lastname)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
-                    COUNT(*)
+                    *
                  FROM
                      ppc_actor
                  WHERE
@@ -32,12 +32,13 @@ class ActorModel extends DbConnect
             $this->request->execute();
 
             // FORMATAGE DU RESULTAT DE LA REQUETE
-            $actor = $this->request->fetch();
+            $actor = $this->request->fetchAll();
 
             // RETOUR DU RESULTAT
             return $actor;
         } catch (PDOException $e) {
-            return $e->errorInfo[1];
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 

@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
+use App\Core\CSRFTokenManager;
+use App\Core\Validator;
 use App\Models\ActorModel as ActorModel;
 use App\Entities\Actor as Actor;
 use App\Models\FilmModel as FilmModel;
@@ -83,8 +85,11 @@ class ActorController extends Controller
     // --------------------
     public function addForm()
     {
+        $token = CSRFTokenManager::generateCSRFToken();
+
         $data = [
-            "scripts" => ["type='module' src='js/addActorForm.js'"]
+            "scripts" => ["type='module' src='js/addActorForm.js'"],
+            "token" => $token
         ];
 
         $this->render("actor/addForm", $data);
@@ -112,8 +117,8 @@ class ActorController extends Controller
 
         // Verification que l'acteur ne soit pas deja en BDD
         $actorModel = new ActorModel();
-        $count = $actorModel->countByFullName($firstname, $lastname);
-        if ($count) {
+        $actor = $actorModel->readByFullName($firstname, $lastname);
+        if ($actor) {
             echo json_encode([
                 'success' => false,
                 'message' => "L'acteur " . $firstname . " " . $lastname . " existe déja"
@@ -122,21 +127,28 @@ class ActorController extends Controller
         }
 
 
-        // Gestion de l'upload
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
-            $uploadName = $_FILES['picture']['name'];
-            $uploadFile = $uploadDir . basename($uploadName);
+        // GESTION DE L'UPLOAD
+        if (!Validator::validateFiles($_FILES, ["picture"])) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur lors de l'upload de l'image : peut être que l'image est trop volumineuse (poids max : 5 Mo)"
+            ]);
+            exit();
+        }
 
-            // Déplacer le fichier uploadé
-            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-            if ($success) {
-                echo json_encode([
-                    'success' => false,
-                    'message' => "Erreur lors de l'upload de l'image"
-                ]);
-                exit();
-            }
+        // Destination du fichier
+        $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
+        $uploadName = $_FILES['picture']['name'];
+        $uploadFile = $uploadDir . basename($uploadName);
+
+        // Déplacer le fichier uploadé
+        $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+        if (!$success) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur lors du déplacement de l'image vers sa destination"
+            ]);
+            exit();
         }
 
         // Hydratation de l'instance de l'entité Actor avec les données du formulaire

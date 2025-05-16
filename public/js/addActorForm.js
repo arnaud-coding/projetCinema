@@ -1,4 +1,14 @@
 // -----------
+// Scroll vers haut de page pour voir message d'erreur global ou succès
+// -----------
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Pour un défilement doux
+    });
+}
+
+// -----------
 // Fonctions de vérification des <input type="date">
 // -----------
 function checkBirthDate(dateStr) {
@@ -78,7 +88,7 @@ document.querySelector('#addActorForm').addEventListener('submit', function (e) 
     const firstnameError = document.querySelector('#firstnameError');
     if (firstname.value.length < 2) {
         console.log("entered here")
-        firstnameError.textContent = "Le prénom de l'acteur doit contenir au moins 2 caractères";
+        firstnameError.textContent = "Le prénom doit contenir au moins 2 caractères";
         firstnameError.classList.remove("d-none");
         isValid = false;
     } else {
@@ -89,7 +99,7 @@ document.querySelector('#addActorForm').addEventListener('submit', function (e) 
     const lastname = document.querySelector('#lastname');
     const lastnameError = document.querySelector('#lastnameError');
     if (lastname.value.length < 2) {
-        lastnameError.textContent = "Le nom de l'acteur doit contenir au moins 2 caractères";
+        lastnameError.textContent = "Le nom doit contenir au moins 2 caractères";
         lastnameError.classList.remove("d-none");
         isValid = false;
     } else {
@@ -169,13 +179,16 @@ document.querySelector('#addActorForm').addEventListener('submit', function (e) 
                 console.log(data);
                 if (data.success) {
                     this.reset();
+                    document.querySelector('#picturePreview').innerHTML = "";
+                    scrollToTop();
                     message.innerHTML = `<p class='text-success'>${data.message}</p>`;
                 } else {
+                    scrollToTop();
                     message.innerHTML = `<p class='text-danger'>${data.message}</p>`;
                 }
             })
             .catch(error => {
-                message.textContent = "Erreur lors de l'envoi du formulaire";
+                message.innerHTML = "<p class='text-danger'>Erreur lors de l'envoi du formulaire</p>";
             })
 
     }
@@ -190,16 +203,13 @@ const reader = new FileReader();
 
 picture.addEventListener('change', () => {
     const file = picture.files[0]; // Récupère le fichier sélectionné
-    console.log('eventHandler: readFileName', file);
     if (file) {
-        console.log('eventHandler: reader.readAsDataURL(file)');
         reader.readAsDataURL(file); // Lit le fichier comme URL
     }
 });
 
 // Événement déclenché lorsque le fichier est lu
 reader.onload = () => {
-    console.log("onload: load done")
     picturePreview.src = reader.result; // Définit la source de l'image
     picturePreview.style.display = 'block';
 };

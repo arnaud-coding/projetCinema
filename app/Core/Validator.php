@@ -36,13 +36,13 @@ class Validator
                 }
 
                 // on vérifie le type MIME du fichier
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
                 if (!in_array($files[$field]['type'], $allowedTypes)) {
                     return false;
                 }
 
                 // on vérifie l'extension du fichier
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
                 $fileExtension = strtolower(pathinfo($files[$field]['name'], PATHINFO_EXTENSION));
                 if (!in_array($fileExtension, $allowedExtensions)) {
                     return false;

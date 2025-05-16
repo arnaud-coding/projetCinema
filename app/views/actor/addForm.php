@@ -22,7 +22,7 @@
     <form id="addActorForm" method="post" action="#" enctype="multipart/form-data" novalidate>
 
         <!-- TOKEN CSRF -->
-        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION["token"]["id"], ENT_QUOTES, "UTF-8") ?>">
+        <input type="hidden" name="token" value="<?= $token ?>">
 
         <!-- CHAMP PRENOM -->
         <div class="mb-3">
@@ -69,7 +69,7 @@
         <!-- CHAMP IMAGE -->
         <div class="mb-3">
             <label for="picture" class="form-label">Image (optionnel)</label>
-            <input id="picture" class="form-control" type="file" name="picture" accept="image/png, image/jpeg, image/jpg, image/gif">
+            <input id="picture" class="form-control" type="file" name="picture" accept="image/jpeg, image/jpg, image/png, image/webp, image/gif">
             <span id="pictureError" class="d-none text-danger"></span>
             <img id="picturePreview" src="" class="mt-3" style="max-width: 200px; max-height: 200px; display: none">
         </div>
