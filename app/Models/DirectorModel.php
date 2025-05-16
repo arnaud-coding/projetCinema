@@ -14,9 +14,35 @@ use App\Core\DbConnect;
 // -----------------------------
 class DirectorModel extends DbConnect
 {
-    // ---------------
-    //  LIRE UN DIRECTOR PAR SON ID
-    // ---------------
+    public function readByFullName($firstname, $lastname)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "SELECT
+                    *
+                 FROM
+                     ppc_director
+                 WHERE
+                     LOWER(firstname) = LOWER(:firstname) AND LOWER(lastname) = LOWER(:lastname)"
+            );
+            $this->request->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $director = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $director;
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
     public function readByID($id_director)
     {
         try {
@@ -104,6 +130,41 @@ class DirectorModel extends DbConnect
             return $directors;
         } catch (PDOException $e) {
             return $e->errorInfo[1];
+        }
+    }
+
+    //  AJOUTER UN REALISATEUR
+    // -----------------
+    public function add(Director $director)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "INSERT INTO
+                    ppc_director
+                 VALUES
+                    (null,
+                     :firstame,
+                     :lastname,
+                     :birth_date,
+                     :death_date,
+                     :biography,
+                     :nationality,
+                     :picture)"
+            );
+            $this->request->bindValue(":firstame", $director->getFirstname(), PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $director->getLastname(), PDO::PARAM_STR);
+            $this->request->bindValue(":birth_date", $director->getBirth_deate(), PDO::PARAM_STR);
+            $this->request->bindValue(":death_date", $director->getDeath_date(), PDO::PARAM_STR);
+            $this->request->bindValue(":biography", $director->getBiography(), PDO::PARAM_STR);
+            $this->request->bindValue(":nationality", $director->getNationality(), PDO::PARAM_STR);
+            $this->request->bindValue(":picture", $director->getPicture(), PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
-use App\Core\CSRFTokenManager;
-use App\Core\Validator;
+use App\Core\CSRFTokenManager as CSRFTokenManager;
+use App\Core\Validator as Validator;
 use App\Models\ActorModel as ActorModel;
 use App\Entities\Actor as Actor;
 use App\Models\FilmModel as FilmModel;
@@ -88,11 +88,13 @@ class ActorController extends Controller
         $token = CSRFTokenManager::generateCSRFToken();
 
         $data = [
-            "scripts" => ["type='module' src='js/addActorForm.js'"],
-            "token" => $token
+            "scripts" => ["type='module' src='js/addOrUpdateActorOrDirectorForm.js'"],
+            "token" => $token,
+            "entity" => "Actor",
+            "controllerMethod" => "add"
         ];
 
-        $this->render("actor/addForm", $data);
+        $this->render("actor/addActorForm", $data);
     }
 
     // AJOUTER UN ACTEUR
@@ -111,7 +113,7 @@ class ActorController extends Controller
         $lastname = $_POST['lastname'] ?? null;
         $firstname = $_POST['firstname'] ?? null;
         $birth_date = $_POST['birth_date'] ?? null;
-        $death_date = $_POST['death_date'] ?? null;
+        $death_date = $_POST['death_date'] === "" ? null : $_POST['death_date'];
         $biography = $_POST['biography'] ?? null;
         $nationality = $_POST['nationality'] ?? null;
 

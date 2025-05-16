@@ -3,7 +3,7 @@
 <!---------------------->
 <div class="d-flex align-items-center">
     <!-- TITRE -->
-    <h1 class="flex-grow-1 text-center fs-3 fst-italic">Ajouter un acteur</h1>
+    <h1 class="flex-grow-1 text-center fs-3 fst-italic">Ajouter un réalisateur</h1>
 
     <!-- BOUTON RETOUR -->
     <a class="btn darkBtn btnWithBorders" href="index.php?controller=Film&action=home"
@@ -12,14 +12,14 @@
     </a>
 </div>
 
-<!-- MESSAGE ERREUR / SUCCES -->
-<div id="message" class="text-center"></div>
-
 <!---------------->
 <!-- FORMULAIRE -->
 <!---------------->
 <div class="mx-auto lightForm formDarkMode p-3 my-3 w-75">
-    <form id="addActorForm" method="post" action="#" enctype="multipart/form-data" novalidate>
+    <form id="addForm" method="post" action="#" enctype="multipart/form-data" novalidate>
+
+        <input type="hidden" id="entity" name="entity" value="<?= $entity ?>">
+        <input type="hidden" id="controllerMethod" name="controllerMethod" value="<?= $controllerMethod ?>">
 
         <!-- TOKEN CSRF -->
         <input type="hidden" name="token" value="<?= $token ?>">

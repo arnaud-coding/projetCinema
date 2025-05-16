@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\CSRFTokenManager;
+use App\Core\CSRFTokenManager as CSRFTokenManager;
 
 function displayNames($items, $max = null, $controller = null)
 {

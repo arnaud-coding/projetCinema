@@ -79,7 +79,10 @@ function checkDeathDate(dateStr) {
 // ---------------------
 // validation du formulaire
 // ---------------------
-document.querySelector('#addActorForm').addEventListener('submit', function (e) {
+const entity = document.querySelector("#entity").value;
+const controllerMethod = document.querySelector("#controllerMethod").value;
+
+document.querySelector('#addForm').addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
 
@@ -165,12 +168,11 @@ document.querySelector('#addActorForm').addEventListener('submit', function (e) 
     };
 
     // Test de validation de la globalité du formulaire
-    console.log("isvalid", isValid);
     if (isValid) {
 
         const formData = new FormData(this);
         const message = document.querySelector('#message');
-        fetch("index.php?controller=Actor&action=add", {
+        fetch(`index.php?controller=${entity}&action=${controllerMethod}`, {
             method: "POST",
             body: formData
         })
@@ -180,16 +182,15 @@ document.querySelector('#addActorForm').addEventListener('submit', function (e) 
                 if (data.success) {
                     this.reset();
                     document.querySelector('#picturePreview').innerHTML = "";
-                    scrollToTop();
                     message.innerHTML = `<p class='text-success'>${data.message}</p>`;
                 } else {
-                    scrollToTop();
                     message.innerHTML = `<p class='text-danger'>${data.message}</p>`;
                 }
             })
             .catch(error => {
                 message.innerHTML = "<p class='text-danger'>Erreur lors de l'envoi du formulaire</p>";
-            })
+            });
+        scrollToTop();
 
     }
 });

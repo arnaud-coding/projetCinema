@@ -124,7 +124,7 @@
                                 </a>
                                 <ul class="dropdown-menu darkBtn btnWithBorders py-0">
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=home">Liste réalisateurs</a></li>
-                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=addForm">Ajouter réalisateurs</a></li>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=addForm">Ajouter réalisateur</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link menuLinks darkTypo" href="index.php?controller=Selection&action=home">Collections</a></li>
