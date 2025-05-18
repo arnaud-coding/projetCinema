@@ -130,45 +130,98 @@ class FilmModel extends DbConnect
         }
     }
 
+    // TROUVE SI UN FILM EXISTE DEJA DANS LA BDD
     // ---------------
-    //  LIRE DES FILMS ET TOUTES DONNEES RELIES A CHAQUE FILM, PAR GENRE DE FILM
-    // ---------------
-    public function readAllInfosByGenre($id_genre) // PAS UTILISE
+    public function readByTitleAndYear($title, $release_year)
     {
         try {
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
-                    f.*,
-                    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name SEPARATOR ', ') AS genres,
-                    GROUP_CONCAT(DISTINCT CONCAT(d.firstname, ' ', d.lastname) ORDER BY d.lastname, d.firstname SEPARATOR ', ') AS directors,
-                    GROUP_CONCAT(DISTINCT CONCAT(a.firstname, ' ', a.lastname) ORDER BY a.lastname, a.firstname SEPARATOR ', ') AS actors
-                FROM ppc_film f
-                LEFT JOIN ppc_film_genre fg ON f.id_film = fg.id_film
-                LEFT JOIN ppc_genre g ON fg.id_genre = g.id_genre
-                LEFT JOIN ppc_film_director fd ON f.id_film = fd.id_film
-                LEFT JOIN ppc_director d ON fd.id_director = d.id_director
-                LEFT JOIN ppc_film_actor fa ON f.id_film = fa.id_film
-                LEFT JOIN ppc_actor a ON fa.id_actor = a.id_actor
-                WHERE f.id_film IN (
-                    SELECT id_film
-                    FROM ppc_film_genre
-                    WHERE id_genre = :id_genre
-                )
-                GROUP BY f.id_film;"
+                    *
+                 FROM
+                     ppc_film
+                 WHERE
+                     LOWER(title) = LOWER(:title) AND release_year = :release_year"
             );
-            $this->request->bindValue(":id_genre", $id_genre, PDO::PARAM_INT);
+            $this->request->bindValue(":title", $title, PDO::PARAM_STR);
+            $this->request->bindValue(":release_year", $release_year, PDO::PARAM_INT);
 
             // EXECUTION DE LA REQUETE SQL
             $this->request->execute();
 
             // FORMATAGE DU RESULTAT DE LA REQUETE
-            $films = $this->request->fetchAll();
+            $film = $this->request->fetch();
 
             // RETOUR DU RESULTAT
-            return $films;
+            return $film;
         } catch (PDOException $e) {
-            return $e->errorInfo[1];
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    //  AJOUTER UN FILM
+    // -----------------
+    public function add(Film $film)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "INSERT INTO
+                    ppc_film
+                 VALUES
+                    (null,
+                     :title,
+                     :synopsis,
+                     :release_year,
+                     :duration,
+                     :picture)"
+            );
+            $this->request->bindValue(":title", $film->getTitle(), PDO::PARAM_STR);
+            $this->request->bindValue(":synopsis", $film->getSynopsis(), PDO::PARAM_STR);
+            $this->request->bindValue(":release_year", $film->getRelease_year(), PDO::PARAM_INT);
+            $this->request->bindValue(":duration", $film->getDuration(), PDO::PARAM_INT);
+            $this->request->bindValue(":picture", $film->getPicture(), PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    //  MODIFIER UN FILM
+    // -----------------
+    public function update(Film $film)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "UPDATE
+                    ppc_film
+                 SET
+                    title = :title,
+                    synopsis = :synopsis,
+                    release_year = :release_year,
+                    duration = :duration,
+                    picture = :picture
+                 WHERE
+                    id_film = :id_film"
+            );
+            $this->request->bindValue(":id_film", $film->getId_film(), PDO::PARAM_INT);
+            $this->request->bindValue(":title", $film->getTitle(), PDO::PARAM_STR);
+            $this->request->bindValue(":synopsis", $film->getSynopsis(), PDO::PARAM_STR);
+            $this->request->bindValue(":release_year", $film->getRelease_year(), PDO::PARAM_INT);
+            $this->request->bindValue(":duration", $film->getDuration(), PDO::PARAM_INT);
+            $this->request->bindValue(":picture", $film->getPicture(), PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 }

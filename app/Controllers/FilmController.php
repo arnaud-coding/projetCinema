@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller as Controller;
+use App\Core\CSRFTokenManager as CSRFTokenManager;
+use App\Core\Validator as Validator;
+use App\Entities\Film as Film;
 use App\Models\FilmModel as FilmModel;
 use App\Models\GenreModel as GenreModel;
 use App\Models\ActorModel as ActorModel;
@@ -57,7 +60,6 @@ class FilmController extends Controller
         // NAVIGATION VERS PAGE
         $this->render("film/homeFilm", $data);
     }
-
 
     // RETOURNE LISTE DE FILMS POUR UN GENRE DONNE
     // --------------------
@@ -180,5 +182,193 @@ class FilmController extends Controller
         }
 
         return $film;
+    }
+
+
+    // NAVIGATION VERS FORMULAIRE D'AJOUT DE FILM
+    // --------------------
+    public function addForm()
+    {
+        $token = CSRFTokenManager::generateCSRFToken();
+
+        $data = [
+            "scripts" => ["type='module' src='js/filmForm.js'"],
+            "token" => $token,
+            "controllerMethod" => "add"
+        ];
+
+        $this->render("film/addFilmForm", $data);
+    }
+
+    // AJOUTER UN FILM
+    // -----------------
+    public function add()
+    {
+        // Verification de la methode de requête
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur : cette page doit être appelée via une requête POST"
+            ]);
+            exit();
+        }
+
+        // Récupération des données du formulaire
+        $title = $_POST['title'] ?? null;
+        $synopsis = $_POST['synopsis'] ?? null;
+        $release_year = $_POST['release_year'] ?? null;
+        $duration = $_POST['duration'] ?? null;
+
+        // Verification que le film ne soit pas deja en BDD
+        $filmModel = new FilmModel();
+        $film = $filmModel->readByTitleAndYear($title, intval($release_year));
+        if ($film) {
+            echo json_encode([
+                'success' => false,
+                'message' => "Le film '" . $title  . "' sorti en " . $release_year . " existe déja"
+            ]);
+            exit();
+        }
+
+        // GESTION DE L'UPLOAD
+        if ($_FILES["picture"]["name"] !== "") {
+
+            // Teste la validité du fichier uploadé (poids, extension et type MIME)
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
+
+            // Destination du fichier
+            $uploadDir = 'img/img_films/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
+        }
+
+        // Hydratation de l'instance de l'entité Film avec les données du formulaire
+        $film = new Film();
+        $film->setTitle($title);
+        $film->setSynopsis($synopsis);
+        $film->setRelease_year(intval($release_year));
+        $film->setDuration(intval($duration));
+        $film->setPicture($uploadName);
+
+        // Appel de la methode d'ajout de film dans la BDD
+        $success = $filmModel->add($film);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "Le film a été ajouté avec succès" : "Echec lors de l'ajout du film"
+        ]);
+        exit();
+    }
+
+    // NAVIGATION VERS FORMULAIRE DE MODIFICATION DE FILM
+    // --------------------
+    public function updateForm()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : "";
+        $filmModel = new FilmModel();
+        $film = $filmModel->readByID($id_film);
+        if (!$film) {
+            $message = "Erreur inattendue : Contactez l'administrateur du système";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+        }
+
+        $token = CSRFTokenManager::generateCSRFToken();
+
+        $data = [
+            "scripts" => ["type='module' src='js/filmForm.js'"],
+            "film" => $film,
+            "token" => $token,
+            "controllerMethod" => "update"
+        ];
+
+        $this->render("film/updateFilmForm", $data);
+    }
+
+    // MODIFIER UN FILM
+    // -----------------
+    public function update()
+    {
+        // Verification de la methode de requête
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur : cette page doit être appelée via une requête POST"
+            ]);
+            exit();
+        }
+
+        // Récupération des données du formulaire
+        $id_film = $_POST['id_film'] ?? null;
+        $title = $_POST['title'] ?? null;
+        $synopsis = $_POST['synopsis'] ?? null;
+        $release_year = $_POST['release_year'] ?? null;
+        $duration = $_POST['duration'] ?? null;
+
+        // GESTION DE L'UPLOAD
+        if ($_FILES["picture"]["name"] !== "") {
+
+            // Teste la validité du fichier uploadé (poids, extension et type MIME)
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
+
+            // Destination du fichier
+            $uploadDir = 'img/img_films/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
+        }
+
+        // Hydratation de l'instance de l'entité Film avec les données du formulaire
+        $film = new Film();
+        $film->setId_film($id_film);
+        $film->setTitle($title);
+        $film->setSynopsis($synopsis);
+        $film->setRelease_year(intval($release_year));
+        $film->setDuration(intval($duration));
+        $film->setPicture($uploadName);
+
+        // Appel de la methode de mise à jour de film dans la BDD
+        $filmModel = new FilmModel();
+        $success = $filmModel->update($film);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "Le film a été mis à jour avec succès" : "Echec lors de la mise à jour du film"
+        ]);
+        exit();
     }
 }

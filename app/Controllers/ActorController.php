@@ -268,7 +268,7 @@ class ActorController extends Controller
         $actor->setNationality($nationality);
         $actor->setPicture($uploadName);
 
-        // Appel de la methode d'ajout d'acteur dans la BDD
+        // Appel de la methode de modification d'acteur dans la BDD
         $actorModel = new ActorModel();
         $success = $actorModel->update($actor);
 

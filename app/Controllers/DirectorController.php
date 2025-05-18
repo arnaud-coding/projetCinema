@@ -117,7 +117,7 @@ class DirectorController extends Controller
         $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
         $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
 
-        // Verification que l'acteur ne soit pas deja en BDD
+        // Verification que le réalisateur ne soit pas deja en BDD
         $directorModel = new DirectorModel();
         $director = $directorModel->readByFullName($firstname, $lastname);
         if ($director) {
@@ -157,7 +157,7 @@ class DirectorController extends Controller
             $uploadName = null;
         }
 
-        // Hydratation de l'instance de l'entité Actor avec les données du formulaire
+        // Hydratation de l'instance de l'entité Director avec les données du formulaire
         $director = new Director();
         $director->setFirstname($firstname);
         $director->setLastname($lastname);
@@ -167,7 +167,7 @@ class DirectorController extends Controller
         $director->setNationality($nationality);
         $director->setPicture($uploadName);
 
-        // Appel de la methode d'ajout d'acteur dans la BDD
+        // Appel de la methode d'ajout de réalisateur dans la BDD
         $success = $directorModel->add($director);
 
         echo json_encode([
@@ -255,7 +255,7 @@ class DirectorController extends Controller
         }
 
 
-        // Hydratation de l'instance de l'entité Actor avec les données du formulaire
+        // Hydratation de l'instance de l'entité Director avec les données du formulaire
         $director = new Director();
         $director->setId_director($id_director);
         $director->setFirstname($firstname);
@@ -266,7 +266,7 @@ class DirectorController extends Controller
         $director->setNationality($nationality);
         $director->setPicture($uploadName);
 
-        // Appel de la methode d'ajout d'acteur dans la BDD
+        // Appel de la methode de modification de réalisateur dans la BDD
         $directorModel = new DirectorModel();
         $success = $directorModel->update($director);
 
