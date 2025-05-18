@@ -86,7 +86,7 @@ class DirectorController extends Controller
         $token = CSRFTokenManager::generateCSRFToken();
 
         $data = [
-            "scripts" => ["type='module' src='js/addOrUpdateActorOrDirectorForm.js'"],
+            "scripts" => ["type='module' src='js/actorOrDirectorForm.js'"],
             "token" => $token,
             "entity" => "Director",
             "controllerMethod" => "add"
@@ -190,7 +190,7 @@ class DirectorController extends Controller
         $token = CSRFTokenManager::generateCSRFToken();
 
         $data = [
-            "scripts" => ["type='module' src='js/addOrUpdateActorOrDirectorForm.js'"],
+            "scripts" => ["type='module' src='js/actorOrDirectorForm.js'"],
             "director" => $director,
             "token" => $token,
             "entity" => "Director",
