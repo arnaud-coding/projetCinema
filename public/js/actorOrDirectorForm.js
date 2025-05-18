@@ -90,7 +90,6 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
     const firstname = document.querySelector('#firstname');
     const firstnameError = document.querySelector('#firstnameError');
     if (firstname.value.length < 2) {
-        console.log("entered here")
         firstnameError.textContent = "Le prénom doit contenir au moins 2 caractères";
         firstnameError.classList.remove("d-none");
         isValid = false;
@@ -178,7 +177,6 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.success) {
                     this.reset();
                     document.querySelector('#picturePreview').innerHTML = "";

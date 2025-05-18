@@ -182,7 +182,7 @@ class ActorModel extends DbConnect
                 WHERE
                     id_actor = :id_actor"
             );
-            $this->request->bindValue(":id_actor", $actor->getId_actor(), PDO::PARAM_STR);
+            $this->request->bindValue(":id_actor", $actor->getId_actor(), PDO::PARAM_INT);
             $this->request->bindValue(":firstame", $actor->getFirstname(), PDO::PARAM_STR);
             $this->request->bindValue(":lastname", $actor->getLastname(), PDO::PARAM_STR);
             $this->request->bindValue(":birth_date", $actor->getBirth_deate(), PDO::PARAM_STR);

@@ -103,8 +103,10 @@ class ActorController extends Controller
     {
         // Verification de la methode de requête
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            $message = "Erreur : cette page doit être appelée via une requête POST";
-            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur : cette page doit être appelée via une requête POST"
+            ]);
             exit();
         }
 
@@ -208,8 +210,10 @@ class ActorController extends Controller
     {
         // Verification de la methode de requête
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            $message = "Erreur : cette page doit être appelée via une requête POST";
-            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+            echo json_encode([
+                'success' => false,
+                'message' => "Erreur : cette page doit être appelée via une requête POST"
+            ]);
             exit();
         }
 

@@ -183,7 +183,7 @@ class DirectorModel extends DbConnect
                 WHERE
                     id_director = :id_director"
             );
-            $this->request->bindValue(":id_director", $director->getId_director(), PDO::PARAM_STR);
+            $this->request->bindValue(":id_director", $director->getId_director(), PDO::PARAM_INT);
             $this->request->bindValue(":firstame", $director->getFirstname(), PDO::PARAM_STR);
             $this->request->bindValue(":lastname", $director->getLastname(), PDO::PARAM_STR);
             $this->request->bindValue(":birth_date", $director->getBirth_deate(), PDO::PARAM_STR);
