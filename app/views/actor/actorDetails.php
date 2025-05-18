@@ -30,6 +30,11 @@
             <button class="nav-link menuLinks darkTypo" id="pills-biography-tab" data-bs-toggle="pill" data-bs-target="#pills-biography" type="button" role="tab" aria-controls="pill-biography" aria-selected="false">Biographie</button>
             <button class="nav-link menuLinks darkTypo" id="pills-filmography-tab" data-bs-toggle="pill" data-bs-target="#pills-filmography" type="button" role="tab" aria-controls="pill-filmography" aria-selected="false">Filmographie</button>
         </div>
+        <!-- BOUTON MODIFIER/METTRE A JOUR -->
+        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+            <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Actor&action=updateForm&id_actor=<?= htmlspecialchars($actor["details"]->id_actor, ENT_QUOTES, "UTF-8") ?>">Mettre à jour</a>
+        <?php
+        } ?>
     </nav>
 
     <!-- CONTENU PRINCIPAL DE LA PAGE -->

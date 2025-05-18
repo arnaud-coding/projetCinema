@@ -48,12 +48,8 @@ class ActorModel extends DbConnect
             // PREPARATION DE LA REQUETE SQL
             $this->request = $this->connection->prepare(
                 "SELECT
-                    CONCAT(firstname, ' ', lastname) AS name,
-                    birth_date,
-                    death_date,
-                    biography,
-                    nationality,
-                    picture
+                    *,
+                    CONCAT(firstname, ' ', lastname) AS name
                  FROM
                      ppc_actor
                  WHERE
@@ -150,6 +146,43 @@ class ActorModel extends DbConnect
                      :nationality,
                      :picture)"
             );
+            $this->request->bindValue(":firstame", $actor->getFirstname(), PDO::PARAM_STR);
+            $this->request->bindValue(":lastname", $actor->getLastname(), PDO::PARAM_STR);
+            $this->request->bindValue(":birth_date", $actor->getBirth_deate(), PDO::PARAM_STR);
+            $this->request->bindValue(":death_date", $actor->getDeath_date(), PDO::PARAM_STR);
+            $this->request->bindValue(":biography", $actor->getBiography(), PDO::PARAM_STR);
+            $this->request->bindValue(":nationality", $actor->getNationality(), PDO::PARAM_STR);
+            $this->request->bindValue(":picture", $actor->getPicture(), PDO::PARAM_STR);
+
+            // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    //  METTRE A JOUR UN ACTEUR
+    // -----------------
+    public function update(Actor $actor)
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare(
+                "UPDATE
+                    ppc_actor
+                 SET
+                    firstname = :firstame,
+                    lastname = :lastname,
+                    birth_date = :birth_date,
+                    death_date = :death_date,
+                    biography = :biography,
+                    nationality = :nationality,
+                    picture = :picture
+                WHERE
+                    id_actor = :id_actor"
+            );
+            $this->request->bindValue(":id_actor", $actor->getId_actor(), PDO::PARAM_STR);
             $this->request->bindValue(":firstame", $actor->getFirstname(), PDO::PARAM_STR);
             $this->request->bindValue(":lastname", $actor->getLastname(), PDO::PARAM_STR);
             $this->request->bindValue(":birth_date", $actor->getBirth_deate(), PDO::PARAM_STR);

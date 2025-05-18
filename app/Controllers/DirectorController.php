@@ -79,7 +79,7 @@ class DirectorController extends Controller
         return $director;
     }
 
-    // NAVIGATION VERS FORMULAIRE D'AJOUT D'ACTEUR
+    // NAVIGATION VERS FORMULAIRE D'AJOUT DE REALISATEUR
     // --------------------
     public function addForm()
     {
@@ -95,7 +95,7 @@ class DirectorController extends Controller
         $this->render("director/addDirectorForm", $data);
     }
 
-    // MODIFIER UN REALISATEUR
+    // AJOUTER UN REALISATEUR
     // -----------------
     public function add()
     {
@@ -126,29 +126,33 @@ class DirectorController extends Controller
             exit();
         }
 
-
         // GESTION DE L'UPLOAD
-        if (!Validator::validateFiles($_FILES, ["picture"])) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors de l'upload de l'image : peut être que l'image est trop volumineuse (poids max : 5 Mo)"
-            ]);
-            exit();
-        }
+        if ($_FILES["picture"]["name"] !== "") {
 
-        // Destination du fichier
-        $uploadDir = 'img/img_directors/'; // S'assurer que ce dossier existe et est accessible en écriture
-        $uploadName = $_FILES['picture']['name'];
-        $uploadFile = $uploadDir . basename($uploadName);
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
 
-        // Déplacer le fichier uploadé
-        $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-        if (!$success) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors du déplacement de l'image vers sa destination"
-            ]);
-            exit();
+            // Destination du fichier
+            $uploadDir = 'img/img_directors/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
         }
 
         // Hydratation de l'instance de l'entité Actor avec les données du formulaire
@@ -196,7 +200,7 @@ class DirectorController extends Controller
         $this->render("director/updateDirectorForm", $data);
     }
 
-    // AJOUTER UN ACTEUR
+    // MODIFIER UN REALISATEUR
     // -----------------
     public function update()
     {
@@ -217,41 +221,35 @@ class DirectorController extends Controller
         $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
         $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
 
-        // Verification que l'acteur ne soit pas deja en BDD
-        $directorModel = new DirectorModel();
-        $director = $directorModel->readByFullName($firstname, $lastname);
-        if ($director) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Le réalisateur " . $firstname . " " . $lastname . " existe déja"
-            ]);
-            exit();
-        }
-
-
         // GESTION DE L'UPLOAD
-        if (!Validator::validateFiles($_FILES, ["picture"])) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors de l'upload de l'image : peut être que l'image est trop volumineuse (poids max : 5 Mo)"
-            ]);
-            exit();
+        if ($_FILES["picture"]["name"] !== "") {
+
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
+
+            // Destination du fichier
+            $uploadDir = 'img/img_directors/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
         }
 
-        // Destination du fichier
-        $uploadDir = 'img/img_directors/'; // S'assurer que ce dossier existe et est accessible en écriture
-        $uploadName = $_FILES['picture']['name'];
-        $uploadFile = $uploadDir . basename($uploadName);
-
-        // Déplacer le fichier uploadé
-        $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-        if (!$success) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors du déplacement de l'image vers sa destination"
-            ]);
-            exit();
-        }
 
         // Hydratation de l'instance de l'entité Actor avec les données du formulaire
         $director = new Director();
@@ -265,6 +263,7 @@ class DirectorController extends Controller
         $director->setPicture($uploadName);
 
         // Appel de la methode d'ajout d'acteur dans la BDD
+        $directorModel = new DirectorModel();
         $success = $directorModel->update($director);
 
         echo json_encode([

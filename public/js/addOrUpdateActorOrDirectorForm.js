@@ -109,7 +109,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         lastnameError.classList.add("d-none");
     }
 
-    // Validation de la date de naissance de l'acteur
+    // Validation de la date de naissance
     const birth_date = document.querySelector('#birth_date');
     const birthDateError = document.querySelector('#birthDateError');
     const birthCheck = checkBirthDate(birth_date.value);
@@ -121,7 +121,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         birthDateError.classList.add("d-none");
     }
 
-    // Validation de la date de décès de l'acteur
+    // Validation de la date de décès
     const death_date = document.querySelector('#death_date');
     const deathDateError = document.querySelector('#deathDateError');
     const deathCheck = checkDeathDate(death_date.value);
@@ -133,7 +133,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         deathDateError.classList.add("d-none");
     }
 
-    // Validation de la biographie de l'acteur
+    // Validation de la biographie
     const biography = document.querySelector('#biography');
     const biographyError = document.querySelector('#biographyError');
     if (biography.value !== "") {
@@ -150,7 +150,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         biographyError.classList.add("d-none");
     }
 
-    // Validation de la nationalité de l'acteur
+    // Validation de la nationalité
     const nationality = document.querySelector('#nationality');
     const nationalityError = document.querySelector('#nationalityError');
     if (nationality.value !== "") {
@@ -165,7 +165,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
     } else {
         // Champ vide : pas d'erreur (colonne nationality NULL)
         nationalityError.classList.add("d-none");
-    };
+    }
 
     // Test de validation de la globalité du formulaire
     if (isValid) {

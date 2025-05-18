@@ -128,29 +128,33 @@ class ActorController extends Controller
             exit();
         }
 
-
         // GESTION DE L'UPLOAD
-        if (!Validator::validateFiles($_FILES, ["picture"])) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors de l'upload de l'image : peut être que l'image est trop volumineuse (poids max : 5 Mo)"
-            ]);
-            exit();
-        }
+        if ($_FILES["picture"]["name"] !== "") {
 
-        // Destination du fichier
-        $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
-        $uploadName = $_FILES['picture']['name'];
-        $uploadFile = $uploadDir . basename($uploadName);
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
 
-        // Déplacer le fichier uploadé
-        $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
-        if (!$success) {
-            echo json_encode([
-                'success' => false,
-                'message' => "Erreur lors du déplacement de l'image vers sa destination"
-            ]);
-            exit();
+            // Destination du fichier
+            $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
         }
 
         // Hydratation de l'instance de l'entité Actor avec les données du formulaire
@@ -169,6 +173,104 @@ class ActorController extends Controller
         echo json_encode([
             'success' => $success,
             'message' => $success ? "L'acteur a été ajouté avec succès" : "Echec lors de l'ajout de l'acteur"
+        ]);
+        exit();
+    }
+
+    // NAVIGATION VERS FORMULAIRE DE MODIFICATION D'ACTEUR
+    // --------------------
+    public function updateForm()
+    {
+        $id_actor = isset($_GET["id_actor"]) ? $_GET["id_actor"] : "";
+        $actorModel = new ActorModel();
+        $actor = $actorModel->readByID($id_actor);
+        if (!$actor) {
+            $message = "Erreur inattendue : Contactez l'administrateur du système";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+        }
+
+        $token = CSRFTokenManager::generateCSRFToken();
+
+        $data = [
+            "scripts" => ["type='module' src='js/addOrUpdateActorOrDirectorForm.js'"],
+            "actor" => $actor,
+            "token" => $token,
+            "entity" => "Actor",
+            "controllerMethod" => "update"
+        ];
+
+        $this->render("actor/updateActorForm", $data);
+    }
+
+    // MODIFIER UN ACTEUR
+    // -----------------
+    public function update()
+    {
+        // Verification de la methode de requête
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            $message = "Erreur : cette page doit être appelée via une requête POST";
+            header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
+            exit();
+        }
+
+        // Récupération des données du formulaire
+        $id_actor = $_POST['id_actor'] ?? null;
+        $firstname = $_POST['firstname'] ?? null;
+        $lastname = $_POST['lastname'] ?? null;
+        $firstname = $_POST['firstname'] ?? null;
+        $birth_date = $_POST['birth_date'] ?? null;
+        $death_date = $_POST['death_date'] === "" ? null : $_POST['death_date'];
+        $biography = $_POST['biography'] === "" ? null : $_POST['biography'];
+        $nationality = $_POST['nationality'] === "" ? null : $_POST['nationality'];
+
+        // GESTION DE L'UPLOAD
+        if ($_FILES["picture"]["name"] !== "") {
+
+            if (!Validator::validateFiles($_FILES, ["picture"])) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors de l'upload de l'image : le fichier est peut être trop volumineux (poids max : 5 Mo)"
+                ]);
+                exit();
+            }
+
+            // Destination du fichier
+            $uploadDir = 'img/img_actors/'; // S'assurer que ce dossier existe et est accessible en écriture
+            $uploadName = $_FILES['picture']['name'];
+            $uploadFile = $uploadDir . basename($uploadName);
+
+            // Déplacer le fichier uploadé
+            $success = move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile);
+            if (!$success) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Erreur lors du déplacement de l'image vers sa destination"
+                ]);
+                exit();
+            }
+        } else {
+            $uploadName = null;
+        }
+
+
+        // Hydratation de l'instance de l'entité Actor avec les données du formulaire
+        $actor = new Actor();
+        $actor->setId_actor($id_actor);
+        $actor->setFirstname($firstname);
+        $actor->setLastname($lastname);
+        $actor->setBirth_deate($birth_date);
+        $actor->setDeath_date($death_date);
+        $actor->setBiography($biography);
+        $actor->setNationality($nationality);
+        $actor->setPicture($uploadName);
+
+        // Appel de la methode d'ajout d'acteur dans la BDD
+        $actorModel = new ActorModel();
+        $success = $actorModel->update($actor);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "L'acteur a été mis à jour avec succès" : "Echec lors de la mise à jour de l'acteur"
         ]);
         exit();
     }
