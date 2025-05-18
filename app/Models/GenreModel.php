@@ -13,8 +13,7 @@ use App\Core\DbConnect;
 // -----------------------------
 class GenreModel extends DbConnect
 {
-    // ---------------
-    //  LIRE UN GENRE
+    //  TROUVE UN GENRE PAR SON ID
     // ---------------
     public function readByID($id_genre)
     {
@@ -32,10 +31,13 @@ class GenreModel extends DbConnect
             // RETOUR DU RESULTAT
             return $genre;
         } catch (PDOException $e) {
-            return $e->errorInfo[1];
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 
+    //  TROUVE TOUS LES GENRES ASSOCIES A UN FILM DONNE
+    // ---------------
     public function getAllByFilmId($id_film)
     {
         try {
@@ -63,7 +65,57 @@ class GenreModel extends DbConnect
             // RETOUR DU RESULTAT
             return $genres;
         } catch (PDOException $e) {
-            return $e->errorInfo[1];
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // AJOUTER UN GENRE
+    // -----------------
+    public function add(Genre $genre)
+    {
+        try {
+            $this->request = $this->connection->prepare("INSERT INTO ppc_genre VALUES (null, :name)");
+            $this->request->bindValue(":id_genre", $genre->getId_genre(), PDO::PARAM_INT);
+            $this->request->bindValue(":name", $genre->getName(), PDO::PARAM_STR);
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // MODIFIER UN GENRE
+    // -----------------
+    public function update(Genre $genre)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "UPDATE
+                    ppc_genre
+                 SET
+                    name = :name
+                 WHERE
+                    id_genre = :id_genre"
+            );
+            $this->request->bindValue(":id_genre", $genre->getId_genre(), PDO::PARAM_INT);
+            $this->request->bindValue(":name", $genre->getName(), PDO::PARAM_STR);
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // SUPPRIMER UN GENRE
+    // -----------------
+    public function delete($id_genre)
+    {
+        try {
+            $this->request = $this->connection->prepare("DELETE FROM ppc_genre WHERE id_genre = :id_genre");
+            $this->request->bindValue(":id_genre", $id_genre, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
         }
     }
 }

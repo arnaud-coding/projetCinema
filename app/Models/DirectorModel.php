@@ -5,7 +5,6 @@ namespace App\Models;
 use PDO;
 use PDOException;
 use App\Entities\Director;
-use App\Entities\Film;
 use App\Core\DbConnect;
 
 
@@ -14,6 +13,8 @@ use App\Core\DbConnect;
 // -----------------------------
 class DirectorModel extends DbConnect
 {
+    //  TROUVE UN REALISATEUR PAR SON NOM COMPLET
+    // -----------------
     public function readByFullName($firstname, $lastname)
     {
         try {
@@ -43,6 +44,8 @@ class DirectorModel extends DbConnect
         }
     }
 
+    //  TROUVE UN REALISATEUR PA SON ID
+    // -----------------
     public function readByID($id_director)
     {
         try {
@@ -71,6 +74,8 @@ class DirectorModel extends DbConnect
         }
     }
 
+    //  TORUVE TOUS LES REALISATEURS
+    // -----------------
     public function readAll()
     {
         try {
@@ -96,6 +101,9 @@ class DirectorModel extends DbConnect
         }
     }
 
+
+    //  TOUVE TOUS LES REALISATEUR ASSOCIES A UN FILM DONNE
+    // -----------------
     public function getAllByFilmId($id_film)
     {
         try {
@@ -193,6 +201,20 @@ class DirectorModel extends DbConnect
             $this->request->bindValue(":picture", $director->getPicture(), PDO::PARAM_STR);
 
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // SUPPRIMER UN REALISATEUR
+    // -----------------
+    public function delete($id_director)
+    {
+        try {
+            $this->request = $this->connection->prepare("DELETE FROM ppc_director WHERE id_director = :id_director");
+            $this->request->bindValue(":id_director", $id_director, PDO::PARAM_INT);
             return $this->request->execute();
         } catch (PDOException $e) {
             // return $e->errorInfo[1];

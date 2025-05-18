@@ -7,7 +7,6 @@ use PDOException;
 use App\Entities\Film;
 use App\Core\DbConnect;
 
-
 // -----------------------------
 // CLASSE MODEL DE L'ENTITE FILM
 // -----------------------------
@@ -218,6 +217,119 @@ class FilmModel extends DbConnect
             $this->request->bindValue(":picture", $film->getPicture(), PDO::PARAM_STR);
 
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // SUPPRIMER UN FILM
+    // -----------------
+    public function delete($id_film)
+    {
+        try {
+            $this->request = $this->connection->prepare("DELETE FROM ppc_film WHERE id_film = :id_film");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // AJOUTER UN ACTEUR A UN FILM
+    // -----------------
+    public function addActorToFilm($id_film, $id_actor)
+    {
+        try {
+            $this->request = $this->connection->prepare("INSERT INTO ppc_film_actor VALUES (:id_film, :id_actor)");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // AJOUTER UN REALISATEUR A UN FILM
+    // -----------------
+    public function addDirectorToFilm($id_film, $id_director)
+    {
+        try {
+            $this->request = $this->connection->prepare("INSERT INTO ppc_film_director VALUES (:id_film, :id_director)");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_director", $id_director, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // AJOUTER UN GENRE A UN FILM
+    // -----------------
+    public function addGenreToFilm($id_film, $id_genre)
+    {
+        try {
+            $this->request = $this->connection->prepare("INSERT INTO ppc_film_genre VALUES (:id_film, :id_genre)");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_genre", $id_genre, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // RETIRE UN ACTEUR D'UN FILM
+    // -----------------
+    public function removeActorFromFilm($id_film, $id_actor)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "DELETE FROM ppc_film_actor
+                 WHERE id_film = :id_film AND id_actor = :id_actor"
+            );
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // RETIRE UN REALISATEUR D' UN FILM
+    // -----------------
+    public function removeDirectorFromFilm($id_film, $id_director)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "DELETE FROM ppc_film_director
+                 WHERE id_film = :id_film AND id_director = :id_director"
+            );
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_director", $id_director, PDO::PARAM_INT);
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // RETIRE UN GENRE D' UN FILM
+    // -----------------
+    public function removeGenreFromFilm($id_film, $id_genre)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "DELETE FROM ppc_film_genre
+                 WHERE id_film = :id_film AND id_genre = :id_genre"
+            );
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            $this->request->bindValue(":id_genre", $id_genre, PDO::PARAM_INT);
             return $this->request->execute();
         } catch (PDOException $e) {
             // return $e->errorInfo[1];

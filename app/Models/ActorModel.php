@@ -13,6 +13,8 @@ use App\Core\DbConnect;
 // -----------------------------
 class ActorModel extends DbConnect
 {
+    // TROUVE UN ACTEUR PAR SON NOM COMPLET
+    // -----------------
     public function readByFullName($firstname, $lastname)
     {
         try {
@@ -42,6 +44,8 @@ class ActorModel extends DbConnect
         }
     }
 
+    // TROUVE UN ACTEUR PAR SON ID
+    // -----------------
     public function readByID($id_actor)
     {
         try {
@@ -70,6 +74,8 @@ class ActorModel extends DbConnect
         }
     }
 
+    // TROUVE TOUS LES ACTEURS
+    // -----------------
     public function readAll()
     {
         try {
@@ -95,6 +101,8 @@ class ActorModel extends DbConnect
         }
     }
 
+    // TROUVE LES ACTEURS ASSOCIES A UN FILM
+    // -----------------
     public function getAllByFilmId($id_film)
     {
         try {
@@ -192,6 +200,20 @@ class ActorModel extends DbConnect
             $this->request->bindValue(":picture", $actor->getPicture(), PDO::PARAM_STR);
 
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
+            return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // SUPPRIMER UN ACTEUR
+    // -----------------
+    public function delete($id_actor)
+    {
+        try {
+            $this->request = $this->connection->prepare("DELETE FROM ppc_actor WHERE id_film = :id_film");
+            $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
             return $this->request->execute();
         } catch (PDOException $e) {
             // return $e->errorInfo[1];
