@@ -53,13 +53,13 @@ if (!$film) { ?>
             <button class="nav-link active menuLinks darkTypo" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
             <button class="nav-link menuLinks darkTypo" id="pills-casting-tab" data-bs-toggle="pill" data-bs-target="#pills-casting" type="button" role="tab" aria-controls="pill-casting" aria-selected="false">Casting</button>
             <button class="nav-link menuLinks darkTypo" id="pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pill-reviews" aria-selected="false">Critiques</button>
-            <button class="nav-link menuLinks darkTypo" id="pills-similar-tab" data-bs-toggle="pill" data-bs-target="#pills-similar" type="button" role="tab" aria-controls="pill-similar" aria-selected="false">Films similaires</button>
+            <!-- BOUTON MODIFIER ET BOUTON SUPPRIMER -->
+            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Film&action=updateForm&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Modifier</a>
+                <a class="btn btn-danger" href="index.php?controller=Film&action=delete&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
+            <?php
+            } ?>
         </div>
-        <!-- BOUTON MODIFIER/METTRE A JOUR -->
-        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-            <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Film&action=updateForm&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Mettre à jour</a>
-        <?php
-        } ?>
     </nav>
 
     <!-- CONTENU PRINCIPAL DE LA PAGE -->
@@ -113,35 +113,52 @@ if (!$film) { ?>
 
         <!-- CASTING -->
         <div class="tab-pane fade" id="pills-casting" role="tabpanel" aria-labelledby="pills-casting-tab" tabindex="0">
+            <!-- REALISATEURS -->
             <div>
-                <h3 class="mb-4">Réalisateur(s)</h3>
+                <div class="d-inline-flex align-items-center mb-4">
+                    <h3 class="mb-0">Réalisateur(s)</h3>
+                    <a class="fs-6 ms-3 p-2 darkBtn btnWithBorders" href="#">Ajouter réalisateur</a>
+                </div>
                 <div class="d-flex">
-                    <?php foreach ($film["directors"] as $director) { ?>
-                        <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks" style="text-decoration: none;">
-                            <div class="me-5" style="width: 150px;">
-                                <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>">
-                                    <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
-                                </object>
-                                <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?></p>
-                            </div>
-                        </a>
-                    <?php
+                    <?php if ($film["directors"] === []) { ?>
+                        <p>Aucun réalisateur associé à ce film pour l'instant</p>
+                        <?php
+                    } else {
+                        foreach ($film["directors"] as $director) : ?>
+                            <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks" style="text-decoration: none;">
+                                <div class="me-5" style="width: 150px;">
+                                    <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>">
+                                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                                    </object>
+                                    <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?></p>
+                                </div>
+                            </a>
+                    <?php endforeach;
                     } ?>
                 </div>
             </div>
+
+            <!-- ACTEURS -->
             <div class="container-fluid mt-5">
-                <h3 class="mb-4">Acteurs</h3>
+                <div class="d-inline-flex align-items-center mb-4">
+                    <h3 class="mb-0">Acteurs</h3>
+                    <a class="fs-6 ms-3 p-2 darkBtn btnWithBorders" href="#">Ajouter acteur</a>
+                </div>
                 <div class="row">
-                    <?php foreach ($film["actors"] as $actor) { ?>
-                        <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 darkTypo menuLinks" style="text-decoration: none;">
-                            <div style="width: 150px;">
-                                <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>">
-                                    <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
-                                </object>
-                                <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?></p>
-                            </div>
-                        </a>
-                    <?php
+                    <?php if ($film["actors"] === []) { ?>
+                        <p>Aucun acteur associé à ce film pour l'instant</p>
+                        <?php
+                    } else {
+                        foreach ($film["actors"] as $actor) : ?>
+                            <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 darkTypo menuLinks" style="text-decoration: none;">
+                                <div style="width: 150px;">
+                                    <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>">
+                                        <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
+                                    </object>
+                                    <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?></p>
+                                </div>
+                            </a>
+                    <?php endforeach;
                     } ?>
                 </div>
             </div>
@@ -175,13 +192,13 @@ if (!$film) { ?>
                             <p>
                                 <i><b><?= htmlspecialchars($review->pseudo, ENT_QUOTES, "UTF-8") ?></b></i>, le <?= $formatter->format($date) ?>
                             </p>
-                            <p><?= htmlspecialchars($review->content, ENT_QUOTES, "UTF-8") ?></p>
                             <p>
                                 <?php for ($i = 1; $i <= 5; $i++) { ?>
                                     <i class="bi bi-star-fill publishedReview <?= $i <= htmlspecialchars($review->rating, ENT_QUOTES, "UTF-8") ? 'active' : '' ?>" data-value="<?= $i ?>"></i>
                                 <?php
                                 } ?>
                             </p>
+                            <p><?= htmlspecialchars($review->content, ENT_QUOTES, "UTF-8") ?></p>
                         </div>
                         <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                             <!-- BOUTON ADMIN : SUPPRESSION CRITIQUE -->
@@ -223,11 +240,6 @@ if (!$film) { ?>
                     <button class="btn darkBtn btnWithBorders mx-3 mb-3" type="submit">Publier</button>
                 </form>
             </div>
-        </div>
-
-        <!-- FILMS SIMILAIRES -->
-        <div class="tab-pane fade" id="pills-similar" role="tabpanel" aria-labelledby="pills-reviews-tab" tabindex="0">
-            LUKE : NOOOON !!!
         </div>
     </div>
 <?php
