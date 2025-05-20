@@ -222,4 +222,36 @@ class DirectorModel extends DbConnect
             return false;
         }
     }
+
+    // RECHERHER UN REALISATEUR (pour barre de recherche)
+    // -----------------
+    public function search($query)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "SELECT
+                id_director AS id,
+                CONCAT(firstname, ' ', lastname) AS name,
+                picture
+             FROM
+                ppc_director
+             WHERE
+                firstname LIKE CONCAT(?, '%')
+                OR lastname LIKE CONCAT(?, '%')
+                OR CONCAT(firstname, ' ', lastname) LIKE CONCAT(?, '%')
+             LIMIT 20"
+            );
+
+            $this->request->bindValue(1, $query, PDO::PARAM_STR);
+            $this->request->bindValue(2, $query, PDO::PARAM_STR);
+            $this->request->bindValue(3, $query, PDO::PARAM_STR);
+
+            $this->request->execute();
+            $directors = $this->request->fetchAll();
+            return $directors;
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
 }

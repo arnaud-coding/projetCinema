@@ -22,11 +22,6 @@ document.querySelectorAll('.btnRemoveFromFilm').forEach(link => {
         }
 
         if (confirm(`Êtes-vous bien sûr de vouloir retirer ${subject} de ce film ?`)) {
-            console.log(" id:", id)
-            console.log(" id_film:", id_film)
-            console.log(" parentDiv:", parentDiv)
-            console.log(" entity:", entity)
-            console.log(" subject:", subject)
             fetch(`index.php?controller=Film&action=remove${entity}FromFilm&id_film=${id_film}&id_${entity.toLowerCase()}=${id}`, { method: "GET" })
                 .then(response => response.json())
                 .then(data => {
@@ -44,5 +39,5 @@ document.querySelectorAll('.btnRemoveFromFilm').forEach(link => {
                         '<p class="text-danger">Une erreur est survenue lors de la suppression</p>';
                 })
         }
-    })
-})
+    });
+});

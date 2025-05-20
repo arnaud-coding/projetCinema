@@ -276,4 +276,22 @@ class DirectorController extends Controller
         ]);
         exit();
     }
+
+
+    // RECHERCHER UN REALISATEUR (pour barre de recherche)
+    // -----------------
+    public function search()
+    {
+        $query = isset($_GET["query"]) ? trim($_GET["query"]) : "";
+
+        $directorModel = new DirectorModel();
+        $directors = $directorModel->search($query);
+
+        if (!$directors) {
+            echo json_encode(['error' => 'Erreur de la base de données']);
+        }
+
+        echo json_encode($directors);
+        exit();
+    }
 }

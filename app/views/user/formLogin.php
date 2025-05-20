@@ -7,7 +7,7 @@
     <h1 class="flex-grow-1 text-center fs-3 fst-italic">Se connecter à mon compte</h1>
 
     <!-- BOUTON RETOUR -->
-    <a class="btn darkBtn btnWithBorders" href="index.php?controller=Home&action=home"
+    <a class="darkBtn btnWithBorders" href="index.php?controller=Home&action=home"
         title="Retour en arrière">
         <i class="bi bi-x-lg"></i>
     </a>

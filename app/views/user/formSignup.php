@@ -44,7 +44,7 @@
         <!-- CHAMP MDP -->
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
-            <input id="password" class="form-control form-control-sm" type="text" name="password" autocomplete="new-password" placeholder="Entrez votre mot de passe">
+            <input id="password" class="form-control form-control-sm" type="password" name="password" autocomplete="new-password" placeholder="Entrez votre mot de passe">
             <!-- PASSWORD STRENGTH INDICATORS -->
             <div id="psw-strength" class="w-100 px-1 py-4" hidden>
                 <div class="progress mb-3" style="height: 5px">

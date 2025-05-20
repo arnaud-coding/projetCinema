@@ -118,8 +118,8 @@ if (!$film) { ?>
                 <div class="d-inline-flex align-items-center mb-4">
                     <h3 class="mb-0">Réalisateur(s)</h3>
                     <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-                        <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
-                        <button type="button" class="fs-6 ms-3 p-2 btnAddToFilm darkBtn btnWithBorders" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="addDirector">Ajouter réalisateur</button>
+                        <!-- ADMIN CONNECTE : Button modal addToFilm -->
+                        <a href="#" id="addDirector" class="fs-6 ms-3 p-2 addToFilmopenModal darkBtn btnWithBorders">Ajouter réalisateur</a>
                     <?php
                     } ?>
                 </div>
@@ -130,7 +130,7 @@ if (!$film) { ?>
                         <?php
                     } else {
                         foreach ($film["directors"] as $director) : ?>
-                            <!-- Liste des réalisateurs associés au film -->
+                            <!-- LISTE DES REALISATEURS DU FILM -->
                             <div id="director-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
                                 <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
                                 <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks">
@@ -141,11 +141,14 @@ if (!$film) { ?>
                                         <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?></p>
                                     </div>
                                 </a>
-                                <!-- Bouton retirer réalisateur du film -->
-                                <a id="removeDirector-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
-                                    href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
-                                    Retirer du film
-                                </a>
+                                <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                                    <!-- ADMIN CONNECTE : Bouton retirer réalisateur du film -->
+                                    <a id="removeDirector-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
+                                        href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
+                                        Retirer du film
+                                    </a>
+                                <?php
+                                } ?>
                             </div>
                     <?php endforeach;
                     } ?>
@@ -156,8 +159,11 @@ if (!$film) { ?>
             <div class="container-fluid mt-5">
                 <div class="d-inline-flex align-items-center mb-4">
                     <h3 class="mb-0">Acteurs</h3>
-                    <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
-                    <button type="button" class="fs-6 ms-3 p-2 btnAddToFilm darkBtn btnWithBorders" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="addActor">Ajouter acteur</button>
+                    <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                        <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
+                        <a href="#" id="addActor" class="fs-6 ms-3 p-2 addToFilmopenModal darkBtn btnWithBorders">Ajouter acteur</a>
+                    <?php
+                    } ?>
                 </div>
 
                 <div class="row">
@@ -178,48 +184,36 @@ if (!$film) { ?>
                                         <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?><i></i></p>
                                     </div>
                                 </a>
-                                <!-- Bouton retirer acteur du film -->
-                                <a id="removeActor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
-                                    href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
-                                    Retirer du film
-                                </a>
+                                <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                                    <!-- ADMIN CONNECTE : Bouton retirer acteur du film -->
+                                    <a id="removeActor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
+                                        href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
+                                        Retirer du film
+                                    </a>
+                                <?php
+                                } ?>
                             </div>
                     <?php endforeach;
                     } ?>
                 </div>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Send message</button>
-                        </div>
-                    </div>
+            <!-- Modal addToFilm -->
+            <div id="myModal" class="modal">
+                <div class="modal-content lightForm formDarkMode">
+                    <div hidden id="filmID<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></div>
+                    <a href="#" class="close-btn darkBtn btnWithBorders p-1" title="Retour en arrière"><i class="bi bi-x-lg"></i></a>
+                    <h2 id="modalTitle"></h2>
+                    <p id="resultMsg"></p>
+                    <input type="text" id="modalSearch" class="form-control mt-3">
+                    <button type="submit" id="btnSearch" class="btn btn-outline-dark buttonLinks"><span class="bi bi-search buttonLinks"></span></button>
+                    <div id="searchResults"></div>
                 </div>
             </div>
         </div>
 
         <!-- CRITIQUES -->
-        <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab" tabindex="0">
+        <div class=" tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab" tabindex="0">
             <h3 class="text-center mt-5 mb-4">Critiques téléspectateurs</h3>
             <?php if (!$film["reviews"]) { ?>
                 <p class="card-text text-center m-3">

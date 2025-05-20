@@ -278,4 +278,21 @@ class ActorController extends Controller
         ]);
         exit();
     }
+
+    // RECHERCHER UN ACTEUR (pour barre de recherche)
+    // -----------------
+    public function search()
+    {
+        $query = isset($_GET["query"]) ? trim($_GET["query"]) : "";
+
+        $actorModel = new ActorModel();
+        $actors = $actorModel->search($query);
+
+        if (!$actors) {
+            echo json_encode(['error' => 'Erreur de la base de données']);
+        }
+
+        echo json_encode($actors);
+        exit();
+    }
 }
