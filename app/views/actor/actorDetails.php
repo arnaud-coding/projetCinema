@@ -25,7 +25,7 @@
 
     <!-- MENU DES DÉTAILS DU FILM -->
     <nav class="d-flex justify-content-center mt-4 mb-4">
-        <div class="nav nav-pills d-flex flex-nowrap" id="pills-tab" role="tablist">
+        <div class="nav nav-pills d-flex flex-nowrap overflow-auto pb-3" id="pills-tab" role="tablist">
             <button class="nav-link active menuLinks darkTypo" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
             <button class="nav-link menuLinks darkTypo" id="pills-biography-tab" data-bs-toggle="pill" data-bs-target="#pills-biography" type="button" role="tab" aria-controls="pill-biography" aria-selected="false">Biographie</button>
             <button class="nav-link menuLinks darkTypo" id="pills-filmography-tab" data-bs-toggle="pill" data-bs-target="#pills-filmography" type="button" role="tab" aria-controls="pill-filmography" aria-selected="false">Filmographie</button>
