@@ -45,6 +45,33 @@
             <p id="releaseYearError" class="d-none text-danger"></p>
         </div>
 
+        <!-- BOUTON OUVRIR MODALE POUR CHOIX GENRE -->
+        <button type="button" class="addGenreToFilmOpenModal lightBtn btnWithBorders p-2 mb-3">Choisissez le(s) genre(s)</button>
+
+        <!------------------------------>
+        <!-- MODAL SELECTION GENRE(S) -->
+        <!------------------------------>
+        <div id="myModal" class="modal">
+            <div class="modal-content lightForm formDarkMode">
+                <div class="d-flex justify-content-center">
+                    <h2 id="modalTitle" class="text-center pb-0">Sélectionner le(s) genre(s)</h2>
+                    <a href="#" class="close-btn darkBtn btnWithBorders px-2" title="Retour en arrière"><i class="bi bi-x-lg"></i></a>
+                </div>
+                <p id="msg"></p>
+                <?php
+                foreach ($genres as $genre) {
+                    $isChecked = in_array($genre->id_genre, $filmGenres); ?>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox"
+                            value="<?= htmlspecialchars($genre->id_genre, ENT_QUOTES, "UTF-8") ?>"
+                            <?= $isChecked ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="checkDefault"><?= htmlspecialchars($genre->name, ENT_QUOTES, "UTF-8") ?></label>
+                    </div>
+                <?php
+                } ?>
+            </div>
+        </div>
+
         <!-- CHAMP DUREE -->
         <div class="mb-3">
             <label for="duration" class="form-label">Durée en minutes</label>
@@ -62,7 +89,7 @@
 
         <!-- BOUTON D'ENVOI -->
         <div class="d-grid mt-4 mb-2">
-            <button class="btn lightBtn btnWithBorders" type="submit">Mettre à jour</button>
+            <button class="lightBtn btnWithBorders" type="submit">Mettre à jour</button>
         </div>
     </form>
 </div>

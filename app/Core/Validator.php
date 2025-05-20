@@ -48,6 +48,8 @@ class Validator
                     return false;
                 }
 
+                //* LA BONNE PRATIQUE SERAIT DE RENOMMER LES FICHIERS UPLOADES AVEC UN NOM UNIQUE COMME
+                //* AVEC LE CODE SUIVANT, MAIS CELA NE M'ARRANGEAIT PAS ICI
                 // on génère un nouveau nom de fichier unique
                 // self::$newFileName = md5(uniqid()) . '.' . $fileExtension;
 

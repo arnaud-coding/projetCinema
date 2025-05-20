@@ -119,7 +119,7 @@ if (!$film) { ?>
                     <h3 class="mb-0">Réalisateur(s)</h3>
                     <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                         <!-- ADMIN CONNECTE : Button modal addToFilm -->
-                        <a href="#" id="addDirector" class="fs-6 ms-3 p-2 addToFilmopenModal darkBtn btnWithBorders">Ajouter réalisateur</a>
+                        <a href="#" id="addDirector" class="fs-6 ms-3 p-2 addToFilmOpenModal darkBtn btnWithBorders">Ajouter réalisateur</a>
                     <?php
                     } ?>
                 </div>
@@ -161,7 +161,7 @@ if (!$film) { ?>
                     <h3 class="mb-0">Acteurs</h3>
                     <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                         <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
-                        <a href="#" id="addActor" class="fs-6 ms-3 p-2 addToFilmopenModal darkBtn btnWithBorders">Ajouter acteur</a>
+                        <a href="#" id="addActor" class="fs-6 ms-3 p-2 addToFilmOpenModal darkBtn btnWithBorders">Ajouter acteur</a>
                     <?php
                     } ?>
                 </div>

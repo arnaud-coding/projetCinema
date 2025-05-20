@@ -1,5 +1,5 @@
 const modal = document.querySelector("#myModal");
-const openBtn = document.querySelectorAll(".addToFilmopenModal");
+const openBtn = document.querySelectorAll(".addToFilmOpenModal");
 const closeBtn = document.querySelector(".close-btn");
 const title = document.querySelector("#modalTitle");
 const searchInput = document.querySelector("#modalSearch");
@@ -9,6 +9,8 @@ const id_film = document.querySelector(".modal-content").firstElementChild.id.re
 let id;
 let entity;
 let subject;
+
+// ! BUG : gestionnaire evt apppelé plusieurs fois (souscription multiple) ; double appel DB : 1er OK ; 2e = error
 
 // Ouverture modal et affichage resultats recherche acteurs/réalisateurs
 openBtn.forEach(btn => {

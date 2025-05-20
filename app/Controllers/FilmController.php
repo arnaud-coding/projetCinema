@@ -194,7 +194,10 @@ class FilmController extends Controller
         $token = CSRFTokenManager::generateCSRFToken();
 
         $data = [
-            "scripts" => ["type='module' src='js/filmForm.js'"],
+            "scripts" => [
+                "type='module' src='js/filmForm.js'",
+                "type='module' src='js/addGenreToFilm.js'"
+            ],
             "token" => $token,
             "controllerMethod" => "add"
         ];
@@ -285,6 +288,8 @@ class FilmController extends Controller
     public function updateForm()
     {
         $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : "";
+
+        // Recupere le film à updater
         $filmModel = new FilmModel();
         $film = $filmModel->readByID($id_film);
         if (!$film) {
@@ -292,11 +297,24 @@ class FilmController extends Controller
             header("Location: index.php?controller=Film&action=home&msgKO=" . urlencode($message));
         }
 
+        // Récupère les genres associés au film
+        $genreModel = new GenreModel();
+        $filmGenres = $genreModel->getAllByFilmId($id_film);
+        $filmGenres = array_map(fn($genre) => $genre->id_genre, $filmGenres);
+
+        // Recupere tous les genres
+        $genres = $genreModel->readAll();
+
         $token = CSRFTokenManager::generateCSRFToken();
 
         $data = [
-            "scripts" => ["type='module' src='js/filmForm.js'"],
+            "scripts" => [
+                "type='module' src='js/filmForm.js'",
+                "type='module' src='js/addGenreToFilm.js'"
+            ],
             "film" => $film,
+            "genres" => $genres,
+            "filmGenres" => $filmGenres,
             "token" => $token,
             "controllerMethod" => "update"
         ];

@@ -32,47 +32,42 @@
                     <i class="linksOnHover darkTypo menuLinks d-none d-md-inline">MovieLovers</i>
                 </a>
 
-                <!-- CHAMP DE RECHERCHE -->
-                <form class="d-flex me-3" method="post" action="index.php?controller=Produit&action=search" style="width: 410px;">
-                    <input class="form-control me-2 border-secondary d-none d-lg-inline" type="text" name="search" placeholder="Rechercher un film, un acteur ou un réalisateur" aria-label="Search">
-                    <button class="btn btn-outline-dark buttonLinks d-none d-lg-inline" type="submit"><span class="bi bi-search buttonLinks"></span></button>
-                </form>
-
                 <!-- MENU CONNEXION USER/ADMIN -->
-                <div class="dropdown">
-                    <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px; margin-right: 75px"></i>
-                    <button class="btn darkBtn btnWithBorders dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php if (isset($_SESSION["user"])) {
-                            echo htmlspecialchars($_SESSION["user"]["pseudo"], ENT_QUOTES, "UTF-8");
-                            if ($_SESSION["user"]["type"] === "admin") {
-                                echo " (admin)";
-                            }
-                        } else {
-                            echo "Mon compte";
-                        } ?>
-                    </button>
-                    <ul class="dropdown-menu darkBtn btnWithBorders py-0">
-                        <?php if (!isset($_SESSION["user"])) { ?>
-                            <!-- AUCUN UTILISATEUR CONNECTE -->
-                            <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
-                            <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
-                            <?php
-                        } else {
-                            // UTILISATEUR OU ADMIN CONNECTE
-                            if ($_SESSION["user"]["type"] === "admin") { ?>
+                <div class="d-flex flex-nowrap">
+                    <div class="dropdown">
+                        <i id="userIcon" class="bi bi-person-fill linksOnHover text-dark d-md-none dropdown-toggle me-5" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 34px"></i>
+                        <button class="btn darkBtn btnWithBorders dropdown-toggle d-none d-md-inline px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php if (isset($_SESSION["user"])) {
+                                echo htmlspecialchars($_SESSION["user"]["pseudo"], ENT_QUOTES, "UTF-8");
+                                if ($_SESSION["user"]["type"] === "admin") {
+                                    echo " (admin)";
+                                }
+                            } else {
+                                echo "Mon compte";
+                            } ?>
+                        </button>
+                        <ul class="dropdown-menu darkBtn btnWithBorders py-0">
+                            <?php if (!isset($_SESSION["user"])) { ?>
+                                <!-- AUCUN UTILISATEUR CONNECTE -->
+                                <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formLogin">Se connecter</a></li>
                                 <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
+                                <?php
+                            } else {
+                                // UTILISATEUR OU ADMIN CONNECTE
+                                if ($_SESSION["user"]["type"] === "admin") { ?>
+                                    <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
+                                <?php
+                                } ?>
+                                <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
+                                <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                             <?php
                             } ?>
-                            <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
-                            <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
-                        <?php
-                        } ?>
-                    </ul>
+                        </ul>
+                    </div>
+
+                    <!-- MODE CLAIR/SOMBRE -->
+                    <i id="btnModeDark" class="bi bi-moon-fill text-dark fs-3 ms-2 me-5" style="cursor: pointer;"></i>
                 </div>
-
-                <!-- MODE CLAIR/SOMBRE -->
-                <i id="btnModeDark" class="bi bi-moon-fill text-dark fs-3 ms-3" style="cursor: pointer;"></i>
-
             </div>
         </nav>
 

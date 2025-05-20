@@ -35,6 +35,27 @@ class GenreModel extends DbConnect
             return false;
         }
     }
+    //  TROUVE TOUS LES GENRES
+    // ---------------
+    public function readAll()
+    {
+        try {
+            // PREPARATION DE LA REQUETE SQL
+            $this->request = $this->connection->prepare("SELECT * FROM ppc_genre");
+
+            // EXECUTION DE LA REQUETE SQL
+            $this->request->execute();
+
+            // FORMATAGE DU RESULTAT DE LA REQUETE
+            $genres = $this->request->fetchAll();
+
+            // RETOUR DU RESULTAT
+            return $genres;
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
 
     //  TROUVE TOUS LES GENRES ASSOCIES A UN FILM DONNE
     // ---------------
