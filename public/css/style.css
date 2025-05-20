@@ -209,6 +209,10 @@ body.noscroll {
     width: 350px;
 }
 
+#modalSearch {
+    width: 80%;
+}
+
 /* Arrière-plan sombre */
 .modal {
     display: none;

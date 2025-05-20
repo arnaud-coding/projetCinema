@@ -5,8 +5,8 @@ const title = document.querySelector("#modalTitle");
 const searchInput = document.querySelector("#modalSearch");
 const btnSearch = document.querySelector("#btnSearch");
 const searchResults = document.querySelector("#searchResults");
-const btnAddToFilm = document.querySelectorAll(".btnAddToFilm");
 const id_film = document.querySelector(".modal-content").firstElementChild.id.replace("filmID", "");
+let id;
 let entity;
 let subject;
 
@@ -32,23 +32,49 @@ openBtn.forEach(btn => {
         if (!btnSearch.dataset.listenerAdded) {
             btnSearch.addEventListener("click", async () => {
                 const query = searchInput.value;
+                try {
+                    const response = await fetch(`index.php?controller=${entity}&action=search&query=${query}`);
+                    const data = await response.json();
+                    searchResults.innerHTML = "";
+                    data.forEach(person => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `<li id='${entity.toLowerCase() + person.id}Li' class='text-end my-3'><b>${person.name}</b><button type='button' id='${entity.toLowerCase() + person.id}' class='btnAddToFilm darkBtn btnWithBorders ms-2 p-1'>Ajouter</button></li>`;
+                        searchResults.appendChild(li);
 
-                if (query.length > 2) { // facultatif : on évite les requêtes trop courtes
-                    try {
-                        const response = await fetch(`index.php?controller=${entity}&action=search&query=${query}`);
-                        const data = await response.json();
-                        data.forEach(person => {
-                            const li = document.createElement("li");
-                            li.innerHTML = `<li id='${entity.toLowerCase() + person.id}Li' class='text-end my-3'><b>${person.name}</b><a href='#' id='${entity.toLowerCase() + person.id}' class='btnAddToFilm darkBtn btnWithBorders ms-2 p-1'>Ajouter</a></li>`;
-                            searchResults.appendChild(li);
-                            console.log(" btnAddToFilm:", btnAddToFilm);
+                        // Ajout au film apres clic sur acteur/réalisateur et si confirmation
+                        const btnAddToFilm = document.querySelectorAll(".btnAddToFilm");
+                        btnAddToFilm.forEach(btn => {
+                            btn.addEventListener("click", function (e) {
+                                if (this.id.startsWith("actor")) {
+                                    id = this.id.replace("actor", "");
+                                    entity = "Actor";
+                                } else if (this.id.startsWith("director")) {
+                                    id = this.id.replace("director", "");
+                                    entity = "Director";
+                                }
+                                fetch(`index.php?controller=Film&action=add${entity}ToFilm&id_film=${id_film}&id_${entity.toLowerCase()}=${id}`, { method: "GET" })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success === true) {
+                                            document.querySelector(`#${entity.toLowerCase() + person.id}Li`).remove();
+                                            document.querySelector('#resultMsg').innerHTML =
+                                                '<p class="text-success">' + data.message + '</p>';
+                                        } else {
+                                            document.querySelector('#resultMsg').innerHTML =
+                                                '<p class="text-danger">' + data.message + '</p>';
+                                        }
+                                    })
+                                    .catch(error => {
+                                        document.querySelector('#resultMsg').innerHTML =
+                                            '<p class="text-danger">Une erreur est survenue lors de l"ajout</p>';
+                                    });
+                            });
                         });
-                    } catch (error) {
-                        searchResults.innerHTML = "<p>Erreur lors de la recherche</p>";
-                    }
-                } else {
-                    searchResults.innerHTML = ""; // Vide les résultats si l'entrée est trop courte
+                    });
+                } catch (error) {
+                    searchResults.innerHTML = "<p>Erreur lors de la recherche</p>";
                 }
+
             });
 
             btnSearch.dataset.listenerAdded = "true"; // Pour ne pas ajouter plusieurs fois
@@ -74,36 +100,4 @@ window.addEventListener("click", (e) => {
         searchInput.value = "";
         entity = ""
     }
-});
-
-
-// Ajout au film apres clic sur acteur/réalisateur et si confirmation
-btnAddToFilm.forEach(btn => {
-    btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        if (this.id.startsWith("actor")) {
-            id = this.id.replace("actor", "");
-            entity = "Actor";
-        } else if (this.id.startsWith("director")) {
-            id = this.id.replace("director", "");
-            entity = "Director";
-        }
-        fetch(`index.php?controller=Film&action=add${entity}ToFilm&id_film=${id_film}&id_${entity.toLowerCase()}=${id}`, { method: "GET" })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success === true) {
-                    console.log("data success");
-                    document.querySelector(`#${entity.toLowerCase() + person.id}Li`).remove();
-                    document.querySelector('#resultMsg').innerHTML =
-                        '<p class="text-success">' + data.message + '</p>';
-                } else {
-                    document.querySelector('#resultMsg').innerHTML =
-                        '<p class="text-danger">' + data.message + '</p>';
-                }
-            })
-            .catch(error => {
-                document.querySelector('#resultMsg').innerHTML =
-                    '<p class="text-danger">Une erreur est survenue lors de l"ajout</p>';
-            });
-    });
 });

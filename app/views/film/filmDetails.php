@@ -202,11 +202,15 @@ if (!$film) { ?>
             <div id="myModal" class="modal">
                 <div class="modal-content lightForm formDarkMode">
                     <div hidden id="filmID<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></div>
-                    <a href="#" class="close-btn darkBtn btnWithBorders p-1" title="Retour en arrière"><i class="bi bi-x-lg"></i></a>
-                    <h2 id="modalTitle"></h2>
+                    <div class="d-flex justify-content-center">
+                        <h2 id="modalTitle" class="text-center pb-0"></h2>
+                        <a href="#" class="close-btn darkBtn btnWithBorders px-2" title="Retour en arrière"><i class="bi bi-x-lg"></i></a>
+                    </div>
                     <p id="resultMsg"></p>
-                    <input type="text" id="modalSearch" class="form-control mt-3">
-                    <button type="submit" id="btnSearch" class="btn btn-outline-dark buttonLinks"><span class="bi bi-search buttonLinks"></span></button>
+                    <div class="d-flex mt-3">
+                        <input type="text" id="modalSearch" class="form-control">
+                        <button type="button" id="btnSearch" class="btn btn-outline-dark buttonLinks ms-5"><span class="bi bi-search buttonLinks"></span></button>
+                    </div>
                     <div id="searchResults"></div>
                 </div>
             </div>
