@@ -85,7 +85,8 @@ class DirectorModel extends DbConnect
                     id_director,
                     CONCAT(firstname, ' ', lastname) AS name,
                     picture
-                 FROM ppc_director"
+                 FROM ppc_director
+                 ORDER BY lastname"
             );
 
             // EXECUTION DE LA REQUETE SQL

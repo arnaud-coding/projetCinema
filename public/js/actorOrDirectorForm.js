@@ -177,7 +177,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success === true) {
                     this.reset();
                     document.querySelector('#picturePreview').innerHTML = "";
                     message.innerHTML = `<p class='text-success'>${data.message}</p>`;

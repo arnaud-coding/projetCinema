@@ -85,7 +85,8 @@ class ActorModel extends DbConnect
                     id_actor,
                     CONCAT(firstname, ' ', lastname) AS name,
                     picture
-                 FROM ppc_actor"
+                 FROM ppc_actor
+                 ORDER BY lastname"
             );
 
             // EXECUTION DE LA REQUETE SQL

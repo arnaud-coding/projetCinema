@@ -103,7 +103,7 @@ document.querySelector(`#filmForm`).addEventListener('submit', function (e) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                if (data.success) {
+                if (data.success === true) {
                     this.reset();
                     document.querySelector('#picturePreview').innerHTML = "";
                     message.innerHTML = `<p class='text-success'>${data.message}</p>`;

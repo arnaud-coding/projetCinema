@@ -178,8 +178,7 @@ a {
 }
 
 /* -----------
-*/
-
+/* Couleur des "pills active" (bootstrap) des menu des page détails */
 button.active {
     background-color: #bfbfbf !important;
     color: #121212 !important;

@@ -8,7 +8,7 @@ document.querySelectorAll('.deleteLink').forEach(link => {
             fetch(`index.php?controller=Review&action=delete&id_review=${reviewId}`, { method: "GET" })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
+                    if (data.success === true) {
                         reviewDiv.remove();
                         document.getElementById('message').innerHTML =
                             '<p class="text-success">' + data.message + '</p>';

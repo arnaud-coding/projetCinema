@@ -118,7 +118,9 @@ class FilmController extends Controller
             "film" => $film,
             "scripts" => [
                 "type='module' src='js/reviews.js'",
-                "type='module' src='js/deleteReview.js'"
+                "type='module' src='js/deleteReview.js'",
+                "type='module' src='js/addToFilmModal.js'",
+                "type='module' src='js/removeFromFilm.js'"
             ]
         ];
         // NAVIGATION VERS PAGE
@@ -368,6 +370,74 @@ class FilmController extends Controller
         echo json_encode([
             'success' => $success,
             'message' => $success ? "Le film a été mis à jour avec succès" : "Echec lors de la mise à jour du film"
+        ]);
+        exit();
+    }
+
+    // AJOUTER UN ACTEUR A UN FILM
+    // -----------------
+    public function addActorToFilm()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
+        $id_actor = isset($_GET["id_actor"]) ? $_GET["id_actor"] : null;
+
+        $filmModel = new FilmModel();
+        $success = $filmModel->addActorToFilm($id_film, $id_actor);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "L'acteur a été ajouté au casting du film avec succès" : "Echec lors de l'ajout de l'acteur au casting de ce film"
+        ]);
+        exit();
+    }
+
+    // AJOUTER UN REALISATEUR A UN FILM
+    // -----------------
+    public function addDirectorToFilm()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
+        $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : null;
+
+        $filmModel = new FilmModel();
+        $success = $filmModel->addDirectorToFilm($id_film, $id_director);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "Le réalisateur a été ajouté au film avec succès" : "Echec lors de l'ajout de ce réalisateur à ce film"
+        ]);
+        exit();
+    }
+
+    // RETIRER UN ACTEUR DU CASTING D'UN FILM (SUPPRIMER L'ASSOCIATION)
+    // -----------------
+    public function removeActorFromFilm()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
+        $id_actor = isset($_GET["id_actor"]) ? $_GET["id_actor"] : null;
+
+        $filmModel = new FilmModel();
+        $success = $filmModel->removeActorFromFilm($id_film, $id_actor);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "L'acteur a été retiré du film avec succès" : "Echec de la suppression de cet acteur du casting de ce film"
+        ]);
+        exit();
+    }
+
+    // RETIRER UN REALISATEUR D'UN FILM (SUPPRIMER L'ASSOCIATION)
+    // -----------------
+    public function removeDirectorFromFilm()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : null;
+        $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : null;
+
+        $filmModel = new FilmModel();
+        $success = $filmModel->removeDirectorFromFilm($id_film, $id_director);
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? "Le réalisateur a été retiré du film avec succès" : "Echec de la suppression de ce réalisateur de la réalisation de ce film"
         ]);
         exit();
     }
