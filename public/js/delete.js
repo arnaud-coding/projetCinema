@@ -19,14 +19,15 @@ document.querySelectorAll('.deleteLink').forEach(link => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === true) {
+                        document.getElementById('message').innerHTML =
+                            '<p class="text-success">' + data.message + '</p>';
+
                         if (parentDiv) {
                             parentDiv.remove();
                         } else {
                             // Redirection si besoin
                             window.location.href = data.redirect || "index.php";
                         }
-                        document.getElementById('message').innerHTML =
-                            '<p class="text-success">' + data.message + '</p>';
                     } else {
                         document.getElementById('message').innerHTML =
                             '<p class="text-danger">' + data.message + '</p>';

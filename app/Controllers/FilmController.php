@@ -414,6 +414,50 @@ class FilmController extends Controller
         exit();
     }
 
+    // SUPPRIMER UN FILM
+    // -----------------
+    public function delete()
+    {
+        $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : "";
+
+        // Récupération du réalisateur à supprimer
+        $filmModel = new FilmModel();
+        $film = $filmModel->readByID($id_film);
+        if (!$film) {
+            // Film non trouvé en BDD
+            echo json_encode([
+                "success" => false,
+                "message" => "Erreur inattendue : veuillez contacter l'administrateur du sysème"
+            ]);
+            exit();
+        }
+
+        // Vérification que le film ne soit pas associé à des réalisateurs et/ou acteurs et/ou à des genres
+        $actorModel = new ActorModel();
+        $actors = $actorModel->getAllByFilmId($id_film);
+        $directorModel = new DirectorModel();
+        $directors = $directorModel->getAllByFilmId($id_film);
+        $genreModel = new GenreModel();
+        $genres = $genreModel->getAllByFilmId($id_film);
+        if ($actors || $directors || $genres) {
+            // Erreur : on demande à l'utilisateur d'aller supprimer les associations entre film et acteurs/réalisateurs,
+            // et entre film et genres avant de supprimer le film
+            echo json_encode([
+                'success' => false,
+                'message' => 'Veuillez retirer les genres au film (avec le bouton "Modifier"), les acteurs et les réalisateurs du casting (sur la page "Casting") de ce film avant de le supprimer'
+            ]);
+            exit();
+        }
+
+        // Suppression du film en BDD
+        $success = $filmModel->delete($id_film);
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? 'Film supprimé avec succès' : 'Echec de la supression du film'
+        ]);
+        exit();
+    }
+
     // AJOUTER UN ACTEUR A UN FILM
     // -----------------
     public function addActorToFilm()
