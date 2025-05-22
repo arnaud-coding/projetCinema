@@ -21,8 +21,8 @@ class Router
     // --------------
     public function routes()
     {
-        // RECUPERATION DE LA ROUTE (Par défaut, HomeControler->homeAction)
-        $this->controller = ($_GET["controller"] ?? "Home") . "Controller";
+        // RECUPERATION DE LA ROUTE (Par défaut, FilmControler->home)
+        $this->controller = ($_GET["controller"] ?? "Film") . "Controller";
         $this->action = $_GET["action"] ?? "home";
 
 
