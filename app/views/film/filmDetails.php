@@ -209,7 +209,6 @@ if (!$film) { ?>
                     <p id="resultMsg"></p>
                     <div class="d-flex mt-3">
                         <input type="text" id="modalSearch" class="form-control">
-                        <button type="button" id="btnSearch" class="btn btn-outline-dark buttonLinks ms-5"><span class="bi bi-search buttonLinks"></span></button>
                     </div>
                     <div id="searchResults"></div>
                 </div>
