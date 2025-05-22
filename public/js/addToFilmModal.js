@@ -47,33 +47,6 @@ window.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
 });
 
-// DELEGATION SUR LES BOUTONS "AJOUTER"
-searchResults.addEventListener("click", function (e) {
-    if (e.target && e.target.classList.contains("btnAddToFilm")) {
-        const btn = e.target;
-        const id = btn.id.replace(entity.toLowerCase(), "");
-
-        fetch(`index.php?controller=Film&action=add${entity}ToFilm&id_film=${id_film}&id_${entity.toLowerCase()}=${id}`, {
-            method: "GET"
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success === true) {
-                    document.querySelector(`#${entity.toLowerCase() + id}Li`).remove();
-                    document.querySelector('#resultMsg').innerHTML =
-                        '<p class="text-success">' + data.message + '</p>';
-                } else {
-                    document.querySelector('#resultMsg').innerHTML =
-                        '<p class="text-danger">' + data.message + '</p>';
-                }
-            })
-            .catch(error => {
-                document.querySelector('#resultMsg').innerHTML =
-                    '<p class="text-danger">Une erreur est survenue lors de l\'ajout</p>';
-            });
-    }
-});
-
 // RECHERCHE EN DIRECT
 let searchTimeout;
 searchInput.addEventListener("input", function () {
@@ -109,4 +82,31 @@ searchInput.addEventListener("input", function () {
             searchResults.innerHTML = "<p class='text-danger'>Erreur lors de la recherche</p>";
         }
     }, 300); // délai pour éviter les appels trop fréquents
+});
+
+// DELEGATION SUR LES BOUTONS "AJOUTER"
+searchResults.addEventListener("click", function (e) {
+    if (e.target && e.target.classList.contains("btnAddToFilm")) {
+        const btn = e.target;
+        const id = btn.id.replace(entity.toLowerCase(), "");
+
+        fetch(`index.php?controller=Film&action=add${entity}ToFilm&id_film=${id_film}&id_${entity.toLowerCase()}=${id}`, {
+            method: "GET"
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === true) {
+                    document.querySelector(`#${entity.toLowerCase() + id}Li`).remove();
+                    document.querySelector('#resultMsg').innerHTML =
+                        '<p class="text-success">' + data.message + '</p>';
+                } else {
+                    document.querySelector('#resultMsg').innerHTML =
+                        '<p class="text-danger">' + data.message + '</p>';
+                }
+            })
+            .catch(error => {
+                document.querySelector('#resultMsg').innerHTML =
+                    '<p class="text-danger">Une erreur est survenue lors de l\'ajout</p>';
+            });
+    }
 });

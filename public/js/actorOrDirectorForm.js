@@ -179,7 +179,7 @@ document.querySelector(`#${entity}Form`).addEventListener('submit', function (e)
             .then(data => {
                 if (data.success === true) {
                     this.reset();
-                    document.querySelector('#picturePreview').innerHTML = "";
+                    document.querySelector('#picturePreview').style.display = "none";
                     message.innerHTML = `<p class='text-success'>${data.message}</p>`;
                 } else {
                     message.innerHTML = `<p class='text-danger'>${data.message}</p>`;
