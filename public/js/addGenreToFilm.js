@@ -1,7 +1,7 @@
 const modal = document.querySelector("#myModal");
 const openBtn = document.querySelector(".addGenreToFilmOpenModal");
-console.log(" openBtn:", openBtn)
 const closeBtn = document.querySelector(".close-btn");
+const validateBtn = document.querySelector(".validate-btn");
 
 // Ouvrir la modale
 openBtn.addEventListener("click", function (e) {
@@ -12,6 +12,12 @@ openBtn.addEventListener("click", function (e) {
 
 // Fermer la modale au clic sur le X
 closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    document.body.classList.remove("noscroll"); // ✅ réactive le scroll
+});
+
+// Fermer la modale après validation sélection
+validateBtn.addEventListener("click", () => {
     modal.style.display = "none";
     document.body.classList.remove("noscroll"); // ✅ réactive le scroll
 });

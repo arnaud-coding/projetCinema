@@ -6,6 +6,7 @@ use App\Controllers\Controller as Controller;
 use App\Core\CSRFTokenManager as CSRFTokenManager;
 use App\Core\Validator as Validator;
 use App\Entities\Film as Film;
+use App\Entities\Film_Genre as Film_Genre;
 use App\Models\FilmModel as FilmModel;
 use App\Models\GenreModel as GenreModel;
 use App\Models\ActorModel as ActorModel;
@@ -193,11 +194,16 @@ class FilmController extends Controller
     {
         $token = CSRFTokenManager::generateCSRFToken();
 
+        // Recupere tous les genres
+        $genreModel = new GenreModel();
+        $genres = $genreModel->readAll();
+
         $data = [
             "scripts" => [
                 "type='module' src='js/filmForm.js'",
                 "type='module' src='js/addGenreToFilm.js'"
             ],
+            "genres" => $genres,
             "token" => $token,
             "controllerMethod" => "add"
         ];
@@ -223,6 +229,13 @@ class FilmController extends Controller
         $synopsis = $_POST['synopsis'] ?? null;
         $release_year = $_POST['release_year'] ?? null;
         $duration = $_POST['duration'] ?? null;
+        $genres = $_POST['genres'] ?? [];
+        $genresArray = [];
+        foreach ($genres as $id_genre) {
+            $genre = new Film_Genre();
+            $genre->setId_genre($id_genre);
+            $genresArray[] = $genre;
+        }
 
         // Verification que le film ne soit pas deja en BDD
         $filmModel = new FilmModel();
@@ -274,7 +287,7 @@ class FilmController extends Controller
         $film->setPicture($uploadName);
 
         // Appel de la methode d'ajout de film dans la BDD
-        $success = $filmModel->add($film);
+        $success = $filmModel->add($film, $genresArray);
 
         echo json_encode([
             'success' => $success,
@@ -289,7 +302,7 @@ class FilmController extends Controller
     {
         $id_film = isset($_GET["id_film"]) ? $_GET["id_film"] : "";
 
-        // Recupere le film à updater
+        // Récupère le film
         $filmModel = new FilmModel();
         $film = $filmModel->readByID($id_film);
         if (!$film) {
@@ -341,6 +354,7 @@ class FilmController extends Controller
         $synopsis = $_POST['synopsis'] ?? null;
         $release_year = $_POST['release_year'] ?? null;
         $duration = $_POST['duration'] ?? null;
+        $genres = $_POST['genres'] ?? [];
 
         // GESTION DE L'UPLOAD
         if ($_FILES["picture"]["name"] !== "") {
@@ -374,7 +388,7 @@ class FilmController extends Controller
 
         // Hydratation de l'instance de l'entité Film avec les données du formulaire
         $film = new Film();
-        $film->setId_film($id_film);
+        $film->setId_film(intval($id_film));
         $film->setTitle($title);
         $film->setSynopsis($synopsis);
         $film->setRelease_year(intval($release_year));
@@ -384,6 +398,14 @@ class FilmController extends Controller
         // Appel de la methode de mise à jour de film dans la BDD
         $filmModel = new FilmModel();
         $success = $filmModel->update($film);
+
+        if ($success === true) {
+            // Suppression des précédentes associations entre le film et des genres et ajout des nouveaux
+            $filmModel->RemoveAllGenresFromFilm(intval($id_film));
+            foreach ($genres as $id_genre) {
+                $filmModel->addGenreToFilm($id_film, $id_genre);
+            }
+        }
 
         echo json_encode([
             'success' => $success,

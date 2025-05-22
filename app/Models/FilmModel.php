@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use PDO;
-use PDOException;
-use App\Entities\Film;
+use PDO as PDO;
+use PDOException as PDOException;
+use App\Entities\Film as Film;
+use App\Entities\Film_Genre as Film_Genre;
 use App\Core\DbConnect;
 
 // -----------------------------
@@ -162,7 +163,7 @@ class FilmModel extends DbConnect
 
     //  AJOUTER UN FILM
     // -----------------
-    public function add(Film $film)
+    public function add(Film $film, $genresArray = [])
     {
         try {
             // PREPARATION DE LA REQUETE SQL
@@ -184,7 +185,14 @@ class FilmModel extends DbConnect
             $this->request->bindValue(":picture", $film->getPicture(), PDO::PARAM_STR);
 
             // EXECUTION DE LA REQUETE SQL ET RETOUR DE L'EXECUTION
-            return $this->request->execute();
+            $success = $this->request->execute();
+            if ($success) {
+                $id_film = $this->connection->lastInsertId();
+                foreach ($genresArray as $genre) {
+                    $this->addGenreToFilm($id_film, $genre->getId_genre());
+                }
+            }
+            return $success;
         } catch (PDOException $e) {
             // return $e->errorInfo[1];
             return false;
@@ -301,7 +309,7 @@ class FilmModel extends DbConnect
         }
     }
 
-    // RETIRE UN REALISATEUR D' UN FILM
+    // RETIRE UN REALISATEUR D'UN FILM
     // -----------------
     public function removeDirectorFromFilm($id_film, $id_director)
     {
@@ -319,7 +327,7 @@ class FilmModel extends DbConnect
         }
     }
 
-    // RETIRE UN GENRE D' UN FILM
+    // RETIRE UN GENRE D UN FILM
     // -----------------
     public function removeGenreFromFilm($id_film, $id_genre)
     {
@@ -331,6 +339,20 @@ class FilmModel extends DbConnect
             $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
             $this->request->bindValue(":id_genre", $id_genre, PDO::PARAM_INT);
             return $this->request->execute();
+        } catch (PDOException $e) {
+            // return $e->errorInfo[1];
+            return false;
+        }
+    }
+
+    // RETRIRE TOUS LES GENRES D'UN FILM
+    // -----------------
+    public function RemoveAllGenresFromFilm($id_film)
+    {
+        try {
+            $this->request = $this->connection->prepare("DELETE FROM ppc_film_genre WHERE id_film = :id_film");
+            $this->request->bindValue(":id_film", $id_film, PDO::PARAM_INT);
+            return  $this->request->execute();
         } catch (PDOException $e) {
             // return $e->errorInfo[1];
             return false;

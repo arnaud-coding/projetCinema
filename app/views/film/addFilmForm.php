@@ -51,6 +51,29 @@
             <p id="durationError" class="d-none text-danger"></p>
         </div>
 
+        <!-- BOUTON OUVRIR MODALE POUR CHOIX GENRE -->
+        <button type="button" class="addGenreToFilmOpenModal lightBtn btnWithBorders p-2 mb-3">Choisissez le(s) genre(s)</button>
+
+        <!-- MODAL SELECTION GENRE(S) -->
+        <div id="myModal" class="modal">
+            <div class="modal-content lightForm formDarkMode">
+                <div class="d-flex justify-content-center">
+                    <h2 id="modalTitle" class="text-center pb-0">Sélection genre(s)</h2>
+                    <a href="#" class="close-btn darkBtn btnWithBorders px-2" title="Retour en arrière"><i class="bi bi-x-lg"></i></a>
+                </div>
+                <p id="msg"></p>
+                <?php
+                foreach ($genres as $genre) { ?>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" name="genres[]" value="<?= htmlspecialchars($genre->id_genre, ENT_QUOTES, "UTF-8") ?>">
+                        <label class="form-check-label" for="genres"><?= htmlspecialchars($genre->name, ENT_QUOTES, "UTF-8") ?></label>
+                    </div>
+                <?php
+                } ?>
+                <a href="#" class="validate-btn darkBtn btnWithBorders my-3 p-2" title="Valider sélection">Valider</a>
+            </div>
+        </div>
+
         <!-- CHAMP IMAGE -->
         <div class="mb-3">
             <label for="picture" class="form-label">Image (optionnel)</label>

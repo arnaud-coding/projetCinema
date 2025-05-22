@@ -31,13 +31,13 @@
             <button class="nav-link active menuLinks darkTypo" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
             <button class="nav-link menuLinks darkTypo" id="pills-biography-tab" data-bs-toggle="pill" data-bs-target="#pills-biography" type="button" role="tab" aria-controls="pill-biography" aria-selected="false">Biographie</button>
             <button class="nav-link menuLinks darkTypo" id="pills-filmography-tab" data-bs-toggle="pill" data-bs-target="#pills-filmography" type="button" role="tab" aria-controls="pill-filmography" aria-selected="false">Filmographie</button>
+            <!-- BOUTONS MODIFIER / SUPPRIMER -->
+            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Director&action=updateForm&id_director=<?= htmlspecialchars($director["details"]->id_director, ENT_QUOTES, "UTF-8") ?>">Modifier</a>
+                <a class="btn btn-danger" href="index.php?controller=Director&action=delete&id_director=<?= htmlspecialchars($director["details"]->id_director, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
+            <?php
+            } ?>
         </div>
-        <!-- BOUTONS MODIFIER / SUPPRIMER -->
-        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-            <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Director&action=updateForm&id_director=<?= htmlspecialchars($director["details"]->id_director, ENT_QUOTES, "UTF-8") ?>">Modifier</a>
-            <a class="btn btn-danger" href="index.php?controller=Director&action=delete&id_director=<?= htmlspecialchars($director["details"]->id_director, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
-        <?php
-        } ?>
     </nav>
 
     <!-- CONTENU PRINCIPAL DE LA PAGE -->

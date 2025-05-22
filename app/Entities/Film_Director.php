@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Entities;
+
 // ---------------------------------------
 // CLASSE DE L'ENTITE film_director DE LA BDD
 //
