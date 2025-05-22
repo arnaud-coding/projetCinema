@@ -213,7 +213,7 @@ class ActorModel extends DbConnect
     public function delete($id_actor)
     {
         try {
-            $this->request = $this->connection->prepare("DELETE FROM ppc_actor WHERE id_film = :id_film");
+            $this->request = $this->connection->prepare("DELETE FROM ppc_actor WHERE id_actor = :id_actor");
             $this->request->bindValue(":id_actor", $id_actor, PDO::PARAM_INT);
             return $this->request->execute();
         } catch (PDOException $e) {

@@ -119,7 +119,7 @@ class FilmController extends Controller
             "film" => $film,
             "scripts" => [
                 "type='module' src='js/reviews.js'",
-                "type='module' src='js/deleteReview.js'",
+                "type='module' src='js/delete.js'",
                 "type='module' src='js/addToFilmModal.js'",
                 "type='module' src='js/removeFromFilm.js'"
             ]

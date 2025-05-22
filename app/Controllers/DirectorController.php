@@ -43,6 +43,7 @@ class DirectorController extends Controller
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
+            "scripts" => ["type='module' src='js/delete.js'"],
             "director" => $director
         ];
         // NAVIGATION VERS PAGE
@@ -277,6 +278,59 @@ class DirectorController extends Controller
         exit();
     }
 
+    // SUPPRIMER UN REALISATEUR
+    // -----------------
+    public function delete()
+    {
+        $id_director = isset($_GET["id_director"]) ? $_GET["id_director"] : null;
+
+        // Récupération du réalisateur à supprimer
+        $directorModel = new DirectorModel();
+        $director = $directorModel->readByID($id_director);
+        if (!$director) {
+            // Réalisateur non trouvé en BDD
+            echo json_encode([
+                "success" => false,
+                "message" => "Erreur inattendue : veuillez contacter l'administrateur du sysème"
+            ]);
+        }
+
+        // Recherche si le réalisateur est associé à des films
+        $filmModel = new FilmModel();
+        $films = $filmModel->readAllByDirectorId($id_director);
+        if ($films) {
+            // formattage des titres pour affichange dans le message d'erreur
+            $titles = "";
+            $count = count($films);
+            if ($count === 1) {
+                $titles .= '"' . $films[0]->title . '" ; ';
+            } else {
+                for ($i = 0; $i < $count - 1; $i++) {
+                    // affichage du 1er à l'avant dernier titre de film
+                    $titles .= '"' . $films[$i]->title . '", ';
+                }
+                for ($i = $count - 1; $i < $count; $i++) {
+                    // affichage du dernier film
+                    $titles .= 'et "' . $films[$i]->title . '" ; ';
+                }
+            }
+
+            // Le réalisateur est associé à des films : on demande à l'utilisateur d'aller le retirer de la réalisation de ces films avant de le supprimer
+            echo json_encode([
+                "success" => false,
+                "message" => "Le réalisateur est associé au(x) film(s) " . $titles . " veuillez le retirer de la réalisation de ce(s) films avant de le supprimer"
+            ]);
+            exit();
+        }
+
+        // Suppression de l'acteur dans la BDD
+        $success = $directorModel->delete($id_director);
+        echo json_encode([
+            "success" => $success,
+            "message" => $success ? "Le réalisateur a été supprimé avec succès" : "Echec de la suppression du réalisateur ; veuillez contacter l'administrateur du système"
+        ]);
+        exit();
+    }
 
     // RECHERCHER UN REALISATEUR (pour barre de recherche)
     // -----------------

@@ -1,15 +1,30 @@
+let entity = "";
+
 document.querySelectorAll('.deleteLink').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
-        const reviewId = this.id;
-        const reviewDiv = document.querySelector(`#review-${reviewId}`);
 
-        if (confirm('Êtes-vous sûr de vouloir supprimer cette critique ?')) {
-            fetch(`index.php?controller=Review&action=delete&id_review=${reviewId}`, { method: "GET" })
+        entity = this.dataset.entity;
+        const id = this.id.replace(`delete${entity}-`, "");
+        const item = this.dataset.item
+        // parentDiv uniquement si c’est une critique
+        let parentDiv = null;
+        if (entity === "Review") {
+            parentDiv = document.querySelector(`#${entity.toLowerCase()}-${id}`);
+        }
+
+        console.log(parentDiv);
+        if (confirm(`Êtes-vous sûr de vouloir supprimer ${item} ?`)) {
+            fetch(`index.php?controller=${entity}&action=delete&id_${entity.toLowerCase()}=${id}`, { method: "GET" })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === true) {
-                        reviewDiv.remove();
+                        if (parentDiv) {
+                            parentDiv.remove();
+                        } else {
+                            // Redirection si besoin
+                            window.location.href = data.redirect || "index.php";
+                        }
                         document.getElementById('message').innerHTML =
                             '<p class="text-success">' + data.message + '</p>';
                     } else {

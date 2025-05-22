@@ -45,6 +45,7 @@ class ActorController extends Controller
 
         // ENVOI DONNEES FILM ET SCRIPTS JS A LA VUE
         $data = [
+            "scripts" => ["type='module' src='js/delete.js'"],
             "actor" => $actor
         ];
         // NAVIGATION VERS PAGE
@@ -275,6 +276,60 @@ class ActorController extends Controller
         echo json_encode([
             'success' => $success,
             'message' => $success ? "L'acteur a été mis à jour avec succès" : "Echec lors de la mise à jour de l'acteur"
+        ]);
+        exit();
+    }
+
+    // SUPPRIMER UN ACTEUR
+    // -----------------
+    public function delete()
+    {
+        $id_actor = isset($_GET["id_actor"]) ? $_GET["id_actor"] : null;
+
+        // Récupération de l'acteur à supprimer
+        $actorModel = new ActorModel();
+        $actor = $actorModel->readByID($id_actor);
+        if (!$actor) {
+            // Acteur non trouvé en BDD
+            echo json_encode([
+                "success" => false,
+                "message" => "Erreur inattendue : veuillez contacter l'administrateur du sysème"
+            ]);
+        }
+
+        // Recherche si l'acteur est associé à des films
+        $filmModel = new FilmModel();
+        $films = $filmModel->readAllByActorId($id_actor);
+        if ($films) {
+            // formattage des titres pour affichange dans le message d'erreur
+            $titles = "";
+            $count = count($films);
+            if ($count === 1) {
+                $titles .= '"' . $films[0]->title . '" ; ';
+            } else {
+                for ($i = 0; $i < $count - 1; $i++) {
+                    // affichage du 1er à l'avant dernier titre de film
+                    $titles .= '"' . $films[$i]->title . '", ';
+                }
+                for ($i = $count - 1; $i < $count; $i++) {
+                    // affichage du dernier film
+                    $titles .= 'et "' . $films[$i]->title . '" ; ';
+                }
+            }
+
+            // L'acteur est associé à des films : on demande à l'utilisateur d'aller le retirer du casting de ces films avant de le supprimer
+            echo json_encode([
+                "success" => false,
+                "message" => "L'acteur est associé au(x) film(s) " . $titles . " veuillez le retirer du casting de ce(s) films avant de le supprimer"
+            ]);
+            exit();
+        }
+
+        // Suppression de l'acteur dans la BDD
+        $success = $actorModel->delete($id_actor);
+        echo json_encode([
+            "success" => $success,
+            "message" => $success ? "L'acteur a été supprimé avec succès" : "Echec de la suppression de l'acteur ; veuillez contacter l'administrateur du système"
         ]);
         exit();
     }

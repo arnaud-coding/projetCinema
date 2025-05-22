@@ -56,7 +56,8 @@ if (!$film) { ?>
             <!-- BOUTON MODIFIER ET BOUTON SUPPRIMER -->
             <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                 <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Film&action=updateForm&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Modifier</a>
-                <a class="btn btn-danger" href="index.php?controller=Film&action=delete&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
+                <a class="deleteLink btn btn-danger" href="#" data-entity="Film" data-item="ce film"
+                    id="deleteFilm-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
             <?php
             } ?>
         </div>
@@ -253,7 +254,7 @@ if (!$film) { ?>
                         </div>
                         <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                             <!-- BOUTON ADMIN : SUPPRESSION CRITIQUE -->
-                            <a id="<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" href="index.php?controller=Review&action=delete&id_review=<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" class="deleteLink btn btn-danger ms-5">
+                            <a href="#" id="deleteReview-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" data-entity="Review" data-item="cette critique" class="deleteLink btn btn-danger ms-5">
                                 <i class="fa-solid fa-xmark"></i>
                             </a>
                         <?php
