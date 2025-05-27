@@ -55,7 +55,8 @@ class FilmController extends Controller
         // SCRIPTS JS
         $data = [
             "filmsByGenres" => $filmsByGenres,
-            "scripts" => ["type='module' src='js/filmsByGenre.js'"]
+            "scripts" => ["type='module' src='js/filmsByGenre.js'"],
+            "scripts" => ["type='module' src='js/home.js'"]
         ];
 
         // NAVIGATION VERS PAGE
