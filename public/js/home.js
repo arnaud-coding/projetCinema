@@ -1,5 +1,4 @@
-const welcomeTitle = document.querySelectorAll("h1");
-console.log(" welcomeTitle:", welcomeTitle)
+const welcomeTitle = document.querySelectorAll(".welcomeMsg");
 
 welcomeTitle.forEach(title =>
     setTimeout(() => {
