@@ -82,7 +82,6 @@
                             <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Film&action=home">Films</a></li>
                             <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Actor&action=home">Acteurs</a></li>
                             <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Director&action=home">Réalisateurs</a></li>
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo nav_cat" href="index.php?controller=Selection&action=home">Collections</a></li>
                         </ul>
                     </div>
                 </div>
@@ -122,7 +121,6 @@
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=Director&action=addForm">Ajouter réalisateur</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link menuLinks darkTypo" href="index.php?controller=Selection&action=home">Collections</a></li>
                         </ul>
                     </div>
                 </div>

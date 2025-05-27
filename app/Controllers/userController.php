@@ -97,7 +97,7 @@ class UserController extends Controller
                         }
 
                         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-                        header("Location: index.php?controller=Home&action=home");
+                        header("Location: index.php?controller=Film&action=home");
                     } else {
                         header("Location: index.php?controller=User&action=formLogin&msgKO=" . urlencode("Mot de passe ou identifiant incorrect"));
                     }
@@ -127,7 +127,7 @@ class UserController extends Controller
         session_destroy();
 
         // ENVOI VERS LE CONTROLEUR PRINCIPAL POUR LE RECHARGEMENT
-        header("Location: index.php?controller=Home&action=home");
+        header("Location: index.php?controller=Film&action=home");
     }
 
     /*

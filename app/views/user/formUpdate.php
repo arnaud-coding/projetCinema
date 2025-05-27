@@ -13,7 +13,7 @@
             <i class="bi bi-x-lg"></i>
         </a>
     <?php else : ?>
-        <a class="btn btn-outline-secondary" href="index.php?controller=Home&action=home"
+        <a class="btn btn-outline-secondary" href="index.php?controller=Film&action=home"
             title="Retour en arrière">
             <i class="bi bi-x-lg"></i>
         </a>
