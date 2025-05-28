@@ -44,7 +44,8 @@
         <!-- CHAMP MDP -->
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
-            <input id="password" class="form-control form-control-sm" type="password" name="password" autocomplete="new-password" placeholder="Entrez votre mot de passe">
+            <input id="password" class="form-control form-control-sm" type="password" name="password" autocomplete="new-password"
+                placeholder="Entrez votre mot de passe">
 
             <!-- ZONE DE CONTROLE DU MDP -->
             <div id="psw-strength" class="w-100 px-1 py-4" hidden>

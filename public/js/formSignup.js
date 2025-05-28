@@ -74,9 +74,9 @@ document.querySelector('#formSignUp').addEventListener('submit', function (e) {
 // --------------------------
 // validation du mot de passe
 // --------------------------
-function validateOne(regex, password, check, xmark) {
+function validateOne(regex, string, check, xmark) {
 
-    if (regex.exec(password)) {
+    if (regex.exec(string)) {
         check.hidden = false;
         xmark.hidden = true;
         return 1;
