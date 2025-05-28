@@ -49,16 +49,11 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 
     <?php
     // Parcours dimension 1 : les genres et leurs films
-    // ------------------------------------------------
     foreach ($filmsByGenres as $genre => $films) { ?>
 
         <!-- Titre du "carroussel netflix" : nom du genre -->
         <h3 class="mb-0"><?= htmlspecialchars($genre, ENT_QUOTES, "UTF-8")  ?></h3>
 
-        <?php
-        // Parcours dimension 2 : les films du genre courant
-        // ------------------------------------------------
-        ?>
         <!-- Carroussel container -->
         <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
@@ -68,9 +63,10 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             </button>
 
             <?php
-            // Liste des films en scroll horizontal
+            // Parcours dimension 2 : les films du genre courant
             foreach ($films as $film) { ?>
-                <a href="index.php?controller=Film&action=details&id_film=<?= htmlspecialchars($film->id_film, ENT_QUOTES, "UTF-8") ?>" class="filmLink darkTypo" style="text-decoration: none;">
+                <a href="index.php?controller=Film&action=details&id_film=<?= htmlspecialchars($film->id_film, ENT_QUOTES, "UTF-8") ?>"
+                    class="filmLink darkTypo" style="text-decoration: none;">
                     <div class="flex-shrink-0" style="width: 150px;">
                         <object data="img/img_films/<?= htmlspecialchars($film->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?>">
                             <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
