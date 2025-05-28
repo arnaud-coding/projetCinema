@@ -352,7 +352,7 @@ class UserController extends Controller
                     if ($success === true) {
                         // SUCCES : REDIRECTION VERS LA PAGE LOGIN
                         $message = "Félicitations, vous êtes des notres ! Connectez vous maintenant...";
-                        $redirect = "index.php?controller=User&action=formLogin&success=" . true . "&message=" . urlencode($message);
+                        $redirect = "index.php?controller=User&action=formLogin&message=" . urlencode($message);
                     } else {
                         if ($success === 1062) {
                             $message = "Le pseudo ou l'adresse mail existe déja";

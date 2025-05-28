@@ -1,3 +1,4 @@
+<?php $message = isset($_GET["message"]) ? $_GET["message"] : "" ?>
 <!---------------------->
 <!-- TITRE DE LA PAGE -->
 <!---------------------->
@@ -7,11 +8,16 @@
     <h1 class="flex-grow-1 text-center fs-3 fst-italic">Se connecter à mon compte</h1>
 
     <!-- BOUTON RETOUR -->
-    <a class="darkBtn btnWithBorders" href="index.php?controller=Film&action=home"
+    <a class="btn darkBtn btnWithBorders" href="index.php?controller=Film&action=home"
         title="Retour en arrière">
         <i class="bi bi-x-lg"></i>
     </a>
 </div>
+
+<!-- MESSAGE D'ERREUR -->
+<p id="message-failure" class="text-center text-danger"></p>
+<!-- MESSAGE DE SUCCES -->
+<p id="message-success" class="text-center text-success"><?= $message ?></p>
 
 <!---------------->
 <!-- FORMULAIRE -->

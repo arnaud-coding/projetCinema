@@ -8,7 +8,6 @@ function displayNames($items, $max = null, $controller = null)
     $max = $max == null ? $count : $max;
 
     for ($i = 0; $i < $count; $i++) {
-
         if ($controller === "Genre") {
             $key = "id_genre";
             $id = $items[$i]->id_genre;
@@ -23,7 +22,8 @@ function displayNames($items, $max = null, $controller = null)
         if ($i === $max - 1) {
             // affichage du dernier élément
             $name = $items[$i]->name; ?>
-            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks linksOnHover">
+            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>"
+                class="darkTypo menuLinks linksOnHover">
                 <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
             </a>
         <?php
@@ -31,7 +31,8 @@ function displayNames($items, $max = null, $controller = null)
         } else {
             // affichage du 1er à l'avant dernier élément
             $name = $items[$i]->name . ", "; ?>
-            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks linksOnHover">
+            <a href="index.php?controller=<?= $controller ?>&action=details&<?= $key ?>=<?= htmlspecialchars($id, ENT_QUOTES, "UTF-8") ?>"
+                class="darkTypo menuLinks linksOnHover">
                 <b><?= htmlspecialchars($name, ENT_QUOTES, "UTF-8") ?></b>
             </a>
     <?php
@@ -50,14 +51,20 @@ if (!$film) { ?>
     <!-- MENU DES DÉTAILS DU FILM -->
     <nav class="d-flex justify-content-center mt-4 mb-4">
         <div class="nav nav-pills d-flex flex-nowrap overflow-auto pb-3" id="pills-tab" role="tablist">
-            <button class="nav-link active menuLinks darkTypo" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
-            <button class="nav-link menuLinks darkTypo" id="pills-casting-tab" data-bs-toggle="pill" data-bs-target="#pills-casting" type="button" role="tab" aria-controls="pill-casting" aria-selected="false">Casting</button>
-            <button class="nav-link menuLinks darkTypo" id="pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pill-reviews" aria-selected="false">Critiques</button>
+            <button class="nav-link active menuLinks darkTypo" id="pills-home-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Accueil</button>
+            <button class="nav-link menuLinks darkTypo" id="pills-casting-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-casting" type="button" role="tab" aria-controls="pill-casting" aria-selected="false">Casting</button>
+            <button class="nav-link menuLinks darkTypo" id="pills-reviews-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pill-reviews" aria-selected="false">Critiques</button>
             <!-- BOUTON MODIFIER ET BOUTON SUPPRIMER -->
             <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-                <a class="ms-2 p-2 darkBtn btnWithBorders" href="index.php?controller=Film&action=updateForm&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Modifier</a>
+                <a class="ms-2 p-2 darkBtn btnWithBorders"
+                    href="index.php?controller=Film&action=updateForm&id_film=<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Modifier
+                </a>
                 <a class="deleteLink btn btn-danger" href="#" data-entity="Film" data-item="ce film"
-                    id="deleteFilm-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Supprimer</a>
+                    id="deleteFilm-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>">Supprimer
+                </a>
             <?php
             } ?>
         </div>
@@ -118,8 +125,8 @@ if (!$film) { ?>
             <div>
                 <div class="d-inline-flex align-items-center mb-4">
                     <h3 class="mb-0">Réalisateur(s)</h3>
+                    <!-- ADMIN CONNECTE : Button modal addToFilm -->
                     <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-                        <!-- ADMIN CONNECTE : Button modal addToFilm -->
                         <a href="#" id="addDirector" class="fs-6 ms-3 p-2 addToFilmOpenModal darkBtn btnWithBorders">Ajouter réalisateur</a>
                     <?php
                     } ?>
@@ -132,11 +139,15 @@ if (!$film) { ?>
                     } else {
                         foreach ($film["directors"] as $director) : ?>
                             <!-- LISTE DES REALISATEURS DU FILM -->
-                            <div id="director-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
+                            <div id="director-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
+                                class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
                                 <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
-                                <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks">
+                                <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
+                                    class="darkTypo menuLinks">
                                     <div class="me-5" style="width: 155px">
-                                        <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>" style="width: 155px">
+                                        <object data="img/img_directors/<?= htmlspecialchars($director->picture, ENT_QUOTES, "UTF-8") ?>"
+                                            class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?>"
+                                            style="width: 155px">
                                             <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
                                         </object>
                                         <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($director->name, ENT_QUOTES, "UTF-8") ?></p>
@@ -160,8 +171,8 @@ if (!$film) { ?>
             <div class="container-fluid mt-5">
                 <div class="d-inline-flex align-items-center mb-4">
                     <h3 class="mb-0">Acteurs</h3>
+                    <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
                     <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-                        <!-- ADMIN CONNECTE : Button trigger modal addToFilm -->
                         <a href="#" id="addActor" class="fs-6 ms-3 p-2 addToFilmOpenModal darkBtn btnWithBorders">Ajouter acteur</a>
                     <?php
                     } ?>
@@ -174,12 +185,16 @@ if (!$film) { ?>
                     } else {
                         foreach ($film["actors"] as $actor) : ?>
                             <!-- Liste des acteurs associés au film -->
-                            <div id="actor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
+                            <div id="actor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
+                                class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
                                 <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
                                 <!-- Carte acteur : lien vers détails acteur au clic -->
-                                <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>" class="darkTypo menuLinks">
+                                <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
+                                    class="darkTypo menuLinks">
                                     <div style="width: 155px">
-                                        <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>" style="width: 155px">
+                                        <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>"
+                                            class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>"
+                                            style="width: 155px">
                                             <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
                                         </object>
                                         <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?><i></i></p>
@@ -239,7 +254,8 @@ if (!$film) { ?>
                         'd MMMM yyyy'          // Format : "4 novembre 1969"
                     ) ?>
 
-                    <div id="review-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" class="d-flex justify-content-between align-items-center lightForm formDarkMode m-3 p-3">
+                    <div id="review-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>"
+                        class="d-flex justify-content-between align-items-center lightForm formDarkMode m-3 p-3">
                         <div>
                             <p>
                                 <i><b><?= htmlspecialchars($review->pseudo, ENT_QUOTES, "UTF-8") ?></b></i>, le <?= $formatter->format($date) ?>
@@ -254,7 +270,8 @@ if (!$film) { ?>
                         </div>
                         <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
                             <!-- BOUTON ADMIN : SUPPRESSION CRITIQUE -->
-                            <a href="#" id="deleteReview-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>" data-entity="Review" data-item="cette critique" class="deleteLink btn btn-danger ms-5">
+                            <a href="#" id="deleteReview-<?= htmlspecialchars($review->id_review, ENT_QUOTES, "UTF-8") ?>"
+                                data-entity="Review" data-item="cette critique" class="deleteLink btn btn-danger ms-5">
                                 <i class="fa-solid fa-xmark"></i>
                             </a>
                         <?php

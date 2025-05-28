@@ -174,6 +174,8 @@ function validateForm(formData, isValid) {
     if (isValid) {
         const msgFailure = document.querySelector("#message-failure");
         const msgSuccess = document.querySelector("#message-success");
+        const msgKO = document.querySelector("#msgKO");
+        const msgOK = document.querySelector("#msgOK");
         msgFailure.innerHTML = "";
         msgSuccess.innerHTML = "";
 
@@ -183,26 +185,24 @@ function validateForm(formData, isValid) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                if (data.redirect) {
+                if (data.redirect && data.success === true) {
                     // redirection demandée par la réponse du controlleur
                     window.location.href = data.redirect;
-                } else {
+                } else if (data.success === true) {
                     // navigation non demandée : afficher message reçu
-                    if (data.success === true) {
-                        this.reset();
-                        // afficher message de succès
-                        msgSuccess.textContent = data.message;
-                    } else {
-                        // afficher message d'erreur
-                        msgFailure.textContent = data.message;
-                    }
+                    this.reset();
+                    // afficher message de succès
+                    msgSuccess.textContent = data.message;
+                } else {
+                    // afficher message d'erreur
+                    msgFailure.textContent = data.message;
                 }
             })
             .catch(error => {
                 console.error(error);
                 msgFailure.textContent = "Erreur lors de l'envoi du formulaire";
             });
-
     }
+
+
 }
