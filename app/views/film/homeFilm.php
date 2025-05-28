@@ -29,27 +29,20 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                 - RATING MEAN
 -->
 
-<!-------------------------->
-<!-- MESSAGE DE BIENVENUE -->
-<!-------------------------->
 <?php $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null ?>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
-    <?php if ($user) { ?>
-        <!-- USER OU ADMIN CONNECTE -->
-        <h1 class="welcomeMsg fs-3 fst-italic mb-3">Bienvenue <?php echo htmlspecialchars($user["pseudo"], ENT_QUOTES, "UTF-8") ?> !</h1>
-    <?php
-    } else { ?>
-        <!-- AUCUN UTILISATEUR CONNECTE -->
-        <h1 class="welcomeMsg fs-3 fst-italic mb-3">Bienvenue sur MovieLovers !</h1>
-        <p class="welcomeMsg">
+<!-- AUCUN UTILISATEUR CONNECTE : Message d'incitation à créer un compte -->
+<?php if (!$user) { ?>
+    <div class="welcomeMsg d-flex flex-column justify-content-center align-items-center">
+        <p class="text-info fst-italic my-2">
             Rejoignez-nous en vous créant un compte,
             <br>ou connectez vous si vous avez déja un compte...
         </p>
-    <?php
-    } ?>
-</div>
+    </div>
+<?php
+}  ?>
 
+<!-- Conteneur principal de la page -->
 <div class="container position-relative">
     <!-- Titre principal de la page -->
     <h2 class="text-center fw-bolder">Les films</h2>
@@ -59,7 +52,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
     // ------------------------------------------------
     foreach ($filmsByGenres as $genre => $films) { ?>
 
-        <!-- Titre du "carroussel netflix" -->
+        <!-- Titre du "carroussel netflix" : nom du genre -->
         <h3 class="mb-0"><?= htmlspecialchars($genre, ENT_QUOTES, "UTF-8")  ?></h3>
 
         <?php
@@ -95,8 +88,7 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                     </div>
                 </a>
             <?php
-            }
-            ?>
+            } ?>
 
             <!-- Flèche droite (masquée sur petit écran) -->
             <button class="scrollRight btn darkBtn btnWithBorders position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">

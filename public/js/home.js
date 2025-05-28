@@ -1,7 +1,5 @@
-const welcomeTitle = document.querySelectorAll(".welcomeMsg");
+const welcomeMsg = document.querySelector(".welcomeMsg");
 
-welcomeTitle.forEach(title =>
-    setTimeout(() => {
-        title.setAttribute("hidden", null);
-    }, 6000)
-)
+welcomeMsg.setTimeout(() => {
+    welcomeMsg.setAttribute("hidden", null);
+}, 2000)
