@@ -1,5 +1,7 @@
-const welcomeMsg = document.querySelector(".welcomeMsg");
+const welcomeMsg = document.querySelectorAll(".welcomeMsg");
 
-welcomeMsg.setTimeout(() => {
-    welcomeMsg.setAttribute("hidden", null);
-}, 2000)
+welcomeMsg.forEach(msg => {
+    setTimeout(() => {
+        msg.setAttribute("hidden", true);
+    }, 3000)
+})

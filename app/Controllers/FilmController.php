@@ -29,22 +29,7 @@ class FilmController extends Controller
             "Crime" => 19
         ];
 
-        /*
-        Résultat :
-            Un tableau à 2 dimensions contenant :
-                - dimension 1 : key = nom du genre ; value = tableau de films (cf dimension 2)
-                - dimension 2 : key = index du tableau de cette dimension (pas utilisé) ; value = objet film
-        Exemple :
-            D1['sci-fi']= D2[]                         (key= genre, value= D2[genre 0])
-                D2[0]= film 0 du genre 0                    object film
-                D2[1]= film 1 du genre 0                    object film
-                D2[2]= film 2 du genre 0                    object film
-                D2 [1]
-            D1['action']= D2[]                         (key= index 1, value= D2[genre 1])
-                D2[0]= film 0 du genre 1                    object film
-                D2[0]= film 0 du genre 2                    object film
 
-        */
         $filmsByGenres = [];
         foreach ($genres as $name => $id) {
 

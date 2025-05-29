@@ -33,8 +33,8 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
 
 <!-- AUCUN UTILISATEUR CONNECTE : Message d'incitation à créer un compte -->
 <?php if (!$user) { ?>
-    <div class="welcomeMsg d-flex flex-column justify-content-center align-items-center">
-        <p class="text-info fst-italic my-2">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <p class="welcomeMsg text-info fst-italic mb-3">
             Rejoignez-nous en vous créant un compte,
             <br>ou connectez vous si vous avez déja un compte...
         </p>
@@ -58,7 +58,8 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
         <div class="filmScroll d-flex overflow-auto py-3 px-2 gap-3">
 
             <!-- Flèche gauche (masquée sur petit écran) -->
-            <button class="scrollLeft btn darkBtn btnWithBorders position-absolute start-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1;  margin-top: 100px">
+            <button class="scrollLeft btn darkBtn btnWithBorders position-absolute start-0 translate-middle-y d-none d-md-block z-3"
+                style="z-index: 1;  margin-top: 100px">
                 <i class="bi bi-chevron-left"></i>
             </button>
 
@@ -68,7 +69,8 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
                 <a href="index.php?controller=Film&action=details&id_film=<?= htmlspecialchars($film->id_film, ENT_QUOTES, "UTF-8") ?>"
                     class="filmLink darkTypo" style="text-decoration: none;">
                     <div class="flex-shrink-0" style="width: 150px;">
-                        <object data="img/img_films/<?= htmlspecialchars($film->picture, ENT_QUOTES, "UTF-8") ?>" class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?>">
+                        <object data="img/img_films/<?= htmlspecialchars($film->picture, ENT_QUOTES, "UTF-8") ?>"
+                            class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($film->title, ENT_QUOTES, "UTF-8") ?>">
                             <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 150px;">
                         </object>
 
@@ -87,7 +89,8 @@ AFFICHER DES LISTES DE FILMS PAR GENRE :
             } ?>
 
             <!-- Flèche droite (masquée sur petit écran) -->
-            <button class="scrollRight btn darkBtn btnWithBorders position-absolute end-0 translate-middle-y d-none d-md-block z-3" style="z-index: 1; margin-top: 100px">
+            <button class="scrollRight btn darkBtn btnWithBorders position-absolute end-0 translate-middle-y d-none d-md-block z-3"
+                style="z-index: 1; margin-top: 100px">
                 <i class="bi bi-chevron-right"></i>
             </button>
         </div>
