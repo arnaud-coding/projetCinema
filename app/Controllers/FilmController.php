@@ -432,7 +432,7 @@ class FilmController extends Controller
             // et entre film et genres avant de supprimer le film
             echo json_encode([
                 'success' => false,
-                'message' => 'Veuillez retirer les genres au film (avec le bouton "Modifier"), les acteurs et les réalisateurs du casting (sur la page "Casting") de ce film avant de le supprimer'
+                'message' => 'Veuillez retirer les genres au film et les acteurs/réalisateurs du casting de ce film avant de le supprimer'
             ]);
             exit();
         }
