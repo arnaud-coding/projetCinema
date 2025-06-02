@@ -456,11 +456,16 @@ class FilmController extends Controller
         $filmModel = new FilmModel();
         $success = $filmModel->addActorToFilm($id_film, $id_actor);
 
-        echo json_encode([
-            'success' => $success,
-            'message' => $success ? "L'acteur a été ajouté au casting du film avec succès" : "Echec lors de l'ajout de l'acteur au casting de ce film"
-        ]);
-        exit();
+        if ($success) {
+            $actorModel = new ActorModel();
+            $actor = $actorModel->readByID($id_actor);
+            echo json_encode([
+                'success' => $success,
+                'message' => $success ? "L'acteur a été ajouté au casting du film avec succès" : "Echec lors de l'ajout de l'acteur au casting de ce film",
+                'actor' => $actor
+            ]);
+            exit();
+        }
     }
 
     // AJOUTER UN REALISATEUR A UN FILM
@@ -473,11 +478,16 @@ class FilmController extends Controller
         $filmModel = new FilmModel();
         $success = $filmModel->addDirectorToFilm($id_film, $id_director);
 
-        echo json_encode([
-            'success' => $success,
-            'message' => $success ? "Le réalisateur a été ajouté au film avec succès" : "Echec lors de l'ajout de ce réalisateur à ce film"
-        ]);
-        exit();
+        if ($success) {
+            $directorModel = new directorModel();
+            $director = $directorModel->readByID($id_director);
+            echo json_encode([
+                'success' => $success,
+                'message' => $success ? "Le réalisateur a été ajouté au film avec succès" : "Echec lors de l'ajout de ce réalisateur à ce film",
+                "director" => $director
+            ]);
+            exit();
+        }
     }
 
     // RETIRER UN ACTEUR DU CASTING D'UN FILM (SUPPRIMER L'ASSOCIATION)

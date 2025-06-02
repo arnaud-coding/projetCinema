@@ -4,19 +4,17 @@ document.querySelectorAll('.btnRemoveFromFilm').forEach(link => {
 
         let id;
         let parentDiv;
-        let id_film;
+        const id_film = document.querySelector(".modal-content").firstElementChild.id.replace("filmID", "");
         let subject;
         let entity;
         if (this.id.startsWith("removeDirector-")) {
             id = this.id.replace("removeDirector-", "");
             parentDiv = document.querySelector(`#director-${id}`);
-            id_film = parentDiv.firstElementChild.id.replace("film-", "");
             subject = "ce réalisateur";
             entity = "Director";
         } else if (this.id.startsWith("removeActor-")) {
             id = this.id.replace("removeActor-", "");
             parentDiv = document.querySelector(`#actor-${id}`);
-            id_film = parentDiv.firstElementChild.id.replace("film-", "");
             subject = "cet acteur";
             entity = "Actor";
         }

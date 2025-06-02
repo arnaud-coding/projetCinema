@@ -8,6 +8,16 @@ const id_film = document.querySelector(".modal-content").firstElementChild.id.re
 
 let entity = "";
 
+function escapeHTML(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
 // OUVERTURE DE LA MODALE
 openBtns.forEach(btn => {
     btn.addEventListener("click", function () {
@@ -99,6 +109,56 @@ searchResults.addEventListener("click", function (e) {
                     document.querySelector(`#${entity.toLowerCase() + id}Li`).remove();
                     document.querySelector('#resultMsg').innerHTML =
                         '<p class="text-success">' + data.message + '</p>';
+                    const newPerson = document.createElement("div");
+                    if (entity === "Actor") {
+                        newPerson.setAttribute("id", `actor-${escapeHTML(actor.id_actor)}`);
+                        newPerson.classList.add("col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center");
+                        newPerson.innerHTML =
+                            `<div style="width: 155px;">
+                                <a href="index.php?controller=Actor&action=details&id_actor=${escapeHTML(data.actor.id_actor)}"
+                                    class="darkTypo menuLinks">
+                                    <div style="width: 155px">
+                                        <object data="img/img_actors/${escapeHTML(data.actor.picture)}"
+                                            class="img-fluid rounded shadow-sm" alt="${escapeHTML(data.actor.name)}"
+                                            style="width: 155px">
+                                            <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
+                                        </object>
+                                        <p class="text-center fw-bold mt-1 mb-0">${escapeHTML(data.actor.name)}<i></i></p>
+                                    </div>
+                                </a>
+                                <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                                    <a id="removeActor-${escapeHTML(data.actor.id_actor)}"
+                                        href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
+                                        Retirer du film
+                                    </a>
+                                <?php
+                                } ?>
+                             </div>`;
+                    }
+                    if (entity === 'Director') {
+                        newPerson.setAttribute("id", `director-${escapeHTML(director.id_director)}`);
+                        newPerson.classList.add("mb-4 mx-4");
+                        newPerson.innerHTML =
+                            `<a href="index.php?controller=Director&action=details&id_director=${escapeHTML(data.director.id_director)}"
+                                 class="darkTypo menuLinks">
+                                 <div class="me-5" style="width: 155px">
+                                     <object data="img/img_directors/${escapeHTML(data.director.picture)}"
+                                         class="img-fluid rounded shadow-sm" alt="${escapeHTML(data.director.name)}"
+                                         style="width: 155px">
+                                         <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
+                                     </object>
+                                     <p class="text-center fw-bold mt-1 mb-0">${escapeHTML(data.director.name)}</p>
+                                 </div>
+                             </a>
+                             <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                                 <!-- ADMIN CONNECTE : Bouton retirer réalisateur du film -->
+                                 <a id="removeDirector-${escapeHTML(data.director.id_director)}"
+                                     href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
+                                     Retirer du film
+                                 </a>
+                             <?php
+                             } ?>`;
+                    }
                 } else {
                     document.querySelector('#resultMsg').innerHTML =
                         '<p class="text-danger">' + data.message + '</p>';

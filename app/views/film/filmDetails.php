@@ -121,7 +121,6 @@ if (!$film) { ?>
 
         <!-- CASTING -->
         <div class="tab-pane fade" id="pills-casting" role="tabpanel" aria-labelledby="pills-casting-tab" tabindex="0">
-            <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
 
             <!-- REALISATEURS -->
             <div>
