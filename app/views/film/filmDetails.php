@@ -121,6 +121,8 @@ if (!$film) { ?>
 
         <!-- CASTING -->
         <div class="tab-pane fade" id="pills-casting" role="tabpanel" aria-labelledby="pills-casting-tab" tabindex="0">
+            <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
+
             <!-- REALISATEURS -->
             <div>
                 <div class="d-inline-flex align-items-center mb-4">
@@ -132,7 +134,7 @@ if (!$film) { ?>
                     } ?>
                 </div>
 
-                <div class="d-flex">
+                <div id="DirectorList" class="d-flex">
                     <?php if ($film["directors"] === []) { ?>
                         <p>Aucun réalisateur associé à ce film pour l'instant</p>
                         <?php
@@ -140,8 +142,7 @@ if (!$film) { ?>
                         foreach ($film["directors"] as $director) : ?>
                             <!-- LISTE DES REALISATEURS DU FILM -->
                             <div id="director-<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
-                                class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
-                                <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
+                                class="mb-4 mx-4">
                                 <a href="index.php?controller=Director&action=details&id_director=<?= htmlspecialchars($director->id_director, ENT_QUOTES, "UTF-8") ?>"
                                     class="darkTypo menuLinks">
                                     <div class="me-5" style="width: 155px">
@@ -178,7 +179,7 @@ if (!$film) { ?>
                     } ?>
                 </div>
 
-                <div class="row">
+                <div id="ActorList" class="row g-3 px-3">
                     <?php if ($film["actors"] === []) { ?>
                         <p>Aucun acteur associé à ce film pour l'instant</p>
                         <?php
@@ -186,28 +187,29 @@ if (!$film) { ?>
                         foreach ($film["actors"] as $actor) : ?>
                             <!-- Liste des acteurs associés au film -->
                             <div id="actor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
-                                class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 mb-4 mx-4" style="width: 155px">
-                                <p hidden id="film-<?= htmlspecialchars($film["details"]->id_film, ENT_QUOTES, "UTF-8") ?>"></p>
-                                <!-- Carte acteur : lien vers détails acteur au clic -->
-                                <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
-                                    class="darkTypo menuLinks">
-                                    <div style="width: 155px">
-                                        <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>"
-                                            class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>"
-                                            style="width: 155px">
-                                            <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
-                                        </object>
-                                        <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?><i></i></p>
-                                    </div>
-                                </a>
-                                <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
-                                    <!-- ADMIN CONNECTE : Bouton retirer acteur du film -->
-                                    <a id="removeActor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
-                                        href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
-                                        Retirer du film
+                                class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 d-flex justify-content-center">
+                                <div style="width: 155px;">
+                                    <!-- Carte acteur : lien vers détails acteur au clic -->
+                                    <a href="index.php?controller=Actor&action=details&id_actor=<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
+                                        class="darkTypo menuLinks">
+                                        <div style="width: 155px">
+                                            <object data="img/img_actors/<?= htmlspecialchars($actor->picture, ENT_QUOTES, "UTF-8") ?>"
+                                                class="img-fluid rounded shadow-sm" alt="<?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?>"
+                                                style="width: 155px">
+                                                <img src="img/nopicture.jpg" class="img-fluid rounded shadow-sm mb-1" alt="no picture" style="width: 155px">
+                                            </object>
+                                            <p class="text-center fw-bold mt-1 mb-0"><?= htmlspecialchars($actor->name, ENT_QUOTES, "UTF-8") ?><i></i></p>
+                                        </div>
                                     </a>
-                                <?php
-                                } ?>
+                                    <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["type"] === "admin") { ?>
+                                        <!-- ADMIN CONNECTE : Bouton retirer acteur du film -->
+                                        <a id="removeActor-<?= htmlspecialchars($actor->id_actor, ENT_QUOTES, "UTF-8") ?>"
+                                            href="#" class="text-center btnRemoveFromFilm btn btn-danger mt-2" style="width: 155px">
+                                            Retirer du film
+                                        </a>
+                                    <?php
+                                    } ?>
+                                </div>
                             </div>
                     <?php endforeach;
                     } ?>

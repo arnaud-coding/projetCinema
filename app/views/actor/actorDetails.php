@@ -75,7 +75,13 @@
         <!-- BIOGRAPHIE -->
         <div class="tab-pane fade w-50" id="pills-biography" role="tabpanel" aria-labelledby="pills-biography-tab" tabindex="0">
             <h3 class="mb-4">Biographie</h3>
-            <p><?= htmlspecialchars($actor["details"]->biography, ENT_QUOTES, "UTF-8") ?></p>
+            <?php if ($actor["details"]->biography === null) { ?>
+                <p>Pas renseignée</p>
+            <?php
+            } else { ?>
+                <p><?= htmlspecialchars($actor["details"]->biography, ENT_QUOTES, "UTF-8") ?></p>
+            <?php
+            } ?>
         </div>
 
         <!-- FILMOGRAPHIE -->
