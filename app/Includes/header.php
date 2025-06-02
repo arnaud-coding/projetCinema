@@ -58,7 +58,6 @@
                                     <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formSignup">Créer un compte</a></li>
                                 <?php
                                 } ?>
-                                <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=formUpdate&id_user=<?php echo htmlspecialchars($_SESSION["user"]["id_user"], ENT_QUOTES, "UTF-8"); ?>">Modifier mon profil</a></li>
                                 <li><a class="dropdown-item dropdownUserBtn darkBtn btnWithBorders" href="index.php?controller=User&action=logout">Se déconnecter</a></li>
                             <?php
                             } ?>
